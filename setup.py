@@ -8,9 +8,9 @@ from setuptools import setup, find_packages
 with open("README.md") as readme_file:
     readme = readme_file.read()
 
-requirements = []
+requirements = ["python-twitter"]
 
-test_requirements = ["pytest"]
+test_requirements = ["pytest", "flake8", "flake8-mypy", "black"]
 
 setup(
     author="Carlos Montecinos Geisse",
