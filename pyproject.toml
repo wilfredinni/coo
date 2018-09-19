@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "auto-tweet"
+version = "0.1.0"
+description = "Python library to automate Twitter tweets"
+authors = ["'Carlos <'carlos.w.montecinos@gmail.com'>"]
+license = "apache-2.0"
+
+[tool.poetry.dependencies]
+python = ">=3.6"
+python-twitter = "^3.4"
+
+[tool.poetry.dev-dependencies]
+black = "^18.3-alpha.0"
+pytest = "^3.8"
+flake8 = "^3.5"
+flake8-mypy = "^17.8"
