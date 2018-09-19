@@ -1,9 +1,41 @@
-from typing import Iterable, Dict
+from typing import Iterable, Dict, Union
 import time
 import twitter
 
-# from_seconds_to: Dict[str, int] = {"tomorrow": 86400, "hour": 3600, "half_hour": 1800}
-# intervals: Dict[str, int] = {"once_a_day": 86400}
+# delay: Dict[str, int] = {
+#     "half_hour": 1800,
+#     "one_hour": 3600,
+#     "tomorrow": 86400,
+#     "next_week": 604800,
+# }
+
+# intervals: Dict[str, int] = {
+#     "once_a_day": 86400,
+#     "twice_perday": 43200,
+#     "three_times_day": 28800,
+# }
+
+test_delay: Dict[str, int] = {
+    "half_hour": 2,
+    "one_hour": 4,
+    "tomorrow": 6,
+    "next_week": 8,
+}
+
+test_intervals: Dict[str, int] = {
+    "once_a_day": 2,
+    "twice_perday": 4,
+    "three_times_day": 6,
+}
+
+
+class NoneArgumentError(TypeError):
+    """Raised when the string argument provided to count_down is not valid."""
+
+    infoMessage = (
+        "count_down must be an int(secs) or a valid String: "
+        "half_hour, one_hour, tomorrow or next_week"
+    )
 
 
 class AutoTweet:
@@ -20,49 +52,32 @@ class AutoTweet:
             self.consumer, self.consumer_secret, self.token, self.token_secret
         )
 
-    def tweet(self, msg: str, count_down: int = None):
-        """Posts a Twitter Update through the Twitter API
+        # Verify if the twitter.User authentication is valid
+        self.verify = self.connect.VerifyCredentials()
 
-        Arguments:
-            msg {str} -- Tweeter Message
+    def tweet(self, msg: str, count_down: Union[str, int] = None):
+        """Post a single tweet with a time delay option."""
+        if type(count_down) == int:
+            time.sleep(count_down)  # type: ignore
 
-        Keyword Arguments:
-            count_down {int} -- (default: {None})
-            If Provided, Delay the Execution of the
-            Update for a Given Number of Seconds.
-        """
-        if count_down:
-            time.sleep(count_down)
+        if type(count_down) == str:
+            time_str = test_delay.get(count_down)  # type: ignore
+            try:
+                time.sleep(time_str)  # type: ignore
+            except TypeError:
+                raise NoneArgumentError(NoneArgumentError.infoMessage)
 
         # self.connect.PostUpdate(msg)
-        print(msg)
+        print(f"msg: {msg} - run with count_down argument: {count_down}")
 
-    # def tweet_interval(
-    #     self, messages: Iterable[str], interval: int, random: bool = False
-    # ):
-    #     if random:
-    #         pass
-    #     else:
-    #         for msg in messages:
-    #             self.connect.PostUpdate(msg)
-    #             time.sleep(interval)
-
-    @property
-    def verify(self):
-        try:
-            return self.connect.VerifyCredentials()
-
-        except twitter.error.TwitterError as e:
-            raise e
+    def tweets(self, msgs, count_down=None, interval=None):
+        """Post multiple tweets with time delay and interval options."""
+        pass
 
     def __str__(self) -> str:
-        return f"{self.verify.name} - {self.verify.created_at}"
+        return f"Twitter User: {self.verify.name}"
 
     def __repr__(self) -> str:
         return "AutoTweet('{}', '{}', '{}', '{}')".format(
             self.consumer, self.consumer_secret, self.token, self.token_secret
         )
-
-
-if __name__ == "__main__":
-    pass

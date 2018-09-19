@@ -1,4 +1,4 @@
-from .core import *
+from .auto_tweet import AutoTweet
 
 
 __title__ = "auto-tweet"
