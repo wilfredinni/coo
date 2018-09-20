@@ -1,40 +1,70 @@
-from typing import Iterable, Dict, Union
-import time
+from typing import Dict, Union, List
+import functools
 import twitter
 
-# delay: Dict[str, int] = {
-#     "half_hour": 1800,
-#     "one_hour": 3600,
-#     "tomorrow": 86400,
-#     "next_week": 604800,
-# }
-
-# intervals: Dict[str, int] = {
-#     "once_a_day": 86400,
-#     "twice_perday": 43200,
-#     "three_times_day": 28800,
-# }
-
-test_delay: Dict[str, int] = {
-    "half_hour": 2,
-    "one_hour": 4,
-    "tomorrow": 6,
-    "next_week": 8,
+delay: Dict[str, int] = {
+    "half_hour": 2,  # 1800
+    "one_hour": 4,  # 3600
+    "tomorrow": 6,  # 86400
+    "next_week": 8,  # 604800
 }
 
-test_intervals: Dict[str, int] = {
-    "once_a_day": 2,
-    "twice_perday": 4,
-    "three_times_day": 6,
+intervals: Dict[str, int] = {
+    "once_a_day": 2,  # 86400
+    "twice_perday": 4,  # 43200
+    "three_times_day": 6,  # 28800
 }
+
+
+def time_delay(func):
+    import time
+
+    @functools.wraps(func)
+    def wrapper_delay(*args, **kwargs):
+        sleep_time = parse_time(delay, kwargs, "delay")
+        try:
+            time.sleep(sleep_time)
+        except TypeError:
+            raise NoneArgumentError(NoneArgumentError.delayInfoMessage)
+
+        return func(*args, **kwargs)
+
+    return wrapper_delay
+
+
+def parse_time(dictionary, time_delay, keyword):
+    time_delay = time_delay.get(keyword)
+
+    if type(time_delay) == int:
+        return time_delay
+    if type(time_delay) == str:
+        return dictionary.get(time_delay)
+
+
+# def check_and_sleep(time_interval):
+# if interval:
+#     if type(interval) == int:
+#         time.sleep(interval)
+
+#     if type(interval) == str:
+#         try:
+#             time_str = test_intervals.get(interval)
+#             time.sleep(time_str)
+#         except TypeError:
+#             raise NoneArgumentError(NoneArgumentError.intervalInfoMessage)
 
 
 class NoneArgumentError(TypeError):
     """Raised when the string argument provided to count_down is not valid."""
 
-    infoMessage = (
-        "count_down must be an int(secs) or a valid String: "
-        "half_hour, one_hour, tomorrow or next_week"
+    delayInfoMessage = (
+        "'delay' must be an int(secs) or a valid String: "
+        "'half_hour', 'one_hour', 'tomorrow' or 'next_week'."
+    )
+
+    intervalInfoMessage = (
+        "'interval' must be an int(secs) or a valid String: "
+        "'once_a_day', 'twice_perday' or 'three_times_day'."
     )
 
 
@@ -55,24 +85,21 @@ class AutoTweet:
         # Verify if the twitter.User authentication is valid
         self.verify = self.connect.VerifyCredentials()
 
-    def tweet(self, msg: str, count_down: Union[str, int] = None):
-        """Post a single tweet with a time delay option."""
-        if type(count_down) == int:
-            time.sleep(count_down)  # type: ignore
-
-        if type(count_down) == str:
-            time_str = test_delay.get(count_down)  # type: ignore
-            try:
-                time.sleep(time_str)  # type: ignore
-            except TypeError:
-                raise NoneArgumentError(NoneArgumentError.infoMessage)
+    @time_delay
+    def tweet(self, msg: str, delay: Union[str, int] = None):
+        """Post a single tweet with or without time delay."""
 
         # self.connect.PostUpdate(msg)
-        print(f"msg: {msg} - run with count_down argument: {count_down}")
+        print(f"msg: {msg} - delay: {delay}")
 
-    def tweets(self, msgs, count_down=None, interval=None):
-        """Post multiple tweets with time delay and interval options."""
-        pass
+    # @time_delay
+    # def tweets(self, msgs, delay=None, interval=None):
+    #     """Post multiple tweets with time delay and interval options."""
+    #     check_and_sleep(delay=delay)
+
+    #     for post in msgs:
+    #         # self.connect.PostUpdate(msg)
+    #         print(f"msg: {post} - delay: {delay} - interval: {interval}")
 
     def __str__(self) -> str:
         return f"Twitter User: {self.verify.name}"
