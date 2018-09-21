@@ -6,6 +6,7 @@ try:
 except ModuleNotFoundError:
     from .exceptions import NoneError
 
+
 DELAY_STR: Dict[str, int] = {
     "half_hour": 2,  # 1800
     "one_hour": 4,  # 3600
@@ -24,11 +25,17 @@ INTERVAL_STR: Dict[str, int] = {
 
 
 def delay_tweet(time_delay):
-    """Delay a tweet update. """
-    if type(time_delay) is int:
+    """Delay a tweet pdate. """
+    # If time_delay is not a str, get sleep_time from the dict
+    try:
         return time.sleep(time_delay)
+    except TypeError:
+        sleep_time = DELAY_STR.get(time_delay)
 
-    sleep_time = DELAY_STR.get(time_delay)
+    # At this point, the 'time_sleep' comes from the 'DELAY_STR'
+    # dictionary. If the return value is 'None', means that the
+    # value provided by the user is not valid, so a 'NoneError'
+    # is raised.
     try:
         return time.sleep(sleep_time)
     except TypeError:
