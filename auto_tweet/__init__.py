@@ -1,4 +1,5 @@
 from .auto_tweet import AutoTweet
+from .time_managment import delay_tweet, DELAY_STR
 
 
 __title__ = "auto-tweet"

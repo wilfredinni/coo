@@ -1,8 +1,8 @@
-from typing import Union
+import time
 
 import twitter
 
-from .time_managment import delay_tweet
+from .time_managment import delay_tweet, DELAY_STR
 
 
 class AutoTweet:
@@ -22,12 +22,20 @@ class AutoTweet:
         # Verify if the twitter.User authentication is valid
         self.verify = self.connect.VerifyCredentials()
 
-    def tweet(self, msg: str, delay: Union[str, int] = None):
-        """Post a single tweet with or without time delay."""
+    def tweet(self, msg: str, delay=None):
+        """Post a single tweet with or without a time delay."""
         if delay:
-            delay_tweet(delay)
+            # if 'delay' is not 'None', first, try to sleep, but if
+            # there is a 'TypeError' use 'delay_tweet()' to get the
+            # int value from the DELAY_STR dict. If there is nothing
+            # in 'delay', just post the Update.
+            try:
+                time.sleep(delay)
+            except TypeError:
+                sleep_time = delay_tweet(delay, DELAY_STR)
+                time.sleep(sleep_time)
 
-        # self.connect.PostUpdate(msg)
+        # return self.connect.PostUpdate(msg)
         print(f"msg: {msg} - delay: {delay}")
 
     # TODO: Post several tweets with time delay and interval options
