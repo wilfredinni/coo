@@ -1,8 +1,6 @@
-import time
-
 import twitter
 
-from .time_managment import delay_time_int, DELAY_STR
+from .time_managment import sleep
 
 
 class AutoTweet:
@@ -26,14 +24,10 @@ class AutoTweet:
         """Post a single tweet with or without a time delay."""
         if delay:
             # if 'delay' is not 'None', first, try to sleep, but if
-            # there is a 'TypeError' use 'delay_tweet()' to get the
+            # there is a 'TypeError' use 'delay_time_int()' to get the
             # int value from the DELAY_STR dict. If there is nothing
             # in 'delay', just post the Update.
-            try:
-                time.sleep(delay)
-            except TypeError:
-                sleep_time = delay_time_int(delay, DELAY_STR)
-                time.sleep(sleep_time)
+            sleep(delay)
 
         # return self.connect.PostUpdate(msg)
         print(f"msg: {msg} - delay: {delay}")

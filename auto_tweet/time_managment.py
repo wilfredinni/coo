@@ -1,4 +1,5 @@
 from typing import Dict
+import time
 
 try:
     from exceptions import NoneError
@@ -21,13 +22,22 @@ INTERVAL_STR: Dict[str, int] = {
 
 
 def delay_time_int(time_delay, dictionary):
-    """Delay a Twitter Update. """
+    """Get the time delay for a Twitter Update."""
     sleep_time = dictionary.get(time_delay)
     # At this point, the 'sleep_time' comes from the one of the
     # dictionaries. If the return value is 'None', means that the
     # value provided by the user is not valid, so an 'NoneError'
     # is raised.
-    try:
+    if type(sleep_time) == int:
         return sleep_time
-    except TypeError:
+    else:
         raise NoneError(NoneError.delayInfoMessage)
+
+
+def sleep(sleep_time):
+    """The actual sleep."""
+    try:
+        time.sleep(sleep_time)
+    except TypeError:
+        sleep_time = delay_time_int(sleep_time, DELAY_STR)
+        time.sleep(sleep_time)
