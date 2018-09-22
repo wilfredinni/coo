@@ -1,0 +1,7 @@
+[run]
+branch = True
+source = auto_tweet
+
+[report]
+omit =
+    tests/*
