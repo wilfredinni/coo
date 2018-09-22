@@ -2,7 +2,7 @@ import time
 
 import twitter
 
-from .time_managment import delay_tweet, DELAY_STR
+from .time_managment import delay_time_int, DELAY_STR
 
 
 class AutoTweet:
@@ -32,7 +32,7 @@ class AutoTweet:
             try:
                 time.sleep(delay)
             except TypeError:
-                sleep_time = delay_tweet(delay, DELAY_STR)
+                sleep_time = delay_time_int(delay, DELAY_STR)
                 time.sleep(sleep_time)
 
         # return self.connect.PostUpdate(msg)

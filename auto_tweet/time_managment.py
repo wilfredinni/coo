@@ -20,7 +20,7 @@ INTERVAL_STR: Dict[str, int] = {
 }
 
 
-def delay_tweet(time_delay, dictionary):
+def delay_time_int(time_delay, dictionary):
     """Delay a Twitter Update. """
     sleep_time = dictionary.get(time_delay)
     # At this point, the 'sleep_time' comes from the one of the

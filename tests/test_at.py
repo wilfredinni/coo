@@ -1,6 +1,6 @@
 # from auto_tweet import AutoTweet
 import pytest
-from auto_tweet import delay_tweet, DELAY_STR
+from auto_tweet import delay_time_int, DELAY_STR
 
 
 @pytest.mark.parametrize(
@@ -13,4 +13,4 @@ from auto_tweet import delay_tweet, DELAY_STR
     ],
 )
 def test_delay_tweet(t_str, t_int):
-    assert delay_tweet(t_str, DELAY_STR) == t_int
+    assert delay_time_int(t_str, DELAY_STR) == t_int
