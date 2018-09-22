@@ -38,8 +38,6 @@ class AutoTweet:
         # return self.connect.PostUpdate(msg)
         print(f"msg: {msg} - delay: {delay}")
 
-    # TODO: Post several tweets with time delay and interval options
-
     def __str__(self) -> str:
         return f"Twitter User: {self.verify.name}"
 

@@ -1,5 +1,4 @@
 from typing import Dict
-import time
 
 try:
     from exceptions import NoneError
@@ -21,38 +20,14 @@ INTERVAL_STR: Dict[str, int] = {
 }
 
 
-# TODO: function or function decorator for intervals in tweets()
-
-
 def delay_tweet(time_delay, dictionary):
     """Delay a Twitter Update. """
     sleep_time = dictionary.get(time_delay)
     # At this point, the 'sleep_time' comes from the one of the
     # dictionaries. If the return value is 'None', means that the
-    # value provided by the user is not valid, so a 'NoneError'
+    # value provided by the user is not valid, so an 'NoneError'
     # is raised.
     try:
         return sleep_time
     except TypeError:
         raise NoneError(NoneError.delayInfoMessage)
-
-
-if __name__ == "__main__":
-
-    class Test:
-        def tweet(self, msg: str, delay=None):
-            """Post a single tweet with or without time delay."""
-            if delay:
-                try:
-                    time.sleep(delay)
-                except TypeError:
-                    sleep_time = delay_tweet(delay, DELAY_STR)
-                    time.sleep(sleep_time)
-
-            print(f"msg: {msg} - delay: {delay}")
-
-    t = Test()
-    t.tweet("My test Twitter update", "half_hour")
-
-    # a = delay_tweet("half_hour")
-    # print(type(a))
