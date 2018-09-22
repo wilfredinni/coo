@@ -41,3 +41,20 @@ def sleep(sleep_time):
     except TypeError:
         sleep_time = delay_time_int(sleep_time, DELAY_STR)
         time.sleep(sleep_time)
+
+
+# if __name__ == "__main__":
+
+#     class Test:
+#         def tweet(self, msg: str, delay=None):
+#             """Post a single tweet with or without time delay."""
+#             if delay:
+#                 sleep(delay)
+
+#             print(f"msg: {msg} - delay: {delay}")
+
+#     t = Test()
+#     t.tweet("My test Twitter update", 5)
+
+# a = delay_tweet("half_hour")
+# print(type(a))
