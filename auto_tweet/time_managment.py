@@ -21,14 +21,14 @@ INTERVAL_STR: Dict[str, int] = {
 }
 
 
-def delay_time_int(time_delay, dictionary):
+def delay_time_int(time_delay, dictionary) -> int:
     """Get the time delay for a Twitter Update."""
     sleep_time = dictionary.get(time_delay)
     # At this point, the 'sleep_time' comes from the one of the
     # dictionaries. If the return value is 'None', means that the
     # value provided by the user is not valid, so an 'NoneError'
     # is raised.
-    if type(sleep_time) == int:
+    if isinstance(sleep_time, int):
         return sleep_time
     else:
         raise NoneError(NoneError.delayInfoMessage)
@@ -55,6 +55,3 @@ def sleep(sleep_time):
 
 #     t = Test()
 #     t.tweet("My test Twitter update", 5)
-
-# a = delay_tweet("half_hour")
-# print(type(a))

@@ -18,7 +18,12 @@ class AutoTweet:
         )
 
         # Verify if the twitter.User authentication is valid
-        self.verify = self.connect.VerifyCredentials()
+        # self.verify = self.connect.VerifyCredentials()
+
+    @property
+    def verify(self):
+        # Verify if the twitter.User authentication is valid
+        return self.connect.VerifyCredentials()
 
     def tweet(self, msg: str, delay=None):
         """Post a single tweet with or without a time delay."""
@@ -30,7 +35,7 @@ class AutoTweet:
             sleep(delay)
 
         # return self.connect.PostUpdate(msg)
-        print(f"msg: {msg} - delay: {delay}")
+        return f"msg: {msg} - delay: {delay}"
 
     def __str__(self) -> str:
         return f"Twitter User: {self.verify.name}"
