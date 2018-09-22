@@ -5,3 +5,4 @@ source = auto_tweet
 [report]
 omit =
     tests/*
+    setup.py
