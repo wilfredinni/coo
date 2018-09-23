@@ -34,12 +34,12 @@ def delay_time_int(time_delay, dictionary) -> int:
         raise NoneError(NoneError.delayInfoMessage)
 
 
-def sleep(sleep_time):
+def zzz(sleep_time, dictionary):
     """The actual sleep."""
     try:
         time.sleep(sleep_time)
     except TypeError:
-        sleep_time = delay_time_int(sleep_time, DELAY_STR)
+        sleep_time = delay_time_int(sleep_time, dictionary)
         time.sleep(sleep_time)
 
 

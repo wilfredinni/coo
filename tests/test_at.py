@@ -2,6 +2,8 @@ import pytest
 from auto_tweet import AutoTweet
 from auto_tweet import delay_time_int, DELAY_STR
 
+# TODO: test delay_time_int to assert 'NoneError'
+
 
 @pytest.mark.parametrize(
     "t_str, t_int",

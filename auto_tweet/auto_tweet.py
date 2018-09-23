@@ -1,6 +1,6 @@
 import twitter
 
-from .time_managment import sleep
+from .time_managment import zzz, DELAY_STR
 
 
 class AutoTweet:
@@ -17,9 +17,6 @@ class AutoTweet:
             self.consumer, self.consumer_secret, self.token, self.token_secret
         )
 
-        # Verify if the twitter.User authentication is valid
-        # self.verify = self.connect.VerifyCredentials()
-
     @property
     def verify(self):
         # Verify if the twitter.User authentication is valid
@@ -32,7 +29,7 @@ class AutoTweet:
             # there is a 'TypeError' use 'delay_time_int()' to get the
             # int value from the DELAY_STR dict. If there is nothing
             # in 'delay', just post the Update.
-            sleep(delay)
+            zzz(delay, DELAY_STR)
 
         # return self.connect.PostUpdate(msg)
         return f"msg: {msg} - delay: {delay}"
