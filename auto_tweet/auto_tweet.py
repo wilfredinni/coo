@@ -1,3 +1,4 @@
+from typing import Union
 import twitter
 
 from .time_managment import zzz, DELAY_STR
@@ -22,7 +23,7 @@ class AutoTweet:
         # Verify if the twitter.User authentication is valid
         return self.connect.VerifyCredentials()
 
-    def tweet(self, msg: str, delay=None):
+    def tweet(self, msg: str, delay: Union[str, int] = None):
         """Post a single tweet with or without a time delay."""
         if delay:
             # if 'delay' is not 'None', first, try to sleep, but if
