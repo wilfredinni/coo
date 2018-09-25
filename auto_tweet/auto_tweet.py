@@ -1,4 +1,5 @@
 from typing import Union, List, Dict
+
 import twitter
 
 from .time_managment import zzz, DELAY_DICT, INTERVAL_DICT
@@ -33,7 +34,7 @@ class AutoTweet:
             # the Update.
             zzz(delay, DELAY_DICT)
 
-        # return self.connect.PostUpdate(msg)
+        # self.connect.PostUpdate(msg)
         return f"msg: {msg} - delay: {delay}"
 
     def tweets(
@@ -48,11 +49,15 @@ class AutoTweet:
 
         # !FIXME: Remove interval at the end of the loop.
         if isinstance(msgs, list):
-            for post in msgs:
-                # return self.connect.PostUpdate(post)
-                print(f"msg: {post} - delay: {delay} - interval: {interval}")
+            twitter_msgs = (i for i in msgs)
+            for update in twitter_msgs:
+                # self.connect.PostUpdate(update)
+                print(f"msg: {update} - delay: {delay} - interval: {interval}")
                 if interval:
                     zzz(interval, INTERVAL_DICT)
+
+        if isinstance(msgs, dict):
+            pass
 
     def __str__(self) -> str:
         return f"Twitter User: {self.verify.name}"
