@@ -25,13 +25,12 @@ def delay_time_int(time_delay, dictionary: Dict) -> int:
     if isinstance(sleep_time, int):
         return sleep_time
 
-    # If 'sleep_time' == None:
-    # First: Choose the correct error message.
+    # If 'sleep_time' == None, choose the correct error message.
     err_msg = NoneError.delayInfoMessage
     if dictionary is INTERVAL_STR:
         err_msg = NoneError.intervalInfoMessage
 
-    # Second, raise the custom NoneError msg.
+    # And raise the custom NoneError.
     raise NoneError(err_msg)
 
 

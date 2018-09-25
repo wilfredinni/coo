@@ -47,7 +47,6 @@ class AutoTweet:
             zzz(delay, DELAY_STR)
 
         # !FIXME: Remove interval at the end of the loop.
-        # !FIXME: Custom error msg for INTERVAL_STR.
         if isinstance(msgs, list):
             for post in msgs:
                 # return self.connect.PostUpdate(post)

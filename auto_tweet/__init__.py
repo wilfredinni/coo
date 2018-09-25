@@ -1,7 +1,5 @@
 from .auto_tweet import AutoTweet
 
-# from .time_managment import delay_time_int, DELAY_STR, INTERVAL_STR
-
 
 __title__ = "auto-tweet"
 __license__ = "Apache 2.0"
