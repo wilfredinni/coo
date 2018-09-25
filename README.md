@@ -36,4 +36,4 @@ at.tweet("my Twitter Update", delay="half_hour")
 ## TODO
 
 - Multiple Twitter Updates with delay and interval options (list)
-- Multiple Twitter Updates with custom delay and interval times for each one (dict)
+- Multiple Twitter Updates with delay and single interval option for each one (dict)
