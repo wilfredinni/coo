@@ -1,4 +1,4 @@
-# auto-tweet
+# AutoTweet
 
 [![Build Status](https://travis-ci.org/wilfredinni/auto-tweet.svg?branch=master)](https://travis-ci.org/wilfredinni/auto-tweet)
 [![codecov](https://codecov.io/gh/wilfredinni/auto-tweet/branch/master/graph/badge.svg)](https://codecov.io/gh/wilfredinni/auto-tweet)
@@ -20,16 +20,15 @@ at = AutoTweet(
 at.verify
 
 # WORK WITH A SINGLE TWEET
-
-# Tweet now
+# Just a Twitter Update
 at.tweet("my Twitter Update")
 
-# Tweet with a time delay using seconds
+# Tweet with time delay option using seconds
 at.tweet("my Twitter Update", delay=10)
 
-# Tweet with a time delay using a string:
+# Tweet with time delay option using a string:
 # "half_hour", "one_hour", "tomorrow" and
-# "next_week"
+# "next_week" for now
 at.tweet("my Twitter Update", delay="half_hour")
 ```
 
