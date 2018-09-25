@@ -3,7 +3,7 @@ import pytest
 from twitter.error import TwitterError
 
 from auto_tweet import AutoTweet
-from auto_tweet.time_managment import delay_time_int, DELAY_STR
+from auto_tweet.time_managment import get_time, DELAY_DICT, INTERVAL_DICT
 from auto_tweet.exceptions import NoneError
 
 
@@ -23,16 +23,36 @@ def test_auto_tweet_verify():
         ("next_week", 8),  # 604800
     ],
 )
-def test_delay_time_int(t_str, t_int):
-    # Test delay_time_int() to assert the int values
+def test_get_time_DELAY_DICT(t_str, t_int):
+    # Test get_time() to assert the int values
     # of the 'DELAY_STR' dictionary.
-    assert delay_time_int(t_str, DELAY_STR) == t_int
+    assert get_time(t_str, DELAY_DICT) == t_int
 
 
-def test_delay_time_int_NoneError():
-    # Directly check the that the 'NoneError' is raised.
+@pytest.mark.parametrize(
+    "t_str, t_int",
+    [
+        ("once_a_day", 2),  # 86400
+        ("twice_perday", 4),  # 43200
+        ("three_times_day", 6),  # 28800
+    ],
+)
+def test_get_time_INTERVAL_DICT(t_str, t_int):
+    # Test get_time() to assert the int values
+    # of the 'INTERVAL_DICT' dictionary.
+    assert get_time(t_str, INTERVAL_DICT) == t_int
+
+
+def test_get_time_NoneError_DELAY_DICT():
+    # Directly check that the 'NoneError' is raised.
     with pytest.raises(NoneError):
-        delay_time_int("wrong_delay_time", DELAY_STR)
+        get_time("wrong_delay_time", DELAY_DICT)
+
+
+def test_get_time_NoneError_INTERVAL_DICT():
+    # Directly check that the 'NoneError' is raised.
+    with pytest.raises(NoneError):
+        get_time("wrong_delay_time", INTERVAL_DICT)
 
 
 @pytest.mark.parametrize(
