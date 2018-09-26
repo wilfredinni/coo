@@ -2,10 +2,12 @@ from typing import Union, List, Dict
 
 import twitter
 
-from .time_managment import zzz, DELAY_DICT, INTERVAL_DICT
+from .utils import zzz, DELAY_DICT, INTERVAL_DICT
 
 
 class AutoTweet:
+    """The heart of the AutoTweet Library."""
+
     def __init__(
         self,
         consumer: str,
@@ -22,6 +24,10 @@ class AutoTweet:
         # True to debug purposes
         self.debug = debug
 
+        # interval and delay switches
+        self.delay_time = True
+        self.interval_time = False
+
         # Creates the connection through the Twitter API
         self.connect = twitter.Api(
             self.consumer, self.consumer_secret, self.token, self.token_secret
@@ -34,15 +40,16 @@ class AutoTweet:
 
     def tweet(self, msg: str, delay: Union[str, int] = None):
         """Post a single tweet with or without a time delay."""
-        if delay:
-            # if 'delay' is not 'None', first, try to sleep, but if
-            # there is a 'TypeError' use 'get_time()' to get the
-            # int value from the DELAY_DICT. Raise a custom NoneError
-            # if the key is wrong. If there is no 'delay', just post
-            # the Update.
+
+        # If there is a 'TypeError' raises NoneError.
+        if delay and self.delay_time:
             zzz(delay, DELAY_DICT)
 
+            # Set to False to avoid repetition
+            self.delay_time = False
+
         if self.debug:
+            # print(f"msg: {msg} - delay: {delay}")
             return f"msg: {msg} - delay: {delay}"
 
         return self.connect.PostUpdate(msg)
@@ -54,24 +61,14 @@ class AutoTweet:
         interval: Union[str, int] = None,
     ):
         """Post multiple tweets with delay and interval options."""
-        if delay:
-            zzz(delay, DELAY_DICT)
-
-        if isinstance(msgs, list):
-            # Use a generator
-            twitter_msgs = (i for i in msgs)
-            for msg in twitter_msgs:
-                if self.debug:
-                    print(f"msg: {msg} - delay: {delay} - interval: {interval}")
-                else:
-                    self.connect.PostUpdate(msg)
-
-                # !FIXME: Remove interval at the end of the loop.
-                if interval:
+        for msg in msgs:
+            if interval:
+                if self.interval_time:
                     zzz(interval, INTERVAL_DICT)
+                # True to interval after first iteration.
+                self.interval_time = True
 
-        if isinstance(msgs, dict):
-            pass
+            self.tweet(msg, delay)
 
     def __str__(self) -> str:
         return f"Twitter User: {self.verify.name}"
