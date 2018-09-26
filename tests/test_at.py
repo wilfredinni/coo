@@ -1,14 +1,20 @@
 import pytest
-
 from twitter.error import TwitterError
 
 from auto_tweet import AutoTweet
-from auto_tweet.time_managment import get_time, DELAY_DICT, INTERVAL_DICT
+from auto_tweet.utils import get_time, DELAY_DICT, INTERVAL_DICT
 from auto_tweet.exceptions import NoneError
 
 at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
 test_updates = ["first", "seconde", "third"]
+
+
+def test_tweet_delay_NoneError():
+    # Check the that the 'NoneError' is raised when a wrong
+    # 'delay' argument is provided.
+    with pytest.raises(NoneError):
+        at.tweet("mock_msg", "wrong_delay_time")
 
 
 def test_auto_tweet_verify():
@@ -94,10 +100,3 @@ def test_tweets_TwitterError():
     # Test that TwitterError is raised for wrong credentials
     with pytest.raises(TwitterError):
         atc.tweets(test_updates)
-
-
-def test_tweet_delay_NoneError():
-    # Check the that the 'NoneError' is raised when a wrong
-    # 'delay' argument is provided.
-    with pytest.raises(NoneError):
-        at.tweet("mock_msg", "wrong_delay_time")

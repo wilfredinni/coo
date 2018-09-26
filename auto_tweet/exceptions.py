@@ -1,5 +1,8 @@
 class NoneError(TypeError):
-    """Raised when the string argument provided to delay is not valid."""
+    """
+    Raised when the string argument provided to delay or interval
+    is not valid.
+    """
 
     delayInfoMessage: str = (
         "'delay' must be an int(secs) or a valid String: "
