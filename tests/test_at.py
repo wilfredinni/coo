@@ -7,6 +7,7 @@ from auto_tweet.time_managment import get_time, DELAY_DICT, INTERVAL_DICT
 from auto_tweet.exceptions import NoneError
 
 at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
+atc = AutoTweet("mock", "mock", "mock", "mock")
 test_updates = ["first", "seconde", "third"]
 
 
@@ -66,6 +67,12 @@ def test_tweet(msg, delay):
     assert isinstance(at.tweet(msg, delay), str)
 
 
+def test_tweet_TwitterError():
+    # Test that TwitterError is raised for wrong credentials
+    with pytest.raises(TwitterError):
+        atc.tweet("My Twitter Update")
+
+
 @pytest.mark.parametrize(
     "msgs, delay, interval",
     [
@@ -81,6 +88,12 @@ def test_tweet(msg, delay):
 def test_tweets(msgs, delay, interval):
     # This test pass as long as no error is raised
     at.tweets(msgs, delay, interval)
+
+
+def test_tweets_TwitterError():
+    # Test that TwitterError is raised for wrong credentials
+    with pytest.raises(TwitterError):
+        atc.tweets(test_updates)
 
 
 def test_tweet_delay_NoneError():
