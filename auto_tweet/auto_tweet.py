@@ -7,12 +7,20 @@ from .time_managment import zzz, DELAY_DICT, INTERVAL_DICT
 
 class AutoTweet:
     def __init__(
-        self, consumer: str, consumer_secret: str, token: str, token_secret: str
+        self,
+        consumer: str,
+        consumer_secret: str,
+        token: str,
+        token_secret: str,
+        debug: bool = False,
     ) -> None:
         self.consumer = consumer
         self.consumer_secret = consumer_secret
         self.token = token
         self.token_secret = token_secret
+
+        # True to debug purposes
+        self.debug = debug
 
         # Creates the connection through the Twitter API
         self.connect = twitter.Api(
@@ -28,14 +36,16 @@ class AutoTweet:
         """Post a single tweet with or without a time delay."""
         if delay:
             # if 'delay' is not 'None', first, try to sleep, but if
-            # there is a 'TypeError' use 'delay_time_int()' to get the
-            # int value from the DELAY_STR dict. Raise a custom NoneError
-            # if the key is wrong. If there is nothing in 'delay', just post
+            # there is a 'TypeError' use 'get_time()' to get the
+            # int value from the DELAY_DICT. Raise a custom NoneError
+            # if the key is wrong. If there is no 'delay', just post
             # the Update.
             zzz(delay, DELAY_DICT)
 
-        # self.connect.PostUpdate(msg)
-        return f"msg: {msg} - delay: {delay}"
+        if self.debug:
+            return f"msg: {msg} - delay: {delay}"
+
+        return self.connect.PostUpdate(msg)
 
     def tweets(
         self,
@@ -47,12 +57,16 @@ class AutoTweet:
         if delay:
             zzz(delay, DELAY_DICT)
 
-        # !FIXME: Remove interval at the end of the loop.
         if isinstance(msgs, list):
+            # Use a generator
             twitter_msgs = (i for i in msgs)
-            for update in twitter_msgs:
-                # self.connect.PostUpdate(update)
-                print(f"msg: {update} - delay: {delay} - interval: {interval}")
+            for msg in twitter_msgs:
+                if self.debug:
+                    print(f"msg: {msg} - delay: {delay} - interval: {interval}")
+                else:
+                    self.connect.PostUpdate(msg)
+
+                # !FIXME: Remove interval at the end of the loop.
                 if interval:
                     zzz(interval, INTERVAL_DICT)
 

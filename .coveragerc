@@ -9,7 +9,6 @@ omit =
 exclude_lines =
     def __repr__
     def __str__
-    if self.debug:
     if settings.DEBUG
     raise AssertionError
     raise NotImplementedError

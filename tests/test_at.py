@@ -6,7 +6,8 @@ from auto_tweet import AutoTweet
 from auto_tweet.time_managment import get_time, DELAY_DICT, INTERVAL_DICT
 from auto_tweet.exceptions import NoneError
 
-at = AutoTweet("mock", "mock", "mock", "mock")
+at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
+test_updates = ["first", "seconde", "third"]
 
 
 def test_auto_tweet_verify():
@@ -58,11 +59,28 @@ def test_get_time_NoneError_INTERVAL_DICT():
 
 @pytest.mark.parametrize(
     "msg, delay",
-    [("My Twitter Msg", None), ("My Twitter Msg", 1), ("My Twitter Msg", "half_hour")],
+    [("My Twitter Msg", None), ("My Twitter Msg", 1), ("My Twitter Msg", "test")],
 )
 def test_tweet(msg, delay):
     # Assert correct tweet updates.
     assert isinstance(at.tweet(msg, delay), str)
+
+
+@pytest.mark.parametrize(
+    "msgs, delay, interval",
+    [
+        (test_updates, None, None),
+        (test_updates, None, 0.1),
+        (test_updates, 0.1, None),
+        (test_updates, 0.1, 0.1),
+        (test_updates, "test", "test"),
+        (test_updates, 0.1, "test"),
+        (test_updates, "test", 0.1),
+    ],
+)
+def test_tweets(msgs, delay, interval):
+    # This test pass as long as no error is raised
+    at.tweets(msgs, delay, interval)
 
 
 def test_tweet_delay_NoneError():

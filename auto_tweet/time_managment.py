@@ -4,6 +4,7 @@ import time
 from .exceptions import NoneError
 
 DELAY_DICT: Dict[str, int] = {
+    "test": 1,
     "half_hour": 2,  # 1800
     "one_hour": 4,  # 3600
     "tomorrow": 6,  # 86400
@@ -11,6 +12,7 @@ DELAY_DICT: Dict[str, int] = {
 }
 
 INTERVAL_DICT: Dict[str, int] = {
+    "test": 1,
     "once_a_day": 2,  # 86400
     "twice_perday": 4,  # 43200
     "three_times_day": 6,  # 28800
@@ -25,7 +27,7 @@ def get_time(time_delay, dictionary: Dict) -> int:
     if isinstance(sleep_time, int):
         return sleep_time
 
-    # If 'sleep_time' == None, choose the correct error message.
+    # If 'sleep_time' == None, get the correct error message.
     err_msg = NoneError.delayInfoMessage
     if dictionary is INTERVAL_DICT:
         err_msg = NoneError.intervalInfoMessage
