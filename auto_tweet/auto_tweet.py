@@ -49,7 +49,7 @@ class AutoTweet:
             self.delay_time = False
 
         if self.debug:
-            # print(f"msg: {msg} - delay: {delay}")
+            print(f"msg: {msg} - delay: {delay}")
             return f"msg: {msg} - delay: {delay}"
 
         return self.connect.PostUpdate(msg)
@@ -63,12 +63,21 @@ class AutoTweet:
         """Post multiple tweets with delay and interval options."""
         for msg in msgs:
             if interval:
-                if self.interval_time:
-                    zzz(interval, INTERVAL_DICT)
-                # True to interval after first iteration.
-                self.interval_time = True
+                self.interval(interval)
 
-            self.tweet(msg, delay)
+            if isinstance(msgs, list):
+                self.tweet(msg, delay)
+
+            elif isinstance(msgs, dict):
+                pass
+
+    def interval(self, interval):
+        # Avoid the first iteration:
+        if self.interval_time:
+            zzz(interval, INTERVAL_DICT)
+
+        # Enabled for the second iteration:
+        self.interval_time = True
 
     def __str__(self) -> str:
         return f"Twitter User: {self.verify.name}"

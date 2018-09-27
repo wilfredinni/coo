@@ -1,6 +1,6 @@
 class NoneError(TypeError):
     """
-    Raised when the string argument provided to delay or interval
+    Raised when the string provided to delay or interval
     is not valid.
     """
 
