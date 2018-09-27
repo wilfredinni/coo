@@ -35,7 +35,7 @@ class AutoTweet:
 
     @property
     def verify(self):
-        # Verify if the twitter.User authentication is valid
+        """ Verify if the authentication is valid """
         return self.connect.VerifyCredentials()
 
     def tweet(self, msg: str, delay: Union[str, int] = None):
