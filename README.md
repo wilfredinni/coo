@@ -26,13 +26,31 @@ at.tweet("my Twitter Update")
 # Tweet with time delay option using seconds
 at.tweet("my Twitter Update", delay=10)
 
-# Tweet with time delay option using a string:
+# Time delay option using a string:
 # "half_hour", "one_hour", "tomorrow" and
-# "next_week" for now
+# "next_week" for now.
 at.tweet("my Twitter Update", delay="half_hour")
+
+# WORK WITH A LIST OF TWEETS
+my_posts = ["this is my first post", "this is my sencond one", "and the last one"]
+
+# Post them all at once:
+at.tweets(my_posts)
+
+# With delay in seconds or strings:
+# "half_hour", "one_hour", "tomorrow" and
+# "next_week" for now.
+at.tweets(my_posts, delay=4)
+at.tweets(my_posts, delay="tomorrow")
+
+# With an interval between updates:
+at.tweets(my_posts, delay="next_week", interval=3600)
+
+# With an interval using strings:
+# "once_a_day", "twice_perday", "three_times_day"
+at.tweets(my_posts, interval="twice_perday")
 ```
 
 ## TODO
 
-- Multiple Twitter Updates with delay and interval options (list)
-- Multiple Twitter Updates with delay and single interval option for each one (dict)
+- Multiple Twitter Updates with delay and interval options for each one (dict)
