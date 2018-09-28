@@ -38,6 +38,7 @@ def get_time(time_delay, dictionary: Dict) -> int:
 
 def zzz(sleep_time, dictionary: Dict):
     """The actual sleep."""
+
     try:
         time.sleep(sleep_time)
     except TypeError:

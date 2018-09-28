@@ -3,7 +3,7 @@ from twitter.error import TwitterError
 
 from auto_tweet import AutoTweet
 from auto_tweet.utils import get_time, DELAY_DICT, INTERVAL_DICT
-from auto_tweet.exceptions import NoneError
+from auto_tweet.exceptions import NoneError, TweetTypeError
 
 at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
@@ -100,3 +100,24 @@ def test_tweets_TwitterError():
     # Test that TwitterError is raised for wrong credentials
     with pytest.raises(TwitterError):
         atc.tweets(test_updates)
+
+
+def test_tweets_interval_NoneError():
+    # Tests that a NoneError is raised when the interval arg
+    # is a str that is not in the INTERVAL_DICT.
+    with pytest.raises(NoneError):
+        at.tweets(test_updates, interval="wrong_interval_time")
+
+
+def test_tweets_msgs_TweetTypeError():
+    # Tests that a TweetTypeError error is raised when
+    # 'msgs' arg is not a list or dict.
+    with pytest.raises(TweetTypeError):
+        at.tweets("mock")
+
+
+def test_tweet_msg_TweetTypeError():
+    # Tests that a TweetTypeError error is raised when
+    # 'msg' arg is not a str.
+    with pytest.raises(TweetTypeError):
+        at.tweet(test_updates)

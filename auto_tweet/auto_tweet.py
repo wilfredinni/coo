@@ -3,6 +3,7 @@ from typing import Union, List, Dict
 import twitter
 
 from .utils import zzz, DELAY_DICT, INTERVAL_DICT
+from .exceptions import TweetTypeError
 
 
 class AutoTweet:
@@ -16,6 +17,7 @@ class AutoTweet:
         token_secret: str,
         debug: bool = False,
     ) -> None:
+
         self.consumer = consumer
         self.consumer_secret = consumer_secret
         self.token = token
@@ -36,12 +38,15 @@ class AutoTweet:
     @property
     def verify(self):
         """ Verify if the authentication is valid """
+
         return self.connect.VerifyCredentials()
 
     def tweet(self, msg: str, delay: Union[str, int] = None):
         """Post a single tweet with or without a time delay."""
 
-        # If there is a 'TypeError' raises NoneError.
+        if not isinstance(msg, str):
+            raise TweetTypeError(TweetTypeError.tweetInfoMsg)
+
         if delay and self.delay_time:
             zzz(delay, DELAY_DICT)
 
@@ -49,8 +54,9 @@ class AutoTweet:
             self.delay_time = False
 
         if self.debug:
-            print(f"msg: {msg} - delay: {delay}")
-            return f"msg: {msg} - delay: {delay}"
+            debug_msg = f"msg: {msg} - delay: {delay}"
+            print(debug_msg)
+            return debug_msg
 
         return self.connect.PostUpdate(msg)
 
@@ -61,7 +67,9 @@ class AutoTweet:
         interval: Union[str, int] = None,
     ):
         """Post multiple tweets with delay and interval options."""
+
         for msg in msgs:
+
             if interval:
                 self.interval(interval)
 
@@ -71,7 +79,11 @@ class AutoTweet:
             elif isinstance(msgs, dict):
                 pass
 
+            else:
+                raise TweetTypeError(TweetTypeError.tweetsInfoMsg)
+
     def interval(self, interval):
+
         # Avoid the first iteration:
         if self.interval_time:
             zzz(interval, INTERVAL_DICT)
