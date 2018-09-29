@@ -16,5 +16,8 @@ class NoneError(TypeError):
 
 
 class TweetTypeError(TypeError):
+    """Raised when the argument provided to 'msg' or 'msgs'
+    is not valid. """
+
     tweetInfoMsg = "'msg' must be a string type."
     tweetsInfoMsg = "'msgs' must be a list or a dict."

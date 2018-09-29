@@ -19,7 +19,7 @@ INTERVAL_DICT: Dict[str, int] = {
 }
 
 
-def get_time(time_delay, dictionary: Dict) -> int:
+def get_time(time_delay: str, dictionary: dict) -> int:
     """Get the time delay for a Twitter Update."""
 
     # Get the 'int' value from the 'str' provided and return it.
