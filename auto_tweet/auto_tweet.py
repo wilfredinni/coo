@@ -27,8 +27,8 @@ class AutoTweet:
         self.debug = debug
 
         # interval and delay switches
-        self.delay_time: bool = True
-        self.interval_time: bool = False
+        self.delay_time = True
+        self.interval_time = False
 
         # Creates the connection through the Twitter API
         self.connect = twitter.Api(
@@ -41,7 +41,7 @@ class AutoTweet:
 
         return self.connect.VerifyCredentials()
 
-    def tweet(self, msg: str, delay: Union[str, int] = None):
+    def tweet(self, msg: str, delay: Union[str, int, None] = None) -> str:
         """Post a single tweet with or without a time delay."""
 
         if not isinstance(msg, str):
@@ -62,10 +62,10 @@ class AutoTweet:
 
     def tweets(
         self,
-        msgs: Union[List, Dict],
-        delay: Union[str, int] = None,
-        interval: Union[str, int] = None,
-    ) -> None:
+        msgs: Union[List[str], Dict],
+        delay: Union[str, int, None] = None,
+        interval: Union[str, int, None] = None,
+    ):
         """Post multiple tweets with delay and interval options."""
 
         for msg in msgs:
@@ -82,7 +82,7 @@ class AutoTweet:
             else:
                 raise TweetTypeError(TweetTypeError.tweetsInfoMsg)
 
-    def interval(self, interval: Union[int, str]) -> None:
+    def interval(self, interval: Union[int, str]):
 
         # Avoid the first iteration:
         if self.interval_time:

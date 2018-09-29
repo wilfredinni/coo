@@ -19,7 +19,7 @@ INTERVAL_DICT: Dict[str, int] = {
 }
 
 
-def get_time(time_delay: str, dictionary: dict) -> int:
+def get_time(time_delay: str, dictionary: Dict[str, int]) -> int:
     """Get the time delay for a Twitter Update."""
 
     # Get the 'int' value from the 'str' provided and return it.
@@ -36,7 +36,7 @@ def get_time(time_delay: str, dictionary: dict) -> int:
     raise NoneError(err_msg)
 
 
-def zzz(sleep_time, dictionary: Dict):
+def zzz(sleep_time, dictionary: Dict[str, int]):
     """The actual sleep."""
 
     try:

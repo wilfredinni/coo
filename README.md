@@ -50,3 +50,4 @@ at.tweets(my_posts, interval="twice_perday")
 ## TODO
 
 - Multiple Twitter Updates with delay and interval options for each one (dict)
+- Templates
