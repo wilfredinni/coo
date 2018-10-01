@@ -1,4 +1,4 @@
-from typing import Union, List, Dict
+from typing import Union
 
 import twitter
 
@@ -41,11 +41,13 @@ class AutoTweet:
 
         return self.connect.VerifyCredentials()
 
-    def tweet(self, msg: str, delay: Union[str, int, None] = None) -> str:
-        """Post a single tweet with or without a time delay."""
-
-        if not isinstance(msg, str):
-            raise TweetTypeError(TweetTypeError.tweetInfoMsg)
+    def tweet(
+        self,
+        msg: Union[str, list],
+        delay: Union[int, str] = None,
+        interval: Union[str, int, None] = None,
+    ):
+        """Post a Twitter Update from a sting or a list."""
 
         if delay and self.delay_time:
             zzz(delay, DELAY_DICT)
@@ -53,34 +55,30 @@ class AutoTweet:
             # Set to False to avoid repetition
             self.delay_time = False
 
-        if self.debug:
-            debug_msg = f"msg: {msg} - delay: {delay}"
-            print(debug_msg)
-            return debug_msg
+        if isinstance(msg, str):
+            # This if for a single tweet, just post or print.
+            if self.debug:
+                debug_msg = f"msg: {msg} - delay: {delay}"
+                print(debug_msg)
+                return debug_msg
 
-        return self.connect.PostUpdate(msg)
+            return self.connect.PostUpdate(msg)
 
-    def tweets(
-        self,
-        msgs: Union[List[str], Dict],
-        delay: Union[str, int, None] = None,
-        interval: Union[str, int, None] = None,
-    ):
-        """Post multiple tweets with delay and interval options."""
+        elif isinstance(msg, list):
+            # For one or multiple tweets Updates
+            for update in msg:
 
-        for msg in msgs:
+                if interval:
+                    self.interval(interval)
 
-            if interval:
-                self.interval(interval)
+                if self.debug:
+                    debug_msg = f"msg: {update} - delay: {delay}"
+                    print(debug_msg)
+                else:
+                    self.connect.PostUpdate(update)
 
-            if isinstance(msgs, list):
-                self.tweet(msg, delay)
-
-            elif isinstance(msgs, dict):
-                pass
-
-            else:
-                raise TweetTypeError(TweetTypeError.tweetsInfoMsg)
+        else:
+            raise TweetTypeError(TweetTypeError.tweetInfoMsg)
 
     def interval(self, interval: Union[int, str]):
 

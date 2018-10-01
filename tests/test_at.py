@@ -68,8 +68,9 @@ def test_get_time_NoneError_INTERVAL_DICT():
     "msg, delay",
     [("My Twitter Msg", None), ("My Twitter Msg", 1), ("My Twitter Msg", "test")],
 )
-def test_tweet(msg, delay):
+def test_single_tweet_debug(msg, delay):
     # Assert correct tweet updates.
+    # ! change this test
     assert isinstance(at.tweet(msg, delay), str)
 
 
@@ -93,31 +94,24 @@ def test_tweet_TwitterError():
 )
 def test_tweets(msgs, delay, interval):
     # This test pass as long as no error is raised
-    at.tweets(msgs, delay, interval)
+    at.tweet(msgs, delay, interval)
 
 
 def test_tweets_TwitterError():
     # Test that TwitterError is raised for wrong credentials
     with pytest.raises(TwitterError):
-        atc.tweets(test_updates)
+        atc.tweet(test_updates)
 
 
 def test_tweets_interval_NoneError():
     # Tests that a NoneError is raised when the interval arg
     # is a str that is not in the INTERVAL_DICT.
     with pytest.raises(NoneError):
-        at.tweets(test_updates, interval="wrong_interval_time")
+        at.tweet(test_updates, interval="wrong_interval_time")
 
 
 def test_tweets_msgs_TweetTypeError():
     # Tests that a TweetTypeError error is raised when
-    # 'msgs' arg is not a list or dict.
+    # 'msg' arg is not a list or str.
     with pytest.raises(TweetTypeError):
-        at.tweets("mock")
-
-
-def test_tweet_msg_TweetTypeError():
-    # Tests that a TweetTypeError error is raised when
-    # 'msg' arg is not a str.
-    with pytest.raises(TweetTypeError):
-        at.tweet(test_updates)
+        at.tweet({"test": "test"})
