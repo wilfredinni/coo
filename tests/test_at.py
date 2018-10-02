@@ -70,7 +70,7 @@ def test_get_time_NoneError_INTERVAL_DICT():
 )
 def test_single_tweet_debug(msg, delay):
     # Assert correct tweet updates.
-    # ! change this test
+    # ! failing: change this test.
     assert isinstance(at.tweet(msg, delay), str)
 
 
