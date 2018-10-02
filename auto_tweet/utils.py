@@ -1,4 +1,5 @@
 from typing import Dict
+from string import Template
 import time
 
 from .exceptions import NoneError
@@ -44,3 +45,12 @@ def zzz(sleep_time, dictionary: Dict[str, int]):
     except TypeError:
         sleep_time = get_time(sleep_time, dictionary)
         time.sleep(sleep_time)
+
+
+def templates(template: str, msg: str) -> str:
+    """Process the Template if provided."""
+    # TODO: change the name of this functions!!!!!!
+
+    template = Template(template).substitute(message=msg)
+
+    return template

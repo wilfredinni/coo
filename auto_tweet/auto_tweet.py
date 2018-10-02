@@ -37,7 +37,7 @@ class AutoTweet:
 
     @property
     def verify(self):
-        """ Verify if the authentication is valid """
+        """Verify if the authentication is valid."""
 
         return self.connect.VerifyCredentials()
 
@@ -46,6 +46,7 @@ class AutoTweet:
         msg: Union[str, list],
         delay: Union[int, str] = None,
         interval: Union[str, int, None] = None,
+        template: str = None,
     ):
         """Post a Twitter Update from a sting or a list."""
 
@@ -57,6 +58,10 @@ class AutoTweet:
 
         if isinstance(msg, str):
             # This is for a single tweet, just post or print.
+
+            # if template:
+            #     msg = templates(template=template, msg=msg)
+
             self.str_update(msg)
 
         elif isinstance(msg, list):
@@ -67,10 +72,10 @@ class AutoTweet:
             raise TweetTypeError(TweetTypeError.tweetInfoMsg)
 
     def str_update(self, msg: str):
-        """Process one Twitter Update"""
+        """Process one Twitter Update."""
 
         if self.debug:
-            print(f"msg: {msg}")
+            print(msg)
         else:
             self.connect.PostUpdate(msg)
 
