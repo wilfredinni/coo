@@ -58,10 +58,6 @@ class AutoTweet:
 
         if isinstance(msg, str):
             # This is for a single tweet, just post or print.
-
-            # if template:
-            #     msg = templates(template=template, msg=msg)
-
             self.str_update(msg, template)
 
         elif isinstance(msg, list):
@@ -71,7 +67,7 @@ class AutoTweet:
         else:
             raise TweetTypeError(TweetTypeError.tweetInfoMsg)
 
-    def str_update(self, msg: str, template=None):
+    def str_update(self, msg: str, template: str = None):
         """Process one Twitter Update."""
 
         if template:
@@ -82,7 +78,9 @@ class AutoTweet:
         else:
             self.connect.PostUpdate(msg)
 
-    def list_update(self, msg: list, interval: Union[int, str] = None, template=None):
+    def list_update(
+        self, msg: list, interval: Union[int, str] = None, template: str = None
+    ):
         """Process and prepare a list of tweet Updates."""
 
         for update in msg:

@@ -50,6 +50,4 @@ def zzz(sleep_time, dictionary: Dict[str, int]):
 def tweet_template(msg: str, template: str) -> str:
     """Process the Template if provided."""
 
-    template = Template(template).substitute(message=msg)
-
-    return template
+    return Template(template).substitute(message=msg)
