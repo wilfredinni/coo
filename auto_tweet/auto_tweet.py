@@ -2,7 +2,7 @@ from typing import Union
 
 import twitter
 
-from .utils import zzz, DELAY_DICT, INTERVAL_DICT
+from .utils import zzz, tweet_template, DELAY_DICT, INTERVAL_DICT
 from .exceptions import TweetTypeError
 
 
@@ -62,24 +62,27 @@ class AutoTweet:
             # if template:
             #     msg = templates(template=template, msg=msg)
 
-            self.str_update(msg)
+            self.str_update(msg, template)
 
         elif isinstance(msg, list):
             # For one or multiple tweet Updates
-            self.list_update(msg, interval)
+            self.list_update(msg, interval, template)
 
         else:
             raise TweetTypeError(TweetTypeError.tweetInfoMsg)
 
-    def str_update(self, msg: str):
+    def str_update(self, msg: str, template=None):
         """Process one Twitter Update."""
+
+        if template:
+            msg = tweet_template(msg=msg, template=template)
 
         if self.debug:
             print(msg)
         else:
             self.connect.PostUpdate(msg)
 
-    def list_update(self, msg: list, interval: Union[int, str] = None):
+    def list_update(self, msg: list, interval: Union[int, str] = None, template=None):
         """Process and prepare a list of tweet Updates."""
 
         for update in msg:
@@ -87,7 +90,7 @@ class AutoTweet:
             if interval:
                 self.interval(interval)
 
-            self.str_update(update)
+            self.str_update(update, template)
 
     def delay(self, delay: Union[str, int, None]):
         """Delay the Post of one or multiple tweets."""

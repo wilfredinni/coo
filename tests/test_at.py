@@ -69,8 +69,8 @@ def test_get_time_NoneError_INTERVAL_DICT():
     [("My Twitter Msg", None), ("My Twitter Msg", 1), ("My Twitter Msg", "test")],
 )
 def test_single_tweet_debug(msg, delay):
-    # Assert correct tweet updates.
     # ! failing: change this test.
+    # Assert correct tweet updates.
     assert isinstance(at.tweet(msg, delay), str)
 
 
