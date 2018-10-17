@@ -2,12 +2,16 @@ import pytest
 from twitter.error import TwitterError
 
 from auto_tweet import AutoTweet
-from auto_tweet.utils import get_time, DELAY_DICT, INTERVAL_DICT
+from auto_tweet.utils import get_time, tweet_template, DELAY_DICT, INTERVAL_DICT
 from auto_tweet.exceptions import NoneError, TweetTypeError
 
 at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
-test_updates = ["first", "seconde", "third"]
+sigle_list_update = ["update"]
+test_updates = ["first", "second", "third"]
+test_template = """$message
+
+#test #python #AutoTweet"""
 
 
 def test_tweet_delay_NoneError():
@@ -64,16 +68,6 @@ def test_get_time_NoneError_INTERVAL_DICT():
         get_time("wrong_delay_time", INTERVAL_DICT)
 
 
-# @pytest.mark.parametrize(
-#     "msg, delay",
-#     [("My Twitter Msg", None), ("My Twitter Msg", 1), ("My Twitter Msg", "test")],
-# )
-# def test_single_tweet_debug(msg, delay):
-    # ! failing: change this test.
-    # Assert correct tweet updates.
-#     assert isinstance(at.tweet(msg, delay), str)
-
-
 def test_tweet_TwitterError():
     # Test that TwitterError is raised for wrong credentials
     with pytest.raises(TwitterError):
@@ -115,3 +109,15 @@ def test_tweets_msgs_TweetTypeError():
     # 'msg' arg is not a list or str.
     with pytest.raises(TweetTypeError):
         at.tweet({"test": "test"})
+
+
+def test_utils_tweet_template():
+    # Directly test the template module from utils.py.
+    template = tweet_template(msg="update", template=test_template)
+    assert isinstance(template, str)
+
+
+@pytest.mark.parametrize("msg", [("update"), (sigle_list_update), (test_updates)])
+def test_at_tweet_template(msg):
+    # This test pass as long as no error is raised
+    at.tweet(msg, template=test_template)
