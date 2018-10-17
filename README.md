@@ -21,7 +21,7 @@ at.verify
 
 # WORK WITH A SINGLE TWEET
 # Just a Twitter Update
-at.tweet("my Twitter Update")
+at.tweet("my Twitter Update") # or at.tweet(["my Twitter Update"])
 
 # Tweet with a time delay option using seconds or a string:
 # "half_hour", "one_hour", "tomorrow" and "next_week" for now.
@@ -34,20 +34,38 @@ at.tweet("my Twitter Update", delay="half_hour")
 my_posts = ["this is my first post", "this is my sencond one", "and the last one"]
 
 # Post them all at once:
-at.tweets(my_posts)
+at.tweet(my_posts)
 
 # With delay in seconds or strings:
 # "half_hour", "one_hour", "tomorrow" and "next_week" for now.
-at.tweets(my_posts, delay=4)
-at.tweets(my_posts, delay="tomorrow")
+at.tweet(my_posts, delay=4)
+at.tweet(my_posts, delay="tomorrow")
 
 # With an interval between updates in seconds or string:
 # "once_a_day", "twice_perday", "three_times_day"
-at.tweets(my_posts, delay="next_week", interval=3600)
-at.tweets(my_posts, interval="twice_perday")
+at.tweet(my_posts, delay="next_week", interval=3600)
+at.tweet(my_posts, interval="twice_perday")
+
+# TEMPLATES
+# $message will be replaced with your messages:
+my_template = """My Message Header
+
+$message
+
+#AutoTweet #python"""
+
+# One tweet:
+at.tweet("my Twitter Update", template=my_template)
+at.tweet("my Twitter Update", delay=10, template=my_template)
+at.tweet("my Twitter Update", delay="half_hour", template=my_template)
+
+# Multiple tweets:
+at.tweet(my_posts, delay=4, template=my_template)
+at.tweet(my_posts, delay="tomorrow", template=my_template)
+at.tweet(my_posts, interval="twice_perday", template=my_template)
+at.tweet(my_posts, delay="next_week", interval=3600, template=my_template)
 ```
 
 ## TODO
 
 - Multiple Twitter Updates with delay and interval options for each one (dict)
-- Templates
