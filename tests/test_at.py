@@ -3,7 +3,7 @@ from twitter.error import TwitterError
 
 from auto_tweet import AutoTweet
 from auto_tweet.utils import get_time, tweet_template, DELAY_DICT, INTERVAL_DICT
-from auto_tweet.exceptions import NoneError, TweetTypeError
+from auto_tweet.exceptions import NoneError, TweetTypeError, TemplateError
 
 at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
@@ -91,6 +91,23 @@ def test_tweets(msgs, delay, interval):
     at.tweet(msgs, delay, interval)
 
 
+@pytest.mark.parametrize(
+    "msgs, delay, interval",
+    [
+        (test_updates, None, None),
+        (test_updates, None, 0.1),
+        (test_updates, 0.1, None),
+        (test_updates, 0.1, 0.1),
+        (test_updates, "test", "test"),
+        (test_updates, 0.1, "test"),
+        (test_updates, "test", 0.1),
+    ],
+)
+def test_tweets_and_templates(msgs, delay, interval):
+    # This test pass as long as no error is raised
+    at.tweet(msgs, delay, interval, template=test_template)
+
+
 def test_tweets_TwitterError():
     # Test that TwitterError is raised for wrong credentials
     with pytest.raises(TwitterError):
@@ -119,5 +136,15 @@ def test_utils_tweet_template():
 
 @pytest.mark.parametrize("msg", [("update"), (sigle_list_update), (test_updates)])
 def test_at_tweet_template(msg):
-    # This test pass as long as no error is raised
+    # This test pass as long as no error is raised.
     at.tweet(msg, template=test_template)
+
+
+@pytest.mark.parametrize(
+    "msg, template", [('msg', tuple), (sigle_list_update, list), (test_updates, dict)]
+)
+def test_template_TemplateError(msg, template):
+    # Tests that a TemplateError error is raised when
+    # 'template' arg is not a str.
+    with pytest.raises(TemplateError):
+        at.tweet(msg, template=template)
