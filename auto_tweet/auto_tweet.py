@@ -81,10 +81,9 @@ class AutoTweet:
     def list_update(
         self, msg: list, interval: Union[int, str] = None, template: str = None
     ):
-        """Process and prepare a list of tweet Updates."""
+        """Process and prepare a list of Twitter Updates."""
 
         for update in msg:
-
             if interval:
                 self.interval(interval)
 
@@ -100,13 +99,13 @@ class AutoTweet:
             self.delay_time = False
 
     def interval(self, interval: Union[int, str]):
-        """Add an interval between Tweeter Updates."""
+        """Add an interval between Twitter Updates."""
 
-        # Avoid the first iteration:
+        # Avoid the first iteration
         if self.interval_time:
             zzz(interval, INTERVAL_DICT)
 
-        # Enabled for the second iteration:
+        # Enabled for the second iteration
         self.interval_time = True
 
     def __str__(self) -> str:

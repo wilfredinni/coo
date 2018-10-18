@@ -2,7 +2,7 @@ from typing import Dict
 from string import Template
 import time
 
-from .exceptions import NoneError
+from .exceptions import NoneError, TemplateError
 
 DELAY_DICT: Dict[str, int] = {
     "test": 1,
@@ -50,4 +50,7 @@ def zzz(sleep_time, dictionary: Dict[str, int]):
 def tweet_template(msg: str, template: str) -> str:
     """Process the Template if provided."""
 
-    return Template(template).substitute(message=msg)
+    try:
+        return Template(template).substitute(message=msg)
+    except TypeError:
+        raise TemplateError(TemplateError.templateInfoMsg)

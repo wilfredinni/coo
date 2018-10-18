@@ -22,3 +22,9 @@ class TweetTypeError(TypeError):
     """
 
     tweetInfoMsg = "'msg' must be a list or a string."
+
+
+class TemplateError(TypeError):
+    """ Raised when the wrong data type is provided in a template. """
+
+    templateInfoMsg = "template must be a String Data Type"
