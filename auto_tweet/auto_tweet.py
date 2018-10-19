@@ -75,8 +75,10 @@ class AutoTweet:
 
         if self.debug:
             print(msg)
-        else:
-            self.connect.PostUpdate(msg)
+
+            return
+
+        self.connect.PostUpdate(msg)
 
     def list_update(
         self, msg: list, interval: Union[int, str] = None, template: str = None
