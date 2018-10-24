@@ -21,6 +21,7 @@ class TweetTypeError(TypeError):
     """
 
     tweetInfoMsg = "'msg' must be a list."
+    wrongListMsg = "The list must contain strings or tuples."
 
 
 class TemplateError(TypeError):

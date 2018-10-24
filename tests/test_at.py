@@ -5,7 +5,7 @@ from auto_tweet import AutoTweet
 from auto_tweet.utils import get_time, tweet_template, DELAY_DICT, INTERVAL_DICT
 from auto_tweet.exceptions import NoneError, TweetTypeError, TemplateError
 
-at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
+at = AutoTweet("mock", "mock", "mock", "mock", preview=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
 sigle_list_update = ["update"]
 test_updates = ["first", "second", "third"]
