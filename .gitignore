@@ -671,3 +671,5 @@ ASALocalRun/
 
 # End of https://www.gitignore.io/api/vim,osx,linux,macos,python,windows,pycharm,sublimetext,visualstudio,visualstudiocode
 import.py
+notebook/*.ipynb
+async.py

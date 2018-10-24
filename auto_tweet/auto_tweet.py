@@ -1,8 +1,9 @@
+import asyncio
 from typing import Union
 
 import twitter
 
-from .utils import zzz, tweet_template, DELAY_DICT, INTERVAL_DICT
+from .utils import zzz, tweet_template, get_time, DELAY_DICT, INTERVAL_DICT
 from .exceptions import TweetTypeError
 
 
@@ -29,6 +30,8 @@ class AutoTweet:
         # interval and delay switches
         self.delay_time = True
         self.interval_time = False
+
+        self.loop = asyncio.get_event_loop()
 
         # Creates the connection through the Twitter API
         self.connect = twitter.Api(
@@ -62,7 +65,11 @@ class AutoTweet:
 
         elif isinstance(msg, list):
             # For one or multiple tweet Updates
-            self.list_update(msg, interval, template)
+            if isinstance(msg[0], tuple):
+                self.loop.run_until_complete(self.async_tasks(msg))
+                self.loop.close()
+            else:
+                self.list_update(msg, interval, template)
 
         else:
             raise TweetTypeError(TweetTypeError.tweetInfoMsg)
@@ -90,6 +97,26 @@ class AutoTweet:
                 self.interval(interval)
 
             self.str_update(update, template)
+
+    async def async_tasks(self, custom_msgs):
+        """Perare the tasks for the custom tweets."""
+
+        await asyncio.wait(
+            [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
+        )
+
+    async def custom_updates(self, msg):
+        """
+        Process custom updates: templates and updates time for every twitter update.
+        """
+
+        try:
+            await asyncio.sleep(msg[0])
+        except TypeError:
+            t = get_time(msg[0], DELAY_DICT)
+            await asyncio.sleep(t)
+
+        self.str_update(msg=msg[2], template=msg[1])
 
     def delay(self, delay: Union[str, int, None]):
         """Delay the Post of one or multiple tweets."""

@@ -5,11 +5,12 @@ import time
 from .exceptions import NoneError, TemplateError
 
 DELAY_DICT: Dict[str, int] = {
+    "now": 0,
     "test": 1,
     "half_hour": 2,  # 1800
     "one_hour": 4,  # 3600
     "tomorrow": 6,  # 86400
-    "next_week": 8,  # 604800
+    "next_week": 10,  # 604800
 }
 
 INTERVAL_DICT: Dict[str, int] = {

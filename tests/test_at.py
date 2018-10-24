@@ -33,7 +33,7 @@ def test_auto_tweet_verify():
         ("half_hour", 2),  # 1800
         ("one_hour", 4),  # 3600
         ("tomorrow", 6),  # 86400
-        ("next_week", 8),  # 604800
+        ("next_week", 10),  # 604800
     ],
 )
 def test_get_time_DELAY_DICT(t_str, t_int):
@@ -125,7 +125,7 @@ def test_tweets_msgs_TweetTypeError():
     # Tests that a TweetTypeError error is raised when
     # 'msg' arg is not a list or str.
     with pytest.raises(TweetTypeError):
-        at.tweet({"test": "test"})
+        at.tweet(dict)
 
 
 def test_utils_tweet_template():
