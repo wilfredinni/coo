@@ -22,7 +22,7 @@ INTERVAL_DICT: Dict[str, int] = {
 
 
 def get_time(time_delay: str, dictionary: Dict[str, int]) -> int:
-    """Get the time delay for a Twitter Update."""
+    """Get the delay or interval time for a Twitter Update."""
     sleep_time = dictionary.get(time_delay)
 
     if isinstance(sleep_time, int):
@@ -38,7 +38,6 @@ def get_time(time_delay: str, dictionary: Dict[str, int]) -> int:
 
 
 def zzz(sleep_time, dictionary: Dict[str, int]):
-    """The actual sleep."""
     try:
         time.sleep(sleep_time)
     except TypeError:
@@ -47,7 +46,6 @@ def zzz(sleep_time, dictionary: Dict[str, int]):
 
 
 def tweet_template(msg: str, template: str) -> str:
-    """Process the Template if provided."""
     try:
         return Template(template).substitute(message=msg)
     except TypeError:
