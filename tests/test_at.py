@@ -9,9 +9,7 @@ at = AutoTweet("mock", "mock", "mock", "mock", debug=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
 sigle_list_update = ["update"]
 test_updates = ["first", "second", "third"]
-test_template = """$message
-
-#test #python #AutoTweet"""
+test_template = """$message"""
 
 
 def test_tweet_delay_NoneError():
@@ -66,12 +64,6 @@ def test_get_time_NoneError_INTERVAL_DICT():
     # Directly check that the 'NoneError' is raised.
     with pytest.raises(NoneError):
         get_time("wrong_delay_time", INTERVAL_DICT)
-
-
-def test_tweet_TwitterError():
-    # Test that TwitterError is raised for wrong credentials
-    with pytest.raises(TwitterError):
-        atc.tweet("My Twitter Update")
 
 
 @pytest.mark.parametrize(
@@ -134,14 +126,14 @@ def test_utils_tweet_template():
     assert isinstance(template, str)
 
 
-@pytest.mark.parametrize("msg", [("update"), (sigle_list_update), (test_updates)])
+@pytest.mark.parametrize("msg", [(sigle_list_update), (test_updates)])
 def test_at_tweet_template(msg):
     # This test pass as long as no error is raised.
     at.tweet(msg, template=test_template)
 
 
 @pytest.mark.parametrize(
-    "msg, template", [('msg', tuple), (sigle_list_update, list), (test_updates, dict)]
+    "msg, template", [(sigle_list_update, list), (test_updates, dict)]
 )
 def test_template_TemplateError(msg, template):
     # Tests that a TemplateError error is raised when

@@ -31,6 +31,7 @@ class AutoTweet:
         self.delay_time = True
         self.interval_time = False
 
+        # The async loop for the custom updates
         self.loop = asyncio.get_event_loop()
 
         # Creates the connection through the Twitter API
@@ -46,7 +47,7 @@ class AutoTweet:
 
     def tweet(
         self,
-        msg: Union[str, list],
+        msg: list,
         delay: Union[int, str] = None,
         interval: Union[str, int, None] = None,
         template: str = None,
@@ -59,11 +60,7 @@ class AutoTweet:
         # Delay the post if needed.
         self.delay(delay)
 
-        if isinstance(msg, str):
-            # This is for a single tweet, just post or print.
-            self.str_update(msg, template)
-
-        elif isinstance(msg, list):
+        if isinstance(msg, list):
             # For one or multiple tweet Updates
             if isinstance(msg[0], tuple):
                 self.loop.run_until_complete(self.async_tasks(msg))
@@ -82,7 +79,6 @@ class AutoTweet:
 
         if self.debug:
             print(msg)
-
             return
 
         self.connect.PostUpdate(msg)
