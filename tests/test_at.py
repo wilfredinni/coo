@@ -10,6 +10,16 @@ atc = AutoTweet("mock", "mock", "mock", "mock")
 sigle_list_update = ["update"]
 test_updates = ["first", "second", "third"]
 test_template = """$message"""
+test_template2 = """$message"""
+test_custom_posts = [
+    (5, None, "4rt print."),
+    ("now", None, "1st print."),
+    (8, None, "5ve print."),
+    ("half_hour", None, "2nd print."),
+    (0, None, "1st last print"),
+    (3, test_template2, "3rd print."),
+    ("next_week", test_template, "Last print."),
+]
 
 
 def test_tweet_delay_NoneError():
@@ -140,3 +150,8 @@ def test_template_TemplateError(msg, template):
     # 'template' arg is not a str.
     with pytest.raises(TemplateError):
         at.tweet(msg, template=template)
+
+
+def test_custom_tweets():
+    # This test pass as long as no error is raised.
+    at.tweet(test_custom_posts)

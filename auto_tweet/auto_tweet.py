@@ -71,6 +71,17 @@ class AutoTweet:
         else:
             raise TweetTypeError(TweetTypeError.tweetInfoMsg)
 
+    def list_update(
+        self, msg: list, interval: Union[int, str] = None, template: str = None
+    ):
+        """Process and prepare a list of Twitter Updates."""
+
+        for update in msg:
+            if interval:
+                self.interval(interval)
+
+            self.str_update(update, template)
+
     def str_update(self, msg: str, template: str = None):
         """Process one Twitter Update."""
 
@@ -83,19 +94,8 @@ class AutoTweet:
 
         self.connect.PostUpdate(msg)
 
-    def list_update(
-        self, msg: list, interval: Union[int, str] = None, template: str = None
-    ):
-        """Process and prepare a list of Twitter Updates."""
-
-        for update in msg:
-            if interval:
-                self.interval(interval)
-
-            self.str_update(update, template)
-
     async def async_tasks(self, custom_msgs):
-        """Perare the tasks for the custom tweets."""
+        """Perare the asyncio tasks for the custom tweets."""
 
         await asyncio.wait(
             [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
@@ -103,7 +103,7 @@ class AutoTweet:
 
     async def custom_updates(self, msg):
         """
-        Process custom updates: templates and updates time for every twitter update.
+        Process custom updates: templates and updates times for every twitter update.
         """
 
         try:
