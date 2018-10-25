@@ -23,14 +23,14 @@ class AutoTweet:
         self.token = token
         self.token_secret = token_secret
 
-        # True to debug purposes
+        # True to preview the update in the console.
         self.preview = preview
 
         # interval and delay switches
         self.delay_time = True
         self.interval_time = False
 
-        # The async loop for the custom updates
+        # The async loop for the custom updates.
         self.loop = asyncio.get_event_loop()
 
         # Creates the connection through the Twitter API
@@ -123,7 +123,7 @@ class AutoTweet:
         self.interval_time = True
 
     def __str__(self) -> str:
-        return f"Twitter User: {self.verify.name}"
+        return "Twitter User: {}".format(self.verify.name)
 
     def __repr__(self) -> str:
         return "AutoTweet('{}', '{}', '{}', '{}')".format(
