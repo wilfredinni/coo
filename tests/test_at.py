@@ -154,4 +154,4 @@ def test_template_TemplateError(msg, template):
 
 def test_custom_tweets():
     # This test pass as long as no error is raised.
-    at.tweet(test_custom_posts)
+    at.schedule(test_custom_posts)

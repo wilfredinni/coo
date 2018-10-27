@@ -1,10 +1,10 @@
-import asyncio
 from typing import Union
+import asyncio
 
 import twitter
 
-from .utils import zzz, tweet_template, get_time, DELAY_DICT, INTERVAL_DICT
-from .exceptions import TweetTypeError
+from .utils import zzz, tweet_template, get_time, parse_time, DELAY_DICT, INTERVAL_DICT
+from .exceptions import TweetTypeError, ScheduleError
 
 
 class AutoTweet:
@@ -50,7 +50,7 @@ class AutoTweet:
         interval: Union[str, int, None] = None,
         template: str = None,
     ):
-        """Post a Twitter Update from a list of strings or tuples."""
+        """Post a Twitter Update from a list of strings."""
         self.delay(delay)
 
         if not isinstance(msg, list):
@@ -59,12 +59,17 @@ class AutoTweet:
         elif isinstance(msg[0], str):
             self.list_update(msg, interval, template)
 
-        elif isinstance(msg[0], tuple):
-            self.loop.run_until_complete(self.async_tasks(msg))
-            self.loop.close()
-
         else:
             raise TweetTypeError(TweetTypeError.wrongListMsg)
+
+    def schedule(self, tweets: list, time_zone=None):
+
+        # TODO: raise an error if the list has no tuples and the correct lenght.
+        if not isinstance(tweets[0], tuple):
+            raise ScheduleError(ScheduleError.wrongListMsg)
+
+        self.loop.run_until_complete(self.async_tasks(tweets, time_zone))
+        self.loop.close()
 
     def list_update(
         self, msg: list, interval: Union[int, str] = None, template: str = None
@@ -87,18 +92,38 @@ class AutoTweet:
 
         return self.connect.PostUpdate(msg)
 
-    async def async_tasks(self, custom_msgs: list):
+    async def async_tasks(self, custom_msgs: list, time_zone: str):
         """Perare the asyncio tasks for the custom tweets."""
+
+        for msg in set(custom_msgs):
+            if len(msg) > 3 or len(msg) < 3:
+                raise ScheduleError(ScheduleError.tupleLenError)
+
         await asyncio.wait(
-            [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
+            [
+                self.loop.create_task(self.custom_updates(post, time_zone))
+                for post in custom_msgs
+            ]
         )
 
-    async def custom_updates(self, msg: tuple):
+    async def custom_updates(self, msg: tuple, time_zone: str):
         """
         Process custom updates: templates and updates times for every twitter update.
         """
+
+        # TODO: raise an error if seconds is a negative integer.
+
+        if isinstance(msg[0], int):
+            seconds = msg[0]
+
+        elif isinstance(msg[0], str):
+            try:
+                seconds = get_time(msg[0], DELAY_DICT)
+            except TypeError:
+                seconds = parse_time(msg[0], time_zone)
+
         try:
-            await asyncio.sleep(msg[0])
+            await asyncio.sleep(seconds)
         except TypeError:
             t = get_time(msg[0], DELAY_DICT)
             await asyncio.sleep(t)
@@ -119,7 +144,6 @@ class AutoTweet:
         if self.interval_time:
             zzz(interval, INTERVAL_DICT)
 
-        # Enabled for the second iteration
         self.interval_time = True
 
     def __str__(self) -> str:

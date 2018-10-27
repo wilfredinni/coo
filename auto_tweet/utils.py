@@ -1,6 +1,8 @@
-from typing import Dict
 from string import Template
+from typing import Dict
 import time
+
+import pendulum
 
 from .exceptions import NoneError, TemplateError
 
@@ -19,6 +21,20 @@ INTERVAL_DICT: Dict[str, int] = {
     "twice_perday": 4,  # 43200
     "three_times_day": 6,  # 28800
 }
+
+
+def parse_time(date_time: str, time_zone: str = None) -> int:
+    if not time_zone:
+        time_zone = "local"
+
+    now = pendulum.now(time_zone)
+    update = pendulum.parse(date_time, tz=time_zone)
+
+    # If a time zone is not specified, it will be set to local.
+    # When passing only time information the date will default to today.
+    # The time will be set to 00:00:00 if it's not specified.
+
+    return (update - now).seconds
 
 
 def get_time(time_delay: str, dictionary: Dict[str, int]) -> int:
