@@ -3,7 +3,7 @@ import asyncio
 
 import twitter
 
-from .utils import zzz, tweet_template, get_time, parse_time, DELAY_DICT, INTERVAL_DICT
+from .utils import zzz, tweet_template, parse_or_get, DELAY_DICT, INTERVAL_DICT
 from .exceptions import TweetTypeError, ScheduleError
 
 
@@ -18,10 +18,8 @@ class AutoTweet:
         token_secret: str,
         preview: bool = False,
     ) -> None:
-        self.consumer = consumer
-        self.consumer_secret = consumer_secret
-        self.token = token
-        self.token_secret = token_secret
+        # Creates the connection through the Twitter API
+        self.connect = twitter.Api(consumer, consumer_secret, token, token_secret)
 
         # True to preview the update in the console.
         self.preview = preview
@@ -32,11 +30,6 @@ class AutoTweet:
 
         # The async loop for the custom updates.
         self.loop = asyncio.get_event_loop()
-
-        # Creates the connection through the Twitter API
-        self.connect = twitter.Api(
-            self.consumer, self.consumer_secret, self.token, self.token_secret
-        )
 
     @property
     def verify(self):
@@ -63,8 +56,8 @@ class AutoTweet:
             raise TweetTypeError(TweetTypeError.wrongListMsg)
 
     def schedule(self, tweets: list, time_zone=None):
+        """Post a list of Twitter Updates from a list of tuples."""
 
-        # TODO: raise an error if the list has no tuples and the correct lenght.
         if not isinstance(tweets[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
 
@@ -96,7 +89,7 @@ class AutoTweet:
         """Perare the asyncio tasks for the custom tweets."""
 
         for msg in set(custom_msgs):
-            if len(msg) > 3 or len(msg) < 3:
+            if len(msg) != 3:
                 raise ScheduleError(ScheduleError.tupleLenError)
 
         await asyncio.wait(
@@ -110,23 +103,8 @@ class AutoTweet:
         """
         Process custom updates: templates and updates times for every twitter update.
         """
-
-        # TODO: raise an error if seconds is a negative integer.
-
-        if isinstance(msg[0], int):
-            seconds = msg[0]
-
-        elif isinstance(msg[0], str):
-            try:
-                seconds = get_time(msg[0], DELAY_DICT)
-            except TypeError:
-                seconds = parse_time(msg[0], time_zone)
-
-        try:
-            await asyncio.sleep(seconds)
-        except TypeError:
-            t = get_time(msg[0], DELAY_DICT)
-            await asyncio.sleep(t)
+        seconds = parse_or_get(msg[0], time_zone)
+        await asyncio.sleep(seconds)
 
         return self.str_update(msg=msg[2], template=msg[1])
 
@@ -146,10 +124,5 @@ class AutoTweet:
 
         self.interval_time = True
 
-    def __str__(self) -> str:
-        return "Twitter User: {}".format(self.verify.name)
-
-    def __repr__(self) -> str:
-        return "AutoTweet('{}', '{}', '{}', '{}')".format(
-            self.consumer, self.consumer_secret, self.token, self.token_secret
-        )
+    def __str__(self):
+        return f"Twitter User: {self.verify.name}."

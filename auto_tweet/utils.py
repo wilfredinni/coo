@@ -3,8 +3,9 @@ from typing import Dict
 import time
 
 import pendulum
+from pendulum.parsing.exceptions import ParserError
 
-from .exceptions import NoneError, TemplateError
+from .exceptions import NoneError, TemplateError, ScheduleError
 
 DELAY_DICT: Dict[str, int] = {
     "now": 0,
@@ -33,16 +34,22 @@ def parse_time(date_time: str, time_zone: str = None) -> int:
     # If a time zone is not specified, it will be set to local.
     # When passing only time information the date will default to today.
     # The time will be set to 00:00:00 if it's not specified.
+    # A future date is needed.
 
-    return (update - now).seconds
+    secs = update - now
+
+    if secs.seconds < 0:
+        raise ScheduleError(ScheduleError.pastDateError)
+
+    return secs.seconds
 
 
 def get_time(time_delay: str, dictionary: Dict[str, int]) -> int:
     """Get the delay or interval time for a Twitter Update."""
-    sleep_time = dictionary.get(time_delay)
+    secs = dictionary.get(time_delay)
 
-    if isinstance(sleep_time, int):
-        return sleep_time
+    if isinstance(secs, int):
+        return secs
 
     # Get the correct error message.
     err_msg = NoneError.delayInfoMessage
@@ -51,6 +58,19 @@ def get_time(time_delay: str, dictionary: Dict[str, int]) -> int:
         err_msg = NoneError.intervalInfoMessage
 
     raise NoneError(err_msg)
+
+
+def parse_or_get(schedule_time, time_zone):
+    if isinstance(schedule_time, int):
+        return schedule_time
+
+    elif schedule_time in DELAY_DICT:
+        return get_time(schedule_time, DELAY_DICT)
+
+    try:
+        return parse_time(schedule_time, time_zone)
+    except ParserError:
+        raise TypeError("An integer, valid datetime or string is needed.")
 
 
 def zzz(sleep_time, dictionary: Dict[str, int]):

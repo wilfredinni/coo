@@ -34,3 +34,4 @@ class ScheduleError(TypeError):
 
     wrongListMsg = "A list of tuples is required."
     tupleLenError = "Every tuple need a length of 3."
+    pastDateError = "A future date is needed."
