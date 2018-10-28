@@ -55,7 +55,7 @@ class AutoTweet:
         else:
             raise TweetTypeError(TweetTypeError.wrongListMsg)
 
-    def schedule(self, tweets: list, time_zone='local'):
+    def schedule(self, tweets: list, time_zone="local"):
         """Post a list of Twitter Updates from a list of tuples."""
         if not isinstance(tweets[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)

@@ -2,8 +2,20 @@ import pytest
 from twitter.error import TwitterError
 
 from auto_tweet import AutoTweet
-from auto_tweet.utils import get_time, tweet_template, DELAY_DICT, INTERVAL_DICT
-from auto_tweet.exceptions import NoneError, TweetTypeError, TemplateError
+from auto_tweet.utils import (
+    get_time,
+    tweet_template,
+    parse_or_get,
+    parse_time,
+    DELAY_DICT,
+    INTERVAL_DICT,
+)
+from auto_tweet.exceptions import (
+    NoneError,
+    TweetTypeError,
+    TemplateError,
+    ScheduleError,
+)
 
 at = AutoTweet("mock", "mock", "mock", "mock", preview=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
@@ -88,7 +100,7 @@ def test_get_time_NoneError_INTERVAL_DICT():
         (test_updates, "test", 0.1),
     ],
 )
-def test_tweets(msgs, delay, interval):
+def test_tweet(msgs, delay, interval):
     # This test pass as long as no error is raised
     at.tweet(msgs, delay, interval)
 
@@ -105,29 +117,32 @@ def test_tweets(msgs, delay, interval):
         (test_updates, "test", 0.1),
     ],
 )
-def test_tweets_and_templates(msgs, delay, interval):
+def test_tweet_and_templates(msgs, delay, interval):
     # This test pass as long as no error is raised
     at.tweet(msgs, delay, interval, template=test_template)
 
 
-def test_tweets_TwitterError():
+def test_tweet_TwitterError():
     # Test that TwitterError is raised for wrong credentials
     with pytest.raises(TwitterError):
         atc.tweet(test_updates)
 
 
-def test_tweets_interval_NoneError():
+def test_tweet_interval_NoneError():
     # Tests that a NoneError is raised when the interval arg
     # is a str that is not in the INTERVAL_DICT.
     with pytest.raises(NoneError):
         at.tweet(test_updates, interval="wrong_interval_time")
 
 
-def test_tweets_msgs_TweetTypeError():
+@pytest.mark.parametrize(
+    "msg", [({"mock": "mock"}), ([{"mock", "mocks"}]), ([123, 123, 123])]
+)
+def test_tweet_msg_TweetTypeError(msg):
     # Tests that a TweetTypeError error is raised when
     # 'msg' arg is not a list or str.
     with pytest.raises(TweetTypeError):
-        at.tweet(dict)
+        at.tweet(msg)
 
 
 def test_utils_tweet_template():
@@ -155,3 +170,62 @@ def test_template_TemplateError(msg, template):
 def test_custom_tweets():
     # This test pass as long as no error is raised.
     at.schedule(test_custom_posts)
+
+
+@pytest.mark.parametrize(
+    "schedule_time, time_zone",
+    [
+        ("2040-10-28 18:46", "America/Santiago"),
+        ("2040-10-28", "America/Santiago"),
+        ("2040-10-28 18:46", "local"),
+        ("2040-10-28", "local"),
+    ],
+)
+def test_parse_or_get(schedule_time, time_zone):
+    time = parse_or_get(schedule_time, time_zone)
+    assert isinstance(time, int)
+
+
+@pytest.mark.parametrize(
+    "schedule_time, time_zone",
+    [("wrong_delay_time", "local"), ("wrong_delay_time", None)],
+)
+def test_parse_or_get_TypeError(schedule_time, time_zone):
+    with pytest.raises(TypeError):
+        parse_or_get(schedule_time, time_zone)
+
+
+@pytest.mark.parametrize(
+    "schedule_time, time_zone",
+    [
+        ("2040-10-28 18:46", "America/Santiago"),
+        ("2040-10-28", "America/Santiago"),
+        ("2040-10-28 18:46", "local"),
+        ("2040-10-28", "local"),
+    ],
+)
+def test_parse_time(schedule_time, time_zone):
+    secs = parse_time(schedule_time, time_zone)
+    assert isinstance(secs, int)
+
+
+@pytest.mark.parametrize(
+    "schedule_time, time_zone",
+    [
+        ("2015-10-28 18:46", "America/Santiago"),
+        ("2002-10-28", "America/Santiago"),
+        ("1995-10-28 18:46", "local"),
+        ("1984-10-28", "local"),
+    ],
+)
+def test_parse_time_ScheduleError(schedule_time, time_zone):
+    with pytest.raises(ScheduleError):
+        parse_time(schedule_time, time_zone)
+
+
+@pytest.mark.parametrize(
+    "tweets", [(["mock"]), ([{"mock": "mock"}]), ([{"mock"}]), ([123]), (["mock"])]
+)
+def test_schedule_ScheduleError(tweets):
+    with pytest.raises(ScheduleError):
+        at.schedule(tweets)
