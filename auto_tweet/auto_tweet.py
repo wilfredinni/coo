@@ -18,13 +18,13 @@ class AutoTweet:
         token_secret: str,
         preview: bool = False,
     ) -> None:
-        # Creates the connection through the Twitter API
+        # Creates the connection through the Twitter API.
         self.connect = twitter.Api(consumer, consumer_secret, token, token_secret)
 
         # True to preview the update in the console.
         self.preview = preview
 
-        # interval and delay switches
+        # interval and delay switches.
         self.delay_time = True
         self.interval_time = False
 
@@ -55,9 +55,8 @@ class AutoTweet:
         else:
             raise TweetTypeError(TweetTypeError.wrongListMsg)
 
-    def schedule(self, tweets: list, time_zone=None):
+    def schedule(self, tweets: list, time_zone='local'):
         """Post a list of Twitter Updates from a list of tuples."""
-
         if not isinstance(tweets[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
 
