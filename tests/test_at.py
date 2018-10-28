@@ -232,7 +232,12 @@ def test_schedule_ScheduleError(tweets):
 
 
 @pytest.mark.parametrize(
-    "tweets", [(["mock"]), ([("mock", "mock")]), ([("mock", "mock", "mock", "mock")])]
+    "tweets",
+    [
+        (("2040-10-28 18:46")),
+        (("2040-10-28 18:46", "mock")),
+        (("2040-10-28 18:46", "mock", "mock", "mock")),
+    ],
 )
 def test_schedule_tupleLen_ScheduleError(tweets):
     with pytest.raises(ScheduleError):
