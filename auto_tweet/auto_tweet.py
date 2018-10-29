@@ -6,6 +6,13 @@ import twitter
 from .utils import zzz, tweet_template, parse_or_get, DELAY_DICT, INTERVAL_DICT
 from .exceptions import TweetTypeError, ScheduleError
 
+# TODO: write the test to raise a ScheduleError for the wrong len(tuple).
+# TODO: change the print for logging in str_update().
+# TODO: refactor the time_zone='local' in schedule().
+# TODO: rewrite comments and docstrings.
+# TODO: rewrite the README.
+# TODO: use parse_or_get() for delay on tweet()
+
 
 class AutoTweet:
     """The heart of the AutoTweet Library."""

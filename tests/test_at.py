@@ -229,16 +229,3 @@ def test_parse_time_ScheduleError(schedule_time, time_zone):
 def test_schedule_ScheduleError(tweets):
     with pytest.raises(ScheduleError):
         at.schedule(tweets)
-
-
-@pytest.mark.parametrize(
-    "tweets",
-    [
-        (("2040-10-28 18:46")),
-        (("2040-10-28 18:46", "mock")),
-        (("2040-10-28 18:46", "mock", "mock", "mock")),
-    ],
-)
-def test_schedule_tupleLen_ScheduleError(tweets):
-    with pytest.raises(ScheduleError):
-        at.schedule(tweets)
