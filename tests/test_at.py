@@ -10,12 +10,7 @@ from auto_tweet.utils import (
     DELAY_DICT,
     INTERVAL_DICT,
 )
-from auto_tweet.exceptions import (
-    NoneError,
-    TweetTypeError,
-    TemplateError,
-    ScheduleError,
-)
+from auto_tweet.exceptions import TweetTypeError, TemplateError, ScheduleError
 
 at = AutoTweet("mock", "mock", "mock", "mock", preview=True)
 atc = AutoTweet("mock", "mock", "mock", "mock")
@@ -24,20 +19,20 @@ test_updates = ["first", "second", "third"]
 test_template = """$message"""
 test_template2 = """$message"""
 test_custom_posts = [
-    (5, None, "4rt print."),
+    (0, None, "4rt print."),
     ("now", None, "1st print."),
-    (8, None, "5ve print."),
-    ("half_hour", None, "2nd print."),
+    (0, None, "5ve print."),
+    ("now", None, "2nd print."),
     (0, None, "1st last print"),
-    (3, test_template2, "3rd print."),
-    ("next_week", test_template, "Last print."),
+    (0, test_template2, "3rd print."),
+    ("now", test_template, "Last print."),
 ]
 
 
-def test_tweet_delay_NoneError():
-    # Check the that the 'NoneError' is raised when a wrong
+def test_tweet_delay_TypeError():
+    # Check the that the 'TypeError' is raised when a wrong
     # 'delay' argument is provided.
-    with pytest.raises(NoneError):
+    with pytest.raises(TypeError):
         at.tweet("mock_msg", "wrong_delay_time")
 
 
@@ -47,57 +42,28 @@ def test_auto_tweet_verify():
         at.verify
 
 
-@pytest.mark.parametrize(
-    "t_str, t_int",
-    [
-        ("half_hour", 2),  # 1800
-        ("one_hour", 4),  # 3600
-        ("tomorrow", 6),  # 86400
-        ("next_week", 10),  # 604800
-    ],
-)
-def test_get_time_DELAY_DICT(t_str, t_int):
+def test_get_time_DELAY_DICT():
     # Test get_time() to assert the int values
     # of the 'DELAY_STR' dictionary.
-    assert get_time(t_str, DELAY_DICT) == t_int
+    assert get_time("now", DELAY_DICT) == 0
 
 
-@pytest.mark.parametrize(
-    "t_str, t_int",
-    [
-        ("once_a_day", 2),  # 86400
-        ("twice_perday", 4),  # 43200
-        ("three_times_day", 6),  # 28800
-    ],
-)
-def test_get_time_INTERVAL_DICT(t_str, t_int):
+def test_get_time_INTERVAL_DICT():
     # Test get_time() to assert the int values
     # of the 'INTERVAL_DICT' dictionary.
-    assert get_time(t_str, INTERVAL_DICT) == t_int
-
-
-def test_get_time_NoneError_DELAY_DICT():
-    # Directly check that the 'NoneError' is raised.
-    with pytest.raises(NoneError):
-        get_time("wrong_delay_time", DELAY_DICT)
-
-
-def test_get_time_NoneError_INTERVAL_DICT():
-    # Directly check that the 'NoneError' is raised.
-    with pytest.raises(NoneError):
-        get_time("wrong_delay_time", INTERVAL_DICT)
+    assert get_time('test', INTERVAL_DICT) == 0
 
 
 @pytest.mark.parametrize(
     "msgs, delay, interval",
     [
         (test_updates, None, None),
-        (test_updates, None, 0.1),
-        (test_updates, 0.1, None),
-        (test_updates, 0.1, 0.1),
-        (test_updates, "test", "test"),
-        (test_updates, 0.1, "test"),
-        (test_updates, "test", 0.1),
+        (test_updates, None, 0),
+        (test_updates, 0, None),
+        (test_updates, 'now', 0),
+        (test_updates, 'now', "test"),
+        (test_updates, 0, "test"),
+        (test_updates, "test", 0),
     ],
 )
 def test_tweet(msgs, delay, interval):
@@ -109,12 +75,12 @@ def test_tweet(msgs, delay, interval):
     "msgs, delay, interval",
     [
         (test_updates, None, None),
-        (test_updates, None, 0.1),
-        (test_updates, 0.1, None),
-        (test_updates, 0.1, 0.1),
-        (test_updates, "test", "test"),
-        (test_updates, 0.1, "test"),
-        (test_updates, "test", 0.1),
+        (test_updates, None, 0),
+        (test_updates, 0, None),
+        (test_updates, 0, 0),
+        (test_updates, "now", "test"),
+        (test_updates, 0, "test"),
+        (test_updates, "now", 0),
     ],
 )
 def test_tweet_and_templates(msgs, delay, interval):
@@ -128,10 +94,10 @@ def test_tweet_TwitterError():
         atc.tweet(test_updates)
 
 
-def test_tweet_interval_NoneError():
-    # Tests that a NoneError is raised when the interval arg
+def test_tweet_interval_TypeeError():
+    # Tests that a TypeError is raised when the interval arg
     # is a str that is not in the INTERVAL_DICT.
-    with pytest.raises(NoneError):
+    with pytest.raises(TypeError):
         at.tweet(test_updates, interval="wrong_interval_time")
 
 

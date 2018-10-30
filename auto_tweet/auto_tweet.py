@@ -3,19 +3,19 @@ import asyncio
 
 import twitter
 
-from .utils import zzz, tweet_template, parse_or_get, DELAY_DICT, INTERVAL_DICT
+from .utils import zzz, tweet_template, parse_or_get
 from .exceptions import TweetTypeError, ScheduleError
 
 # TODO: write the test to raise a ScheduleError for the wrong len(tuple).
 # TODO: change the print for logging in str_update().
-# TODO: refactor the time_zone='local' in schedule().
 # TODO: rewrite comments and docstrings.
 # TODO: rewrite the README.
-# TODO: use parse_or_get() for delay on tweet()
 
 
 class AutoTweet:
     """The heart of the AutoTweet Library."""
+
+    time_zone: str = "local"
 
     def __init__(
         self,
@@ -38,6 +38,10 @@ class AutoTweet:
         # The async loop for the custom updates.
         self.loop = asyncio.get_event_loop()
 
+    @classmethod
+    def set_time_zone(cls, time_zone):
+        cls.time_zone = time_zone
+
     @property
     def verify(self):
         """Verify if the authentication is valid."""
@@ -49,9 +53,10 @@ class AutoTweet:
         delay: Union[int, str] = None,
         interval: Union[str, int, None] = None,
         template: str = None,
+        time_zone: str = time_zone,
     ):
         """Post a Twitter Update from a list of strings."""
-        self.delay(delay)
+        self.delay(delay, time_zone)
 
         if not isinstance(msg, list):
             raise TweetTypeError(TweetTypeError.tweetInfoMsg)
@@ -62,7 +67,7 @@ class AutoTweet:
         else:
             raise TweetTypeError(TweetTypeError.wrongListMsg)
 
-    def schedule(self, tweets: list, time_zone="local"):
+    def schedule(self, tweets: list, time_zone=time_zone):
         """Post a list of Twitter Updates from a list of tuples."""
         if not isinstance(tweets[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
@@ -71,7 +76,7 @@ class AutoTweet:
         self.loop.close()
 
     def list_update(
-        self, msg: list, interval: Union[int, str] = None, template: str = None
+        self, msg: list, interval: Union[int, str, None], template: Union[str, None]
     ):
         """Process and prepare a list of Strings as Twitter Updates."""
         for update in msg:
@@ -80,7 +85,7 @@ class AutoTweet:
 
             self.str_update(update, template)
 
-    def str_update(self, msg: str, template: str = None):
+    def str_update(self, msg: str, template: Union[str, None]):
         """Post the Twitter Update."""
         if template:
             msg = tweet_template(msg=msg, template=template)
@@ -93,7 +98,6 @@ class AutoTweet:
 
     async def async_tasks(self, custom_msgs: list, time_zone: str):
         """Perare the asyncio tasks for the custom tweets."""
-
         for msg in set(custom_msgs):
             if len(msg) != 3:
                 raise ScheduleError(ScheduleError.tupleLenError)
@@ -114,10 +118,10 @@ class AutoTweet:
 
         return self.str_update(msg=msg[2], template=msg[1])
 
-    def delay(self, delay: Union[str, int, None]):
+    def delay(self, delay: Union[str, int, None], time_zone):
         """Delay the Post of one or multiple tweets."""
         if delay and self.delay_time:
-            zzz(delay, DELAY_DICT)
+            zzz(delay, time_zone)
 
             # Set to False to avoid repetition
             self.delay_time = False
@@ -126,7 +130,7 @@ class AutoTweet:
         """Add an interval between Twitter Updates."""
         # Avoid the first iteration
         if self.interval_time:
-            zzz(interval, INTERVAL_DICT)
+            zzz(interval)
 
         self.interval_time = True
 
