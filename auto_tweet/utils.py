@@ -23,7 +23,7 @@ INTERVAL_DICT: Dict[str, int] = {
 }
 
 
-def parse_time(date_time: str, time_zone: str = None) -> int:
+def parse_time(date_time: str, time_zone: str) -> int:
     now = pendulum.now(time_zone)
     update = pendulum.parse(date_time, tz=time_zone)
 

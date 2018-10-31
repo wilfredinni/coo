@@ -63,7 +63,7 @@ def test_get_time_INTERVAL_DICT():
         (test_updates, 'now', 0),
         (test_updates, 'now', "test"),
         (test_updates, 0, "test"),
-        (test_updates, "test", 0),
+        (test_updates, "now", 0),
     ],
 )
 def test_tweet(msgs, delay, interval):
