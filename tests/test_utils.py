@@ -18,8 +18,6 @@ from auto_tweet.exceptions import ScheduleError, TemplateError
     [
         ("2040-10-28 18:46", "America/Santiago"),
         ("2040-10-28", "America/Santiago"),
-        ("2040-10-28 18:46", "local"),
-        ("2040-10-28", "local"),
     ],
 )
 def test_parse_time(date_time, time_zone):
@@ -32,8 +30,6 @@ def test_parse_time(date_time, time_zone):
     [
         ("2015-10-28 18:46", "America/Santiago"),
         ("2002-10-28", "America/Santiago"),
-        ("1995-10-28 18:46", "local"),
-        ("1984-10-28", "local"),
     ],
 )
 def test_parse_time_ScheduleError(schedule_time, time_zone):
@@ -76,8 +72,8 @@ def test_get_time_INTERVAL_DICT(time_delay, int_value):
         (20, None),
         ("now", None),
         ("test", None),
-        ("2040-10-28 18:46", "local"),
         ("2040-10-28", "America/Santiago"),
+        ("2040-10-28 18:46", "America/Santiago"),
     ],
 )
 def test_parse_or_get(schedule_time, time_zone):
@@ -87,7 +83,7 @@ def test_parse_or_get(schedule_time, time_zone):
 
 @pytest.mark.parametrize(
     "schedule_time, time_zone",
-    [("wrong_delay_time", "local"), ("wrong_delay_time", None)],
+    [("wrong_delay_time", "America/Santiago"), ("wrong_delay_time", None)],
 )
 def test_parse_or_get_TypeError(schedule_time, time_zone):
     with pytest.raises(TypeError):
