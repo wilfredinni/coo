@@ -1,4 +1,4 @@
-# AutoTweet: Easily schedule Twitter updates.
+# AutoTweet: Schedule Twitter Updates with Easy
 
 [![Build Status](https://travis-ci.org/wilfredinni/auto-tweet.svg?branch=master)](https://travis-ci.org/wilfredinni/auto-tweet)
 [![codecov](https://codecov.io/gh/wilfredinni/auto-tweet/branch/master/graph/badge.svg)](https://codecov.io/gh/wilfredinni/auto-tweet)
