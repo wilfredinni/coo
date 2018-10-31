@@ -202,7 +202,7 @@ class AutoTweet:
             Post the update to Twitter.
         """
         if template:
-            update = tweet_template(msg=update, template=template)
+            update = tweet_template(update=update, template=template)
 
         if self.preview:
             print(update)
