@@ -2,7 +2,6 @@ appdirs==1.4.3
 atomicwrites==1.2.1
 attrs==18.2.0
 -e git+https://github.com/wilfredinni/auto-tweet.git@82613bf630956edf758cd9f6e2a0f562ca604e97#egg=auto_tweet
-black==18.9b0
 CacheControl==0.12.5
 cachy==0.2.0
 certifi==2018.10.15
