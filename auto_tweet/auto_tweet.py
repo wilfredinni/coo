@@ -14,7 +14,7 @@ from .exceptions import TweetTypeError, ScheduleError
 
 class AutoTweet:
     """
-    Easily schedule Twitter updates.
+    Schedule Twitter Updates with Easy.
 
     Note: to use this library you need to create an account on
     https://developer.twitter.com/ and generate Keys and Access
@@ -31,8 +31,7 @@ class AutoTweet:
     token_secret : str
         Twitter token secret.
     preview : bool, optional
-        True to print the update(s) on the console
-        and not publish on Twitter (default is False).
+        Print the update(s) on the console.
 
     Methods
     -------
@@ -68,11 +67,11 @@ class AutoTweet:
         token_secret : str
             Twitter token secret.
         preview : bool, optional
-            True to print the update(s) on the console
-            and not publish on Twitter (default is False).
+            Print the update(s) on the console.
         """
         # Creates the connection through the Twitter API.
-        self.connect = twitter.Api(consumer, consumer_secret, token, token_secret)
+        # https://github.com/bear/python-twitter
+        self.api = twitter.Api(consumer, consumer_secret, token, token_secret)
 
         # True to preview the update in the console.
         self.preview = preview
@@ -88,7 +87,7 @@ class AutoTweet:
     def verify(self):
         """Verify if the authentication is valid."""
 
-        return self.connect.VerifyCredentials()
+        return self.api.VerifyCredentials()
 
     def tweet(
         self,
@@ -99,8 +98,7 @@ class AutoTweet:
         time_zone: str = time_zone,
     ):
         """
-        Post Twitter Updates from a list of strings with
-        delay, interval and template options.
+        Post Twitter Updates from a list of strings.
 
         Parameters
         ----------
@@ -111,21 +109,15 @@ class AutoTweet:
         interval : str, int, optional
             The time between Updates.
         template : str, optional
-            Multiline string containing a '$message' that will
-            be replaced with the Twitter update.
+            A string to serve as a template. Need to has a "$message".
         time_zone : str, optional
-            Sets a time zone for parsing date, time or
-            datetime strings (default is 'local').
-
-            e.g. "America/Santiago"
-
+            Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
         Raises
         ------
         TweetTypeError
-            Raised when 'updates' is not an instance of list, or
-            the elements in the list are not strings.
+            When "updates" is not a list or its elements are not strings.
         """
         self.delay(delay, time_zone)
 
@@ -149,8 +141,7 @@ class AutoTweet:
         Parameters
         ----------
         updates : list
-            A list of tuples that contains the datetime, the template and the
-            update message:
+            A list of tuples that contains:
 
             [("datetime", "template", "update msg")]
 
@@ -164,19 +155,16 @@ class AutoTweet:
             - The time will be set to 00:00:00 if it's not specified.
             - A future date is needed, otherwisem a ScheduleError is raised.
 
+            The template is string with a "$message".
+
         time_zone : str, optional
-            Sets a time zone for parsing date, time or datetime strings
-            (default is 'local').
-
-            e.g. "America/Santiago"
-
+            Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
         Raises
         ------
         ScheduleError
-            Raised when the lenght of the tuple on a list is
-            greater or less than 3.
+            When the lenght of a tuple updates is less or greater than 3.
         """
         if not isinstance(updates[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
@@ -193,8 +181,7 @@ class AutoTweet:
         update : str
             A string representing a Twitter Update.
         template : str, optional
-            Multiline string containing a '$message' that will
-            be replaced with the Twitter update.
+            A string to serve as a template. Need to has a "$message".
 
         Returns
         -------
@@ -208,7 +195,7 @@ class AutoTweet:
             print(update)
             return
 
-        return self.connect.PostUpdate(update)
+        return self.api.PostUpdate(update)
 
     async def async_tasks(self, custom_msgs: list, time_zone: str):
         """Perare the asyncio tasks for the custom tweets."""

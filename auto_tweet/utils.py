@@ -40,21 +40,15 @@ def parse_time(date_time: str, time_zone: str) -> int:
     return secs.seconds
 
 
-def get_time(time_delay: str, dictionary: Dict[str, int]):
-    """Get the delay or interval from DELAY_DICT or INTERVAL_DICT."""
-
-    return dictionary.get(time_delay)
-
-
 def parse_or_get(schedule_time, time_zone):
     if isinstance(schedule_time, int):
         return schedule_time
 
     elif schedule_time in DELAY_DICT:
-        return get_time(schedule_time, DELAY_DICT)
+        return DELAY_DICT.get(schedule_time)
 
     elif schedule_time in INTERVAL_DICT:
-        return get_time(schedule_time, INTERVAL_DICT)
+        return INTERVAL_DICT.get(schedule_time)
 
     try:
         return parse_time(schedule_time, time_zone)

@@ -2,7 +2,6 @@ import pytest
 
 from auto_tweet.utils import (
     parse_time,
-    get_time,
     parse_or_get,
     zzz,
     tweet_template,
@@ -10,6 +9,34 @@ from auto_tweet.utils import (
     INTERVAL_DICT,
 )
 from auto_tweet.exceptions import ScheduleError, TemplateError
+
+
+# DICTIONARIES
+@pytest.mark.parametrize(
+    "time_delay, int_value",
+    [
+        ("now", 0),
+        ("half_hour", 1800),
+        ("one_hour", 3600),
+        ("tomorrow", 86400),
+        ("next_week", 604800),
+    ],
+)
+def test_DELAY_DICT(time_delay, int_value):
+    assert DELAY_DICT.get(time_delay) == int_value
+
+
+@pytest.mark.parametrize(
+    "time_delay, int_value",
+    [
+        ("test", 0),
+        ("once_a_day", 86400),
+        ("twice_perday", 43200),
+        ("three_times_day", 28800),
+    ],
+)
+def test_INTERVAL_DICT(time_delay, int_value):
+    assert INTERVAL_DICT.get(time_delay) == int_value
 
 
 # PARSE TIME
@@ -29,34 +56,6 @@ def test_parse_time(date_time, time_zone):
 def test_parse_time_ScheduleError(schedule_time, time_zone):
     with pytest.raises(ScheduleError):
         parse_time(schedule_time, time_zone)
-
-
-# GET TIME
-@pytest.mark.parametrize(
-    "time_delay, int_value",
-    [
-        ("now", 0),
-        ("half_hour", 1800),
-        ("one_hour", 3600),
-        ("tomorrow", 86400),
-        ("next_week", 604800),
-    ],
-)
-def test_get_time_DELAY_DICT(time_delay, int_value):
-    assert get_time(time_delay, DELAY_DICT) == int_value
-
-
-@pytest.mark.parametrize(
-    "time_delay, int_value",
-    [
-        ("test", 0),
-        ("once_a_day", 86400),
-        ("twice_perday", 43200),
-        ("three_times_day", 28800),
-    ],
-)
-def test_get_time_INTERVAL_DICT(time_delay, int_value):
-    assert get_time(time_delay, INTERVAL_DICT) == int_value
 
 
 # PARSE OR GET
