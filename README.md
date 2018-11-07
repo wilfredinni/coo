@@ -63,10 +63,31 @@ tweets = [
     ("2030-10-28 18:50", template, "My Twitter update with a template."),
     ("2030-10-29 18:15", template2, "Update with a different template."),
     ("2030-11-01 13:45", None, "Awesome Twitter update without a template."),
+
+    # date with and without templates
+    ("2030-12-25", template3, "Merry christmas!"),
+    ("2031-01-01", None, "And a happy new year!"),
+
+    # time with and without templates
+    ("18:46", template2, "Will be post today at 18:46."),
+    ("23:00", None, "A tweet for today at 23:00."),
+
+    # integer (seconds) with and without templates
+    (3600, template, "This tweet will be posted in an hour."),
+    (86400, None, "This one, tomorrow at the same hour."),
 ]
 
 at.schedule(tweets, time_zone="America/Santiago")
 ```
+
+Notes for parsing DateTime strings
+
+- If a time zone is not specified, it will set to `local`.
+- The time will be set to 00:00:00 if it's not specified.
+- When passing only time information the date will default to today.
+- A future date is needed, otherwise a `ScheduleError` is raised.
+
+More [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 #### date strings
 
