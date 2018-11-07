@@ -37,15 +37,6 @@ Schedule updates with `datetime` strings or integers and [custom templates](#Tem
 AutoTweet.schedule(updates, time_zone)
 ```
 
-#### Notes for parsing DateTime strings
-
-- If a time zone is not specified, it will set to `local`.
-- The time will be set to 00:00:00 if it's not specified.
-- When passing only time information the date will default to today.
-- A future date is needed, otherwise a `ScheduleError` is raised.
-
-More [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-
 #### datetime strings
 
 ```python
@@ -80,50 +71,14 @@ tweets = [
 at.schedule(tweets, time_zone="America/Santiago")
 ```
 
-Notes for parsing DateTime strings
+#### Notes for parsing DateTime strings
 
 - If a time zone is not specified, it will set to `local`.
 - The time will be set to 00:00:00 if it's not specified.
 - When passing only time information the date will default to today.
 - A future date is needed, otherwise a `ScheduleError` is raised.
 
-More [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-
-#### date strings
-
-```python
-tweets = [
-    # date with and without templates
-    ("2030-12-25", template3, "Merry christmas!"),
-    ("2031-01-01", None, "And a happy new year!"),
-]
-
-at.schedule(tweets, time_zone="Australia/Sydney")
-```
-
-#### time strings
-
-```python
-tweets = [
-    # time with and without templates
-    ("18:46", template2, "Will be post today at 18:46."),
-    ("23:00", None, "A tweet for today at 23:00."),
-]
-
-at.schedule(tweets, time_zone="America/Santiago")
-```
-
-#### integers
-
-```python
-tweets = [
-    # integer (seconds) with and without templates
-    (3600, template, "This tweet will be posted in an hour."),
-    (86400, None, "This one, tomorrow at the same hour."),
-]
-
-at.schedule(tweets, time_zone="America/New_York")
-```
+Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 ### Tweet an ordered list of strings
 
