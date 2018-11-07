@@ -8,7 +8,7 @@
 
 To use AutoTweet you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
 
-**Installing AutoTweet**
+**Installing**
 
 ```shell
 pip install AutoTweet
@@ -29,6 +29,15 @@ at = AutoTweet(
 
 Alternatively, you can set `preview=True` and print your tweets in the terminal instead to post them on Twitter.
 
+Notes for parsing DateTime strings:
+
+- If a time zone is not specified, it will set to `local`.
+- The time will be set to 00:00:00 if it's not specified.
+- When passing only time information the date will default to today.
+- A future date is needed, otherwise a `ScheduleError` is raised.
+
+More [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+
 ### Scheduling Twitter Updates
 
 Schedule updates with `datetime` strings or integers and [custom templates](#Templates) if needed.
@@ -43,17 +52,12 @@ AutoTweet.schedule(updates, time_zone)
 tweets = [
     # datetime with and without templates
     ("2030-10-28 18:50", template, "My Twitter update with a template."),
-    ("2030-10-28 18:50", template2, "Update with a different template."),
-    ("2030-11-24 13:45", None, "Awesome Twitter update without a template."),
+    ("2030-10-29 18:15", template2, "Update with a different template."),
+    ("2030-11-01 13:45", None, "Awesome Twitter update without a template."),
 ]
 
 at.schedule(tweets, time_zone="America/Santiago")
 ```
-
-- If a time zone is not specified, it will set to `local`.
-- The time will be set to 00:00:00 if it's not specified.
-- A future date is needed, otherwise a `ScheduleError` is raised.
-- [Time Zones Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 #### date strings
 
@@ -67,11 +71,6 @@ tweets = [
 at.schedule(tweets, time_zone="Australia/Sydney")
 ```
 
-- If a time zone is not specified, it will set to `local`.
-- The time will be set to 00:00:00 if it's not specified.
-- A future date is needed, otherwise a `ScheduleError` is raised.
-- [Time Zones Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-
 #### time strings
 
 ```python
@@ -83,11 +82,6 @@ tweets = [
 
 at.schedule(tweets, time_zone="America/Santiago")
 ```
-
-- If a time zone is not specified, it will set to `local`.
-- When passing only time information the date will default to today.
-- A future time is needed, otherwise a `ScheduleError` is raised.
-- [Time Zones Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 #### integers
 
@@ -132,8 +126,10 @@ You can use `datetime`, `date` and `time` strings, integers as seconds and some 
 at.tweet(tweets, delay="2030-11-24 13:45", time_zone="America/Santiago")
 at.tweet(tweets, delay="2030-11-24", time_zone="Australia/Sydney")
 at.tweet(tweets, delay="13:45", time_zone="America/New_York")
+
 # "keywords"
 at.tweet(tweets, delay="next_week")
+
 # integer
 at.tweet(tweets, delay=3600)
 ```
@@ -183,9 +179,6 @@ d_messages = at.api.GetDirectMessages()
 
 # favorited tweets
 favorites = at.api.GetFavorites()
-
-# followers
-followers = at.api.GetFollowers()
 
 # mentions
 mentions = at.api.GetMentions()
