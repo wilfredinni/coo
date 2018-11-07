@@ -29,15 +29,6 @@ at = AutoTweet(
 
 Alternatively, you can set `preview=True` and print your tweets in the terminal instead to post them on Twitter.
 
-Notes for parsing DateTime strings:
-
-- If a time zone is not specified, it will set to `local`.
-- The time will be set to 00:00:00 if it's not specified.
-- When passing only time information the date will default to today.
-- A future date is needed, otherwise a `ScheduleError` is raised.
-
-More [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-
 ### Scheduling Twitter Updates
 
 Schedule updates with `datetime` strings or integers and [custom templates](#Templates) if needed.
@@ -46,9 +37,27 @@ Schedule updates with `datetime` strings or integers and [custom templates](#Tem
 AutoTweet.schedule(updates, time_zone)
 ```
 
+#### Notes for parsing DateTime strings
+
+- If a time zone is not specified, it will set to `local`.
+- The time will be set to 00:00:00 if it's not specified.
+- When passing only time information the date will default to today.
+- A future date is needed, otherwise a `ScheduleError` is raised.
+
+More [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+
 #### datetime strings
 
 ```python
+from auto_tweet import AutoTweet
+
+at = AutoTweet(
+    "consumer_key",
+    "consumer_secret",
+    "access_token",
+    "access_token_secret"
+)
+
 tweets = [
     # datetime with and without templates
     ("2030-10-28 18:50", template, "My Twitter update with a template."),
@@ -134,7 +143,7 @@ at.tweet(tweets, delay="next_week")
 at.tweet(tweets, delay=3600)
 ```
 
-When parsing `datetime` strings, the same rules as [Scheduling Twitter Updates](#Scheduling-Twitter-Updates) are apply.
+Remember to read the [Notes for parsing DateTime strings](#Notes-for-parsing-DateTime-strings).
 
 #### Post Twitter Updates with an interval
 
@@ -143,7 +152,8 @@ Use integers as seconds or some strings as keywords: `once_a_day`, `twice_perday
 ```python
 # "keywords"
 at.tweet(tweets, interval="three_times_day")
-# integer
+
+# integers
 at.tweet(tweets, interval=3600)
 ```
 
