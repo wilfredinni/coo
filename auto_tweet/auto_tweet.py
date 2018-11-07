@@ -151,9 +151,9 @@ class AutoTweet:
 
             Notes for parsing date and time strings:
             - If a time zone is not specified, it will be set to local.
-            - When passing only time information the date will default to today.
+            - When parsing only time information the date will default to today.
             - The time will be set to 00:00:00 if it's not specified.
-            - A future date is needed, otherwisem a ScheduleError is raised.
+            - A future date is needed, otherwise, a ScheduleError is raised.
 
             The template is string with a "$message".
 
