@@ -25,20 +25,20 @@ def test_wrong_credentials_TwitterError():
     [
         (m_updates, None, None, None, None),
         # One None
-        (m_updates, None, "test", "template", "local"),
+        (m_updates, None, "now", "template", "local"),
         (m_updates, "now", None, "template", "local"),
-        (m_updates, "now", "test", None, "local"),
-        (m_updates, "now", "test", "template", None),
+        (m_updates, "now", "now", None, "local"),
+        (m_updates, "now", "now", "template", None),
         # Two None
         (m_updates, None, None, "template", "local"),
         (m_updates, "now", None, None, "local"),
-        (m_updates, "now", "test", None, None),
-        (m_updates, None, "test", "template", None),
+        (m_updates, "now", "now", None, None),
+        (m_updates, None, "now", "template", None),
         # Delay
         (m_updates, "now", None, None, None),
         (m_updates, 0, None, None, None),
         # Interval
-        (m_updates, None, "test", None, None),
+        (m_updates, None, "now", None, None),
         (m_updates, None, 0, None, None),
         # Template
         (m_updates, None, None, "template", None),
@@ -120,6 +120,6 @@ def test_delay(delay, time_zone):
 
 
 # INTERVAL
-@pytest.mark.parametrize("interval", [(0), ("test")])
+@pytest.mark.parametrize("interval", [(0), ("now")])
 def test_interval(interval):
     at_preview.interval(interval)

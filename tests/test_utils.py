@@ -1,13 +1,6 @@
 import pytest
 
-from auto_tweet.utils import (
-    parse_time,
-    parse_or_get,
-    zzz,
-    tweet_template,
-    DELAY_DICT,
-    INTERVAL_DICT,
-)
+from auto_tweet.utils import parse_time, parse_or_get, zzz, tweet_template, TIME_DICT
 from auto_tweet.exceptions import ScheduleError, TemplateError
 
 
@@ -18,25 +11,28 @@ from auto_tweet.exceptions import ScheduleError, TemplateError
         ("now", 0),
         ("half_hour", 1800),
         ("one_hour", 3600),
-        ("tomorrow", 86400),
-        ("next_week", 604800),
+        ("two_hours", 7200),
+        ("four_hours", 14400),
+        ("six_hours", 21600),
+        ("eight_hours", 28800),
+        ("ten_hours", 36000),
+        ("twelve_hours", 43200),
+        ("fourteen_hours", 50400),
+        ("sixteen_hours", 57600),
+        ("eighteen_hours", 64800),
+        ("twenty_hours", 72000),
+        ("twenty_two_hours", 79200),
+        ("one_day", 86400),
+        ("two_days", 172800),
+        ("three_days", 259200),
+        ("four_days", 345600),
+        ("five_days", 432000),
+        ("six_days", 518400),
+        ("one_week", 604800),
     ],
 )
-def test_DELAY_DICT(time_delay, int_value):
-    assert DELAY_DICT.get(time_delay) == int_value
-
-
-@pytest.mark.parametrize(
-    "time_delay, int_value",
-    [
-        ("test", 0),
-        ("once_a_day", 86400),
-        ("twice_perday", 43200),
-        ("three_times_day", 28800),
-    ],
-)
-def test_INTERVAL_DICT(time_delay, int_value):
-    assert INTERVAL_DICT.get(time_delay) == int_value
+def test_TIME_DICT(time_delay, int_value):
+    assert TIME_DICT.get(time_delay) == int_value
 
 
 # PARSE TIME
@@ -64,7 +60,6 @@ def test_parse_time_ScheduleError(schedule_time, time_zone):
     [
         (20, None),
         ("now", None),
-        ("test", None),
         ("2040-10-28", "America/Santiago"),
         ("2040-10-28 18:46", "America/Santiago"),
     ],
@@ -87,9 +82,7 @@ def test_parse_or_get_TypeError(schedule_time, time_zone):
 
 
 # ZZZ
-@pytest.mark.parametrize(
-    "sleep_time, time_zone", [(0, None), ("now", None), ("test", None)]
-)
+@pytest.mark.parametrize("sleep_time, time_zone", [(0, None), ("now", None)])
 def test_zzz_INT(sleep_time, time_zone):
     # TODO: test datetime strings
     zzz(sleep_time, time_zone)
