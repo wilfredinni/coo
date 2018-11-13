@@ -11,7 +11,7 @@ To use AutoTweet you need to first apply for a developer account in the [Twitter
 **Installing**
 
 ```shell
-pip install AutoTweet
+pip install ...
 ```
 
 **Initializing**
@@ -78,7 +78,7 @@ at.schedule(tweets, time_zone="America/Santiago")
 - When passing only time information the date will default to today.
 - A future date is needed, otherwise a `ScheduleError` is raised.
 
-Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) available.
 
 ### Tweet an ordered list of strings
 
@@ -89,6 +89,15 @@ AutoTweet.tweet(updates, delay, interval, template, time_zone)
 ```
 
 ```python
+from auto_tweet import AutoTweet
+
+at = AutoTweet(
+    "consumer_key",
+    "consumer_secret",
+    "access_token",
+    "access_token_secret"
+)
+
 tweets = [
     "My first awesome Twitter Update",
     "My second awesome Twitter Update",
@@ -104,7 +113,7 @@ at.tweet(tweets)
 
 #### Post Twitter Updates with a delay
 
-You can use `datetime`, `date` and `time` strings, integers as seconds and some strings as keywords: `half_hour`, `one_hour`, `tomorrow`, `next_week`.
+You can use `datetime`, `date` and `time` strings, integers as seconds and some strings as [keywords](#Delay-and-Inverval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others.
 
 ```python
 # datetime, date and time strings
@@ -113,7 +122,7 @@ at.tweet(tweets, delay="2030-11-24", time_zone="Australia/Sydney")
 at.tweet(tweets, delay="13:45", time_zone="America/New_York")
 
 # "keywords"
-at.tweet(tweets, delay="next_week")
+at.tweet(tweets, delay="one_week")
 
 # integer
 at.tweet(tweets, delay=3600)
@@ -123,7 +132,7 @@ Remember to read the [Notes for parsing DateTime strings](#Notes-for-parsing-Dat
 
 #### Post Twitter Updates with an interval
 
-Use integers as seconds or some strings as keywords: `once_a_day`, `twice_perday` and `three_times_day`.
+Use integers as seconds or some strings as [keywords](#Delay-and-Inverval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others.
 
 ```python
 # "keywords"
@@ -151,6 +160,32 @@ $message
 #python #coding #AutoTweet
 """
 ```
+
+### Delay and Inverval Keywords
+
+| Keyword          | Seconds |
+| ---------------- | ------- |
+| now              | 0       |
+| half_hour        | 1800    |
+| one_hour         | 3600    |
+| two_hours        | 7200    |
+| four_hours       | 14400   |
+| six_hours        | 21600   |
+| eight_hours      | 28800   |
+| ten_hours        | 36000   |
+| twelve_hours     | 43200   |
+| fourteen_hours   | 50400   |
+| sixteen_hours    | 57600   |
+| eighteen_hours   | 64800   |
+| twenty_hours     | 72000   |
+| twenty_two_hours | 79200   |
+| one_day          | 86400   |
+| two_days         | 172800  |
+| three_days       | 259200  |
+| four_days        | 345600  |
+| five_days        | 432000  |
+| six_days         | 518400  |
+| one_week         | 604800  |
 
 ## The Twitter API
 
