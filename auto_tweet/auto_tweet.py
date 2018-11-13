@@ -7,8 +7,8 @@ from .utils import zzz, tweet_template, parse_or_get
 from .exceptions import TweetTypeError, ScheduleError
 
 # TODO: write the test to raise a ScheduleError for the wrong len(tuple).
-# TODO: change the print for logging in str_update().
 # TODO: revisit comments and docstrings.
+# TODO: logging.
 # TODO: rewrite the README.
 
 
