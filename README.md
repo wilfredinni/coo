@@ -37,7 +37,7 @@ Schedule updates with `datetime` strings or integers and [custom templates](#Tem
 AutoTweet.schedule(updates, time_zone)
 ```
 
-#### datetime strings
+Full example:
 
 ```python
 from auto_tweet import AutoTweet
@@ -125,7 +125,7 @@ at.tweet(tweets, delay="13:45", time_zone="America/New_York")
 at.tweet(tweets, delay="one_week")
 
 # integer
-at.tweet(tweets, delay=3600)
+at.tweet(tweets, delay=604800)
 ```
 
 Remember to read the [Notes for parsing DateTime strings](#Notes-for-parsing-DateTime-strings).
@@ -136,10 +136,10 @@ Use integers as seconds or some strings as [keywords](#Delay-and-Inverval-Keywor
 
 ```python
 # "keywords"
-at.tweet(tweets, interval="three_times_day")
+at.tweet(tweets, interval="four_hours")
 
 # integers
-at.tweet(tweets, interval=3600)
+at.tweet(tweets, interval=14400)
 ```
 
 #### Use a template

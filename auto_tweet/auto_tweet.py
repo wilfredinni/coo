@@ -93,7 +93,7 @@ class AutoTweet:
         self,
         updates: list,
         delay: Union[int, str] = None,
-        interval: Union[str, int, None] = None,
+        interval: Union[None, str, int] = None,
         template: str = None,
         time_zone: str = time_zone,
     ):
@@ -172,7 +172,7 @@ class AutoTweet:
         self.loop.run_until_complete(self.async_tasks(updates, time_zone))
         self.loop.close()
 
-    def str_update(self, update: str, template: Union[str, None]):
+    def str_update(self, update: str, template: Union[None, str]):
         """
         Post a Twitter Update from a string.
 
@@ -221,7 +221,7 @@ class AutoTweet:
 
         return self.str_update(update=msg[2], template=msg[1])
 
-    def delay(self, delay: Union[str, int, None], time_zone):
+    def delay(self, delay: Union[None, str, int], time_zone):
         """Delay the Post of one or multiple tweets."""
         if delay and self.delay_time:
             zzz(delay, time_zone)
