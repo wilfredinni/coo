@@ -1,8 +1,12 @@
-<p style="text-align:center;"><img src="coo2.png" alt="Logo"></p>
+<h1 align="center">
+  <img src="coo2.png" alt="Logo">
+</h1>
 
-<h1 style="text-align:center;">coo: schedule Twitter updates with easy</h1>
+<h1 align="center">
+  coo: schedule Twitter updates with easy
+</h1>
 
-<p style="text-align:center;">
+<p align="center">
     <a href="https://travis-ci.org/wilfredinni/coo">
         <img src="https://travis-ci.org/wilfredinni/coo.svg?branch=master" alt="Build Status">
     </a>
