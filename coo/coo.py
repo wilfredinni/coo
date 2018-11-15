@@ -7,9 +7,7 @@ from .utils import zzz, tweet_template, parse_or_get
 from .exceptions import TweetTypeError, ScheduleError
 
 # TODO: write the test to raise a ScheduleError for the wrong len(tuple).
-# TODO: revisit comments and docstrings.
 # TODO: logging.
-# TODO: rewrite the README.
 
 
 class Coo:
@@ -69,9 +67,11 @@ class Coo:
         preview : bool, optional
             Print the update(s) on the console.
         """
-        # Creates the connection through the Twitter API.
         # https://github.com/bear/python-twitter
-        self.api = twitter.Api(consumer, consumer_secret, token, token_secret)
+        self.consumer = consumer
+        self.consumer_secret = consumer_secret
+        self.token = token
+        self.token_secret = token_secret
 
         # True to preview the update in the console.
         self.preview = preview
@@ -84,9 +84,25 @@ class Coo:
         self.loop = asyncio.get_event_loop()
 
     @property
+    def api(self):
+        """
+        Through Coo.api you gain access to all of the Python Twitter
+        wrapper models:
+
+        from coo import Coo
+
+        >>> at = Coo("consumer", "consumer_secret", "access_token", "token_secret")
+        >>> at.api.GetFollowers()
+
+        More info: https://python-twitter.readthedocs.io/en/latest/index.html
+        """
+        return twitter.Api(
+            self.consumer, self.consumer_secret, self.token, self.token_secret
+        )
+
+    @property
     def verify(self):
         """Verify if the authentication is valid."""
-
         return self.api.VerifyCredentials()
 
     def tweet(
