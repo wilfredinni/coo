@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = auto_tweet
+source = coo
 
 [report]
 omit =

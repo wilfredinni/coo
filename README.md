@@ -1,29 +1,40 @@
-# AutoTweet: Schedule Twitter Updates with Easy
+<p style="text-align:center;"><img src="coo2.png" alt="Logo"></p>
 
-[![Build Status](https://travis-ci.org/wilfredinni/auto-tweet.svg?branch=master)](https://travis-ci.org/wilfredinni/auto-tweet)
-[![codecov](https://codecov.io/gh/wilfredinni/auto-tweet/branch/master/graph/badge.svg)](https://codecov.io/gh/wilfredinni/auto-tweet)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+<h1 style="text-align:center;">coo: schedule Twitter updates with easy</h1>
+
+<p style="text-align:center;">
+    <a href="https://travis-ci.org/wilfredinni/coo">
+        <img src="https://travis-ci.org/wilfredinni/coo.svg?branch=master" alt="Build Status">
+    </a>
+    <a href="https://codecov.io/gh/wilfredinni/coo">
+        <img src="https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg" alt="codecov">
+    </a>
+    <a href="https://opensource.org/licenses/Apache-2.0">
+        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License">
+    </a>
+</p>
 
 ## Usage
 
-To use AutoTweet you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
+To use Coo you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
 
 **Installing**
 
 ```shell
-pip install ...
+pip install coo
 ```
 
 **Initializing**
 
 ```python
-from auto_tweet import AutoTweet
+from coo import Coo
 
-at = AutoTweet(
+at = Coo(
     "consumer_key",
     "consumer_secret",
     "access_token",
-    "access_token_secret"
+    "access_token_secret",
+    preview=False
 )
 ```
 
@@ -34,15 +45,15 @@ Alternatively, you can set `preview=True` and print your tweets in the terminal 
 Schedule updates with `datetime` strings or integers and [custom templates](#Templates) if needed.
 
 ```python
-AutoTweet.schedule(updates, time_zone)
+Coo.schedule(updates, time_zone)
 ```
 
 Full example:
 
 ```python
-from auto_tweet import AutoTweet
+from coo import Coo
 
-at = AutoTweet(
+at = Coo(
     "consumer_key",
     "consumer_secret",
     "access_token",
@@ -85,13 +96,13 @@ Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_
 Post ordered updates with `delay`, `interval`, and [templates](#Templates) if needed.
 
 ```python
-AutoTweet.tweet(updates, delay, interval, template, time_zone)
+Coo.tweet(updates, delay, interval, template, time_zone)
 ```
 
 ```python
-from auto_tweet import AutoTweet
+from coo import Coo
 
-at = AutoTweet(
+at = Coo(
     "consumer_key",
     "consumer_secret",
     "access_token",
@@ -157,7 +168,7 @@ template = """My aswesome header
 
 $message
 
-#python #coding #AutoTweet
+#python #coding #coo
 """
 ```
 
@@ -189,7 +200,7 @@ $message
 
 ## The Twitter API
 
-AutoTweet is written using the [Python Twitter](https://github.com/bear/python-twitter) wrapper, and through `AutoTweet.api` you gain access to all of his models:
+Coo is written using the [Python Twitter](https://github.com/bear/python-twitter) wrapper, and through `Coo.api` you gain access to all of his models:
 
 ```python
 # get your followers
