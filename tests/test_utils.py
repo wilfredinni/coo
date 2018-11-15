@@ -1,7 +1,7 @@
 import pytest
 
-from auto_tweet.utils import parse_time, parse_or_get, zzz, tweet_template, TIME_DICT
-from auto_tweet.exceptions import ScheduleError, TemplateError
+from coo.utils import parse_time, parse_or_get, zzz, tweet_template, TIME_DICT
+from coo.exceptions import ScheduleError, TemplateError
 
 
 # DICTIONARIES
