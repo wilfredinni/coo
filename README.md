@@ -14,11 +14,8 @@
     </a>
 </p>
 
-## Usage
+Coo is an easy to use Python library for scheduling Twitter updates. To use it, you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
 
-To use Coo you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
-
-**Installing**
 
 ```shell
 pip install coo
@@ -40,9 +37,9 @@ at = Coo(
 
 Alternatively, you can set `preview=True` and print your tweets in the terminal instead to post them on Twitter.
 
-### Scheduling Twitter Updates
+## Scheduling Twitter Updates
 
-Schedule updates with `datetime` strings or integers and [custom templates](#Templates) if needed.
+Schedule updates with `datetime` strings or integers and use a [custom template](#Templates) if needed.
 
 ```python
 Coo.schedule(updates, time_zone)
@@ -82,7 +79,7 @@ tweets = [
 at.schedule(tweets, time_zone="America/Santiago")
 ```
 
-#### Notes for parsing DateTime strings
+### Notes for parsing DateTime strings
 
 - If a time zone is not specified, it will set to `local`.
 - The time will be set to 00:00:00 if it's not specified.
@@ -91,9 +88,9 @@ at.schedule(tweets, time_zone="America/Santiago")
 
 Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) available.
 
-### Tweet an ordered list of strings
+## Tweet an ordered list of strings
 
-Post ordered updates with `delay`, `interval`, and [templates](#Templates) if needed.
+Post ordered updates with `delay`, `interval`, and a [template](#Templates) if needed.
 
 ```python
 Coo.tweet(updates, delay, interval, template, time_zone)
@@ -122,7 +119,7 @@ tweets = [
 at.tweet(tweets)
 ```
 
-#### Post Twitter Updates with a delay
+### Delay
 
 You can use `datetime`, `date` and `time` strings, integers as seconds and some strings as [keywords](#Delay-and-Inverval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others.
 
@@ -141,7 +138,7 @@ at.tweet(tweets, delay=604800)
 
 Remember to read the [Notes for parsing DateTime strings](#Notes-for-parsing-DateTime-strings).
 
-#### Post Twitter Updates with an interval
+### Interval
 
 Use integers as seconds or some strings as [keywords](#Delay-and-Inverval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others.
 
@@ -153,23 +150,10 @@ at.tweet(tweets, interval="four_hours")
 at.tweet(tweets, interval=14400)
 ```
 
-#### Use a template
+### Use a template
 
 ```python
 at.tweet(tweets, template=template)
-```
-
-### Templates
-
-Templates are very simple, just use a multiline string and add a `$message` where you want your message to appear.
-
-```python
-template = """My aswesome header
-
-$message
-
-#python #coding #coo
-"""
 ```
 
 ### Delay and Inverval Keywords
@@ -197,6 +181,20 @@ $message
 | five_days        | 432000  |
 | six_days         | 518400  |
 | one_week         | 604800  |
+
+
+## Templates
+
+Templates are very simple, just use a multiline string and add a `$message` where you want your message to appear.
+
+```python
+template = """My aswesome header
+
+$message
+
+#python #coding #coo
+"""
+```
 
 ## The Twitter API
 
