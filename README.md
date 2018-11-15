@@ -1,6 +1,6 @@
-<h1 align="center">
+<p align="center">
   <img src="coo2.png" alt="Logo">
-</h1>
+</p>
 
 <h1 align="center">
   coo: schedule Twitter updates with easy
