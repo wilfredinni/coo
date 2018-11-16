@@ -43,7 +43,7 @@ Alternatively, you can set `preview=True` and print your tweets in the terminal 
 
 ## Scheduling Twitter Updates
 
-Schedule updates with `datetime` strings or integers and use a [custom template](#Templates) if needed.
+Schedule updates with `datetime` strings or integers and use [custom templates](#Templates) if needed.
 
 ```python
 Coo.schedule(updates, time_zone)
