@@ -156,7 +156,7 @@ at.tweet(tweets, interval=14400)
 
 #### Template
 
-And of course, you can also set one template for each one of the updates.
+And of course, you can also set one [template](#Templates) for each one of the updates.
 
 ```python
 at.tweet(tweets, template=template)
