@@ -3,7 +3,6 @@ appdirs==1.4.3
 atomicwrites==1.2.1
 attrs==18.2.0
 Babel==2.6.0
-black==18.9b0
 certifi==2018.10.15
 chardet==3.0.4
 Click==7.0
