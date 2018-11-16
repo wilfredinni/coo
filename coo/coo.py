@@ -7,7 +7,6 @@ from .utils import zzz, tweet_template, parse_or_get
 from .exceptions import TweetTypeError, ScheduleError
 
 # TODO: write the test to raise a ScheduleError for the wrong len(tuple).
-# TODO: logging.
 
 
 class Coo:
@@ -109,7 +108,7 @@ class Coo:
         self,
         updates: list,
         delay: Union[int, str] = None,
-        interval: Union[None, str, int] = None,
+        interval: Union[int, str] = None,
         template: str = None,
         time_zone: str = time_zone,
     ):
