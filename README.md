@@ -13,6 +13,9 @@
     <a href="https://codecov.io/gh/wilfredinni/coo">
         <img src="https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg" alt="codecov">
     </a>
+    <a href="https://coo.readthedocs.io/en/latest/?badge=latest">
+        <img src="https://readthedocs.org/projects/coo/badge/?version=latest" alt="Docs">
+    </a>
     <a href="https://opensource.org/licenses/Apache-2.0">
         <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License">
     </a>
