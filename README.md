@@ -224,3 +224,7 @@ retweets = at.api.GetRetweets()
 ```
 
 And a lot more. If you are interested, check their [documentation](https://python-twitter.readthedocs.io/en/latest/index.html).
+
+## Documentation
+
+Documentation available at [readthedocs.org](https://coo.readthedocs.io/en/latest/).
