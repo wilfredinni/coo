@@ -44,6 +44,45 @@ at = Coo(
 
 Alternatively, you can set `preview=True` and print your tweets in the terminal instead to post them on Twitter.
 
+Scheduling Twitter updates:
+
+```python
+from coo import Coo
+
+at = Coo(
+    "consumer_key",
+    "consumer_secret",
+    "access_token",
+    "access_token_secret"
+)
+
+tweets = [
+    ("2030-10-28 18:50", template, "My Twitter update with a template."),
+    ("2030-10-29 18:15", template2, "Update with a different template."),
+    ("2030-11-01 13:45", None, "Awesome Twitter update without a template."),
+]
+
+at.schedule(tweets, time_zone="America/Santiago")
+```
+
+Or you can use a list of strings and add a `delay`, `interval` and a `template`:
+
+```python
+tweets = [
+    "My first awesome Twitter Update",
+    "My second awesome Twitter Update",
+    "My third awesome Twitter Update",
+    "My fourth awesome Twitter Update",
+    "My fifth awesome Twitter Update",
+    "My sixth awesome Twitter Update",
+]
+
+at.tweet(tweets, delay="13:45", interval="four_hours", template=my_template)
+```
+
+For more detailed options and usage, keep reading or check the [documentation](https://coo.readthedocs.io/en/latest/) :blue_book:.
+
+
 ## Scheduling Twitter Updates
 
 Schedule updates with `datetime` strings or integers and use [custom templates](#Templates) if needed.
