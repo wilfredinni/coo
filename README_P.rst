@@ -11,8 +11,6 @@ coo: Schedule Twitter updates
 .. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
     :target: https://opensource.org/licenses/Apache-2.0
 
-
-
 Coo is an easy to use Python library for scheduling Twitter updates. To use it, you need
 to first apply for a developer account in the
 `Twitter Developers Platform <https://developer.twitter.com/>`_ and generate the Keys and
@@ -75,8 +73,6 @@ Or you can use a list of strings and add a ``delay``, ``interval`` and a ``templ
     ]
 
     at.tweet(tweets, delay="13:45", interval="four_hours", template=my_template)
-
-For more detailed options and usage, keep reading or check the `documentation <https://coo.readthedocs.io/en/latest/>`_.
 
 Schedule Twitter Updates
 ========================
@@ -277,7 +273,7 @@ wrapper, and through `Coo.api` you gain access to all of his models:
 
 And a lot more. If you are interested, check their `documentation <https://python-twitter.readthedocs.io/en/latest/index.html>`_.
 
-Docs
-====
+Documentation
+=============
 
-Documentation available at [readthedocs.org](https://coo.readthedocs.io/en/latest/).
+Documentation available at `readthedocs.org <https://coo.readthedocs.io/en/latest/>`_.
