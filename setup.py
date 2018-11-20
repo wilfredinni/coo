@@ -30,10 +30,10 @@ setup(
     include_package_data=True,
     keywords="coo",
     name="coo",
-    packages=find_packages(include=["auto_tweet"]),
+    packages=find_packages(include=["coo"]),
     test_suite="tests",
     tests_require=test_requirements,
-    url="https://github.com/wilfredinni/auto_tweet",
-    version="0.1.0",
+    url="https://github.com/wilfredinni/coo",
+    version="0.1.1",
     zip_safe=False,
 )
