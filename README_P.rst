@@ -2,27 +2,16 @@
 coo: Schedule Twitter updates
 =============================
 
-.. raw:: html
+.. image:: https://travis-ci.org/wilfredinni/coo.svg?branch=master
+    :target: https://travis-ci.org/wilfredinni/coo
+.. image:: https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg
+    :target: https://codecov.io/gh/wilfredinni/coo
+.. image:: https://readthedocs.org/projects/coo/badge/?version=latest
+    :target: https://coo.readthedocs.io/en/latest/?badge=latest
+.. image:: https://img.shields.io/badge/License-Apache%202.0-blue.svg
+    :target: https://opensource.org/licenses/Apache-2.0
 
-    <embed>
-        <p align="center"><img src="https://raw.githubusercontent.com/wilfredinni/coo/master/coo2.png" alt="Logo"></p>
-    </embed>
 
-.. raw:: html
-
-    <embed>
-        <p align="center">
-            <a href="https://travis-ci.org/wilfredinni/coo">
-                <img src="https://travis-ci.org/wilfredinni/coo.svg?branch=master" alt="Build Status">
-            </a>
-            <a href="https://codecov.io/gh/wilfredinni/coo">
-                <img src="https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg" alt="codecov">
-            </a>
-            <a href="https://opensource.org/licenses/Apache-2.0">
-                <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License">
-            </a>
-        </p>
-    </embed>
 
 Coo is an easy to use Python library for scheduling Twitter updates. To use it, you need
 to first apply for a developer account in the
@@ -47,7 +36,7 @@ Initializing
         preview=False,
     )
 
-Alternatively, you can set `preview=True` and print your tweets in the terminal instead
+Alternatively, you can set ``preview=True`` and print your tweets in the terminal instead
 to post them on Twitter.
 
 Scheduling Twitter updates:
@@ -87,8 +76,7 @@ Or you can use a list of strings and add a ``delay``, ``interval`` and a ``templ
 
     at.tweet(tweets, delay="13:45", interval="four_hours", template=my_template)
 
-For more detailed options and usage, keep reading or check the
-`documentation <https://coo.readthedocs.io/en/latest/>`_.
+For more detailed options and usage, keep reading or check the `documentation <https://coo.readthedocs.io/en/latest/>`_.
 
 Schedule Twitter Updates
 ========================
@@ -197,14 +185,12 @@ delay the post of your first update.
     # integer
     at.tweet(tweets, delay=604800)
 
-.. note::
+When parsing DateTime strings:
 
-    When parsing DateTime strings:
-
-    - If a time zone is not specified, it will set to `local`.
-    - The time will be set to 00:00:00 if it's not specified.
-    - When passing only time information the date will default to today.
-    - A future date is needed, otherwise a `ScheduleError` is raised.
+- If a time zone is not specified, it will set to `local`.
+- The time will be set to 00:00:00 if it's not specified.
+- When passing only time information the date will default to today.
+- A future date is needed, otherwise a `ScheduleError` is raised.
 
 Here you can find all the `Time Zones <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`_.
 
@@ -254,7 +240,8 @@ one_week         604800
 Template
 ========
 
-Templates are very simple, just use a multiline string and add a `$message` where you want your message to appear.
+Templates are very simple, just use a multiline string and add a ``$message``
+where you want your message to appear.
 
 .. code-block:: python
 
@@ -290,7 +277,7 @@ wrapper, and through `Coo.api` you gain access to all of his models:
 
 And a lot more. If you are interested, check their `documentation <https://python-twitter.readthedocs.io/en/latest/index.html>`_.
 
-Documentation
-=============
+Docs
+====
 
 Documentation available at [readthedocs.org](https://coo.readthedocs.io/en/latest/).
