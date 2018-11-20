@@ -1,25 +1,11 @@
-<p align="center">
-  <img src="coo2.png" alt="Logo">
-</p>
+![Logo](coo2.png)
 
-<h1 align="center">
-  coo: schedule Twitter updates with easy
-</h1>
+# coo: schedule Twitter updates with easy
 
-<p align="center">
-    <a href="https://travis-ci.org/wilfredinni/coo">
-        <img src="https://travis-ci.org/wilfredinni/coo.svg?branch=master" alt="Build Status">
-    </a>
-    <a href="https://codecov.io/gh/wilfredinni/coo">
-        <img src="https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg" alt="codecov">
-    </a>
-    <a href="https://coo.readthedocs.io/en/latest/?badge=latest">
-        <img src="https://readthedocs.org/projects/coo/badge/?version=latest" alt="Docs">
-    </a>
-    <a href="https://opensource.org/licenses/Apache-2.0">
-        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License">
-    </a>
-</p>
+[![Build Status](https://travis-ci.org/wilfredinni/coo.svg?branch=master)](https://travis-ci.org/wilfredinni/coo)
+[![codecov](https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg)](https://codecov.io/gh/wilfredinni/coo)
+[![docs](https://readthedocs.org/projects/coo/badge/?version=latest)](https://coo.readthedocs.io/en/latest/?badge=latest)
+[![license](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Coo is an easy to use Python library for scheduling Twitter updates. To use it, you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
 
@@ -38,7 +24,7 @@ at = Coo(
     "consumer_secret",
     "access_token",
     "access_token_secret",
-    preview=False
+    preview=False,
 )
 ```
 
@@ -80,7 +66,7 @@ tweets = [
 at.tweet(tweets, delay="13:45", interval="four_hours", template=my_template)
 ```
 
-For more detailed options and usage, keep reading or check the [documentation](https://coo.readthedocs.io/en/latest/) :blue_book:.
+For more detailed options and usage, keep reading or check the [documentation](https://coo.readthedocs.io/en/latest/).
 
 
 ## Scheduling Twitter Updates
