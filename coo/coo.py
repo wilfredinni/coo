@@ -6,7 +6,7 @@ import twitter
 from .utils import zzz, tweet_template, parse_or_get
 from .exceptions import TweetTypeError, ScheduleError
 
-# TODO: write the test to raise a ScheduleError for the wrong len(tuple).
+# TODO: write a test for ScheduleError for the wrong len(tuple).
 
 
 class Coo:
@@ -179,7 +179,7 @@ class Coo:
         Raises
         ------
         ScheduleError
-            When the lenght of a tuple updates is less or greater than 3.
+            When the length of a tuple updates is less or greater than 3.
         """
         if not isinstance(updates[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
@@ -213,7 +213,7 @@ class Coo:
         return self.api.PostUpdate(update)
 
     async def async_tasks(self, custom_msgs: list, time_zone: str):
-        """Perare the asyncio tasks for the custom tweets."""
+        """Prepare the asyncio tasks for the custom tweets."""
         for msg in set(custom_msgs):
             if len(msg) != 3:
                 # Raises a ScheduleError if the len of the typle is less tan 3.

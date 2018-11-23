@@ -241,7 +241,7 @@ where you want your message to appear.
 
 .. code-block:: python
 
-    template = """My aswesome header
+    template = """My awesome header
 
     $message
 

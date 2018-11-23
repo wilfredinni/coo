@@ -66,7 +66,7 @@ def parse_or_get(schedule_time, time_zone):
 
 
 def zzz(sleep_time, time_zone: str = None):
-    """Dalay sleep and intrval time sleep. """
+    """Delay sleep and interval time sleep. """
     try:
         time.sleep(sleep_time)
     except TypeError:
