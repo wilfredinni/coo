@@ -34,7 +34,7 @@ TIME_DICT: Dict[str, int] = {
 
 
 def parse_time(date_time: str, time_zone: str) -> int:
-    """Returns the seconds between now and the sheduled time."""
+    """Returns the seconds between now and the scheduled time."""
     now = pendulum.now(time_zone)
     update = pendulum.parse(date_time, tz=time_zone)
 

@@ -167,7 +167,7 @@ at.tweet(tweets)
 
 #### Delay
 
-You can use `datetime`, `date` and `time` strings, integers as seconds and some strings as [keywords](#Delay-and-Inverval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others to delay the post of your first update.
+You can use `datetime`, `date` and `time` strings, integers as seconds and some strings as [keywords](#Delay-and-Interval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others to delay the post of your first update.
 
 ```python
 # datetime, date and time strings
@@ -186,7 +186,7 @@ Remember to read the [Notes for parsing DateTime strings](#Notes-for-parsing-Dat
 
 #### Interval
 
-Use integers as seconds or some strings as [keywords](#Delay-and-Inverval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others.
+Use integers as seconds or some strings as [keywords](#Delay-and-Interval-Keywords): `half_hour`, `one_hour`, `one_day` and `one_week` between others.
 
 ```python
 # "keywords"
@@ -204,7 +204,7 @@ And of course, you can also set one [template](#Templates) for each one of the u
 at.tweet(tweets, template=template)
 ```
 
-#### Delay and Inverval Keywords
+#### Delay and Interval Keywords
 
 | Keyword          | Seconds |
 | ---------------- | ------- |
