@@ -50,7 +50,7 @@ class Coo:
         consumer_secret: str,
         token: str,
         token_secret: str,
-        preview: bool = False,
+        preview=False,
     ) -> None:
         """
         Parameters
@@ -216,7 +216,7 @@ class Coo:
         """Prepare the asyncio tasks for the custom tweets."""
         for msg in set(custom_msgs):
             if len(msg) != 3:
-                # Raises a ScheduleError if the len of the typle is less tan 3.
+                # Raises a ScheduleError if the len of the tuple is less tan 3.
                 raise ScheduleError(ScheduleError.tupleLenError)
 
         await asyncio.wait(
