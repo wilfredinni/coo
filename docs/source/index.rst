@@ -72,6 +72,7 @@ User Guide
    schedule
    list_schedule
    twitter_api
+   changelog
 
 Indices and tables
 ==================
