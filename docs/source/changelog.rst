@@ -1,10 +1,8 @@
 Change Log
 ==========
 
-`Unreleased <https://github.com/wilfredinni/coo/tree/master>`_
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-
+`0.1.2 <https://github.com/wilfredinni/coo/releases/tag/0.1.2>`_ - 2018-11-29
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **Added**
 
