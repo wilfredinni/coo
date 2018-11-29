@@ -25,15 +25,15 @@ def test_wrong_credentials_TwitterError():
     [
         (m_updates, None, None, None, None),
         # One None
-        (m_updates, None, "now", "template", "local"),
-        (m_updates, "now", None, "template", "local"),
+        (m_updates, None, "now", "$message", "local"),
+        (m_updates, "now", None, "$message", "local"),
         (m_updates, "now", "now", None, "local"),
-        (m_updates, "now", "now", "template", None),
+        (m_updates, "now", "now", "$message", None),
         # Two None
-        (m_updates, None, None, "template", "local"),
+        (m_updates, None, None, "$message", "local"),
         (m_updates, "now", None, None, "local"),
         (m_updates, "now", "now", None, None),
-        (m_updates, None, "now", "template", None),
+        (m_updates, None, "now", "$message", None),
         # Delay
         (m_updates, "now", None, None, None),
         (m_updates, 0, None, None, None),
@@ -41,7 +41,7 @@ def test_wrong_credentials_TwitterError():
         (m_updates, None, "now", None, None),
         (m_updates, None, 0, None, None),
         # Template
-        (m_updates, None, None, "template", None),
+        (m_updates, None, None, "$message", None),
         # Time zone
         (m_updates, None, None, None, "local"),
         (m_updates, None, None, None, "America/Santiago "),
@@ -106,7 +106,7 @@ def test_schedule_ScheduleError(updates):
 # STR UPDATE
 @pytest.mark.parametrize(
     "update, template",
-    [("My Twitter Update", None), ("My Twitter Update", "myTemplate")],
+    [("My Twitter Update", None), ("My Twitter Update", "$message")],
 )
 def test_str_update(update, template):
     at_preview.str_update(update, template)

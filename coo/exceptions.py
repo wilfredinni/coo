@@ -10,6 +10,7 @@ class TemplateError(TypeError):
     """ Raised when the wrong data type is provided in a template. """
 
     templateInfoMsg = "template must be a string."
+    templateMsgErr = "The template must contain a '$message'."
 
 
 class ScheduleError(TypeError):

@@ -61,7 +61,7 @@ def parse_or_get(schedule_time, time_zone):
     try:
         return parse_time(schedule_time, time_zone)
     except ParserError:
-        raise TypeError("An integer, valid datetime or string is needed.")
+        raise TypeError("An integer, valid datetime or keyword is needed.")
 
 
 def zzz(sleep_time, time_zone: str = None):
@@ -75,10 +75,17 @@ def zzz(sleep_time, time_zone: str = None):
 
 def tweet_template(update: str, template: str) -> str:
     """Returns the the update in the template."""
+    check_message_in_template(template)
     try:
         return Template(template).substitute(message=update)
     except TypeError:
         raise TemplateError(TemplateError.templateInfoMsg)
+
+
+def check_message_in_template(template):
+    """Raises a TemplateError if the template does not contain a $message."""
+    if template and "$message" not in template:
+        raise TemplateError(TemplateError.templateMsgErr)
 
 
 def check_schedule_len(schedule: tuple):

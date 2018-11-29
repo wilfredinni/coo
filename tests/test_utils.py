@@ -88,9 +88,9 @@ def test_zzz_INT(sleep_time, time_zone):
     zzz(sleep_time, time_zone)
 
 
-# TWEET TEMPLATE
+# TEMPLATE
 def test_tweet_template():
-    assert isinstance(tweet_template("msg", "str"), str)
+    assert isinstance(tweet_template("msg", "$message"), str)
 
 
 @pytest.mark.parametrize(
@@ -101,9 +101,13 @@ def test_tweet_template():
         ("msg", [1, 2, 3]),
         ("msg", {1, 2, 3}),
         ("msg", {1: 2}),
-        ("msg", 1),
     ],
 )
 def test_tweet_template_TemplateError(update, template):
     with pytest.raises(TemplateError):
         tweet_template(update, template)
+
+
+def test_message_template_TemplateError():
+    with pytest.raises(TemplateError):
+        tweet_template("update", "template")
