@@ -1,10 +1,9 @@
 class TweetTypeError(TypeError):
     """
-    Raised when the argument provided to 'msg' is not a list.
+    Raised when the argument provided to 'msg' is not a list of strings.
     """
 
-    tweetInfoMsg = "A list is required."
-    wrongListMsg = "A list of strings is required."
+    wrongListMsg = "A List of Strings is required."
 
 
 class TemplateError(TypeError):

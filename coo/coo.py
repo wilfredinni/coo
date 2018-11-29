@@ -1,10 +1,10 @@
-from typing import Union
+from typing import Union, List
 import asyncio
 
 import twitter
 
-from .utils import zzz, tweet_template, parse_or_get
-from .exceptions import TweetTypeError, ScheduleError
+from .utils import zzz, tweet_template, parse_or_get, check_schedule_len
+from .exceptions import ScheduleError, TweetTypeError
 
 # TODO: write a test for ScheduleError for the wrong len(tuple).
 
@@ -106,7 +106,7 @@ class Coo:
 
     def tweet(
         self,
-        updates: list,
+        updates: List[str],
         delay: Union[int, str] = None,
         interval: Union[int, str] = None,
         template: str = None,
@@ -134,20 +134,14 @@ class Coo:
         TweetTypeError
             When "updates" is not a list or its elements are not strings.
         """
-        self.delay(delay, time_zone)
-
-        if not isinstance(updates, list):
-            raise TweetTypeError(TweetTypeError.tweetInfoMsg)
-
-        elif isinstance(updates[0], str):
-            for update in updates:
-                if interval:
-                    self.interval(interval)
-
-                self.str_update(update, template)
-
-        else:
+        # If 'updates' is not a List of Strings.
+        if not isinstance(updates, list) or not isinstance(updates[0], str):
             raise TweetTypeError(TweetTypeError.wrongListMsg)
+
+        self.delay(delay, time_zone)
+        for update in updates:
+            self.interval(interval)
+            self.str_update(update, template)
 
     def schedule(self, updates: list, time_zone=time_zone):
         """
@@ -215,9 +209,7 @@ class Coo:
     async def async_tasks(self, custom_msgs: list, time_zone: str):
         """Prepare the asyncio tasks for the custom tweets."""
         for msg in set(custom_msgs):
-            if len(msg) != 3:
-                # Raises a ScheduleError if the len of the tuple is less tan 3.
-                raise ScheduleError(ScheduleError.tupleLenError)
+            check_schedule_len(msg)
 
         await asyncio.wait(
             [
@@ -244,13 +236,15 @@ class Coo:
             # Set to False to avoid repetition
             self.delay_time = False
 
-    def interval(self, interval: Union[int, str]):
+    def interval(self, interval: Union[int, str, None]):
         """Add an interval between Twitter Updates."""
         # Avoid the first iteration
-        if self.interval_time:
+        if interval and self.interval_time is True:
             zzz(interval)
 
-        self.interval_time = True
+        # Allow from the second one
+        if self.interval_time is False:
+            self.interval_time = True
 
     def __str__(self):
         return f"Twitter User: {self.verify.name}."
