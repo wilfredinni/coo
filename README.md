@@ -236,7 +236,7 @@ at.tweet(tweets, template=template)
 Templates are very simple, just use a multiline string and add a `$message` where you want your message to appear.
 
 ```python
-template = """My aswesome header
+template = """My awesome header
 
 $message
 
@@ -269,4 +269,4 @@ And a lot more. If you are interested, check their [documentation](https://pytho
 
 ## Documentation
 
-Documentation available at [readthedocs.org](https://coo.readthedocs.io/en/latest/).
+Documentation available at [coo.readthedocs.io](https://coo.readthedocs.io/en/latest/).
