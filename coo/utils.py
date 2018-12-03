@@ -54,7 +54,6 @@ def parse_or_get(schedule_time, time_zone):
     """Returns seconds from dictionaries, integers or a DateTime."""
     if isinstance(schedule_time, int):
         return schedule_time
-
     elif schedule_time in TIME_DICT:
         return TIME_DICT.get(schedule_time)
 
