@@ -2,17 +2,15 @@
 
 ## [Unreleased]
 
-## [0.1.2] - 2018-11-29
-
 ### Added
 
-- Added changes to CHANGELOG.md.
-- Added changes to the documentation.
-- Added releases.
+- Added support to post updates randomly with `tweet(aleartory=True)`. Default is `False`.
+
+## [0.1.2] - 2018-11-29
 
 ### Fixed
 
-- Fixed template overwriting the tweets when `$message` is not provided.
+- Fixed template overwriting the updates when `$message` is not provided.
 - Fixed lots of typos.
 
 ## [0.1.1] - 2018-11-21

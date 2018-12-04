@@ -1,4 +1,5 @@
 from typing import Union, List
+import random
 import asyncio
 
 import twitter
@@ -28,7 +29,7 @@ class Coo:
     token_secret : str
         Twitter token secret.
     preview : bool, optional
-        Print the update(s) on the console.
+        Print the update(s) on the console (default is 'False).
 
     Methods
     -------
@@ -111,6 +112,7 @@ class Coo:
         interval: Union[int, str] = None,
         template: str = None,
         time_zone: str = time_zone,
+        aleatory=False,
     ):
         """
         Post Twitter Updates from a list of strings.
@@ -119,7 +121,7 @@ class Coo:
         ----------
         updates : list
             A list of strings, each one is a Twitter Update.
-        delay : int, str, optional
+        delay : str, int, optional
             The time before the first Update.
         interval : str, int, optional
             The time between Updates.
@@ -128,6 +130,8 @@ class Coo:
         time_zone : str, optional
             Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+        aleatory : bool, optional
+            Tweet the updates randomly (default is 'False').
 
         Raises
         ------
@@ -137,6 +141,9 @@ class Coo:
         # If 'updates' is not a List of Strings.
         if not isinstance(updates, list) or not isinstance(updates[0], str):
             raise TweetTypeError(TweetTypeError.wrongListMsg)
+
+        if aleatory:
+            random.shuffle(updates)
 
         self.delay(delay, time_zone)
         for update in updates:

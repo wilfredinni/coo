@@ -10,7 +10,7 @@ at_preview = Coo("mock", "mock", "mock", "mock", preview=True)
 atc = Coo("mock", "mock", "mock", "mock")
 
 # Mock Update list
-m_updates = ["mock", "mock", "mock", "mock", "mock"]
+m_updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
 
 
 # API
@@ -69,6 +69,11 @@ def test_tweet(updates, delay, interval, template, time_zone):
 def test_tweet_TweetTypeError(updates):
     with pytest.raises(TweetTypeError):
         at_preview.tweet(updates)
+
+
+def test_aleatory_tweet():
+    # TODO: test aleatory=True (coo.tweet)
+    pass
 
 
 # SCHEDULE
