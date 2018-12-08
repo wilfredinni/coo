@@ -108,10 +108,14 @@ def test_schedule_ScheduleError(updates):
         at_preview.schedule(updates)
 
 
+def test_schedule_len_tuple_ScheduleError():
+    # TODO: write a test for ScheduleError for the wrong len(tuple).
+    pass
+
+
 # STR UPDATE
 @pytest.mark.parametrize(
-    "update, template",
-    [("My Twitter Update", None), ("My Twitter Update", "$message")],
+    "update, template", [("My Twitter Update", None), ("My Twitter Update", "$message")]
 )
 def test_str_update(update, template):
     at_preview.str_update(update, template)
