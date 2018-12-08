@@ -128,7 +128,7 @@ class Coo:
         template : str, optional
             A string to serve as a template. Need to has a "$message".
         media : str, optional
-            A URL, or a PATH to a local file, or a file-like object (something
+        URL or PATH to a local file, or a file-like object (something
             with a read() method), or a list of any combination of the above.
         time_zone : str, optional
             Sets a time zone for parsing datetime strings (default is 'local'):
@@ -202,7 +202,7 @@ class Coo:
         template : str, optional
             A string to serve as a template. Need to has a "$message".
         media : str, optional
-            A URL, or a PATH to a local file, or a file-like object (something
+            URL or PATH to a local file, or a file-like object (something
             with a read() method), or a list of any combination of the above.
 
         Returns
