@@ -1,4 +1,5 @@
 from typing import Union, List
+from pathlib import Path
 import random
 import asyncio
 
@@ -6,8 +7,6 @@ import twitter
 
 from .utils import zzz, tweet_template, parse_or_get, check_schedule_len
 from .exceptions import ScheduleError, TweetTypeError
-
-# TODO: write a test for ScheduleError for the wrong len(tuple).
 
 
 class Coo:
@@ -111,6 +110,7 @@ class Coo:
         delay: Union[int, str] = None,
         interval: Union[int, str] = None,
         template: str = None,
+        media: str = None,
         time_zone: str = time_zone,
         aleatory=False,
     ):
@@ -127,6 +127,9 @@ class Coo:
             The time between Updates.
         template : str, optional
             A string to serve as a template. Need to has a "$message".
+        media : str, optional
+            A URL, or a PATH to a local file, or a file-like object (something
+            with a read() method), or a list of any combination of the above.
         time_zone : str, optional
             Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -148,7 +151,7 @@ class Coo:
         self.delay(delay, time_zone)
         for update in updates:
             self.interval(interval)
-            self.str_update(update, template)
+            self.str_update(update, template, media)
 
     def schedule(self, updates: list, time_zone=time_zone):
         """
@@ -188,7 +191,7 @@ class Coo:
         self.loop.run_until_complete(self.async_tasks(updates, time_zone))
         self.loop.close()
 
-    def str_update(self, update: str, template: Union[None, str]):
+    def str_update(self, update: str, template: Union[None, str], media=None):
         """
         Post a Twitter Update from a string.
 
@@ -198,6 +201,9 @@ class Coo:
             A string representing a Twitter Update.
         template : str, optional
             A string to serve as a template. Need to has a "$message".
+        media : str, optional
+            A URL, or a PATH to a local file, or a file-like object (something
+            with a read() method), or a list of any combination of the above.
 
         Returns
         -------
@@ -206,12 +212,19 @@ class Coo:
         """
         if template:
             update = tweet_template(update=update, template=template)
-
         if self.preview:
             print(update)
             return
+        if media:
+            media_file = Path(media)
 
-        return self.api.PostUpdate(update)
+        try:
+            # Try to post with a media file.
+            with open(media_file, "rb") as media_file:  # type: ignore
+                return self.api.PostUpdate(update, media=media_file)
+        except TypeError:
+            # If media is not a readable type, just post the update.
+            return self.api.PostUpdate(update)
 
     async def async_tasks(self, custom_msgs: list, time_zone: str):
         """Prepare the asyncio tasks for the custom tweets."""
