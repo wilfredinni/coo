@@ -76,6 +76,11 @@ def test_aleatory_tweet():
     pass
 
 
+def test_media_update():
+    # TODO: test media updates
+    pass
+
+
 # SCHEDULE
 @pytest.mark.parametrize(
     "updates",
