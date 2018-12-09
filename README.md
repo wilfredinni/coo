@@ -7,6 +7,9 @@
 </h1>
 
 <p align="center">
+    <a href="https://badge.fury.io/py/coo">
+        <img src="https://badge.fury.io/py/coo.svg" alt="PyPI version" height="18">
+    </a>
     <a href="https://travis-ci.org/wilfredinni/coo">
         <img src="https://travis-ci.org/wilfredinni/coo.svg?branch=master" alt="Build Status">
     </a>

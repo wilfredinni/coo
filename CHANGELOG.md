@@ -5,7 +5,8 @@
 ### Added
 
 - Added support to post updates randomly: `Coo.tweet(aleartory=True)`. Default is `False`.
-- Added support for updates with media files: `Coo.tweet(updates, media="path/to/media_file.png")`.
+- Added support for updates with a media file: `Coo.tweet(updates, media="path/to/media_file.png")`.
+- Added support for updates with a media file: `Coo.schedule(updates, media="path/to/media_file.png")`.
 
 ## [0.1.2] - 2018-11-29
 

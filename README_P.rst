@@ -2,6 +2,8 @@
 coo: Schedule Twitter updates
 =============================
 
+.. image:: https://badge.fury.io/py/coo.svg
+    :target: https://badge.fury.io/py/coo
 .. image:: https://travis-ci.org/wilfredinni/coo.svg?branch=master
     :target: https://travis-ci.org/wilfredinni/coo
 .. image:: https://codecov.io/gh/wilfredinni/coo/branch/master/graph/badge.svg
