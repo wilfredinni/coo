@@ -5,7 +5,7 @@ coo: Schedule Twitter updates
 .. raw:: html
 
     <embed>
-        <p align="center"><img src="https://raw.githubusercontent.com/wilfredinni/coo/master/coo2.png" alt="Logo"></p>
+        <p align="center"><img src="https://raw.githubusercontent.com/wilfredinni/coo/master/coo.png" alt="Logo"></p>
     </embed>
 
 .. raw:: html
