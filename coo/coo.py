@@ -1,4 +1,4 @@
-from typing import Union, List
+from typing import Union, List, Optional
 from pathlib import Path
 import random
 import asyncio
@@ -43,6 +43,7 @@ class Coo:
     """
 
     time_zone: str = "local"
+    media: Optional[str] = None
 
     def __init__(
         self,
@@ -104,14 +105,22 @@ class Coo:
         """Verify if the authentication is valid."""
         return self.api.VerifyCredentials()
 
+    @classmethod
+    def set_time_zone(cls, time_zone):
+        cls.time_zone = time_zone
+
+    @classmethod
+    def set_media_file(cls, media):
+        cls.media = media
+
     def tweet(
         self,
         updates: List[str],
         delay: Union[int, str] = None,
         interval: Union[int, str] = None,
-        template: str = None,
-        media: str = None,
-        time_zone: str = time_zone,
+        template: Optional[str] = None,
+        media=media,
+        time_zone=time_zone,
         aleatory=False,
     ):
         """
@@ -128,8 +137,8 @@ class Coo:
         template : str, optional
             A string to serve as a template. Need to has a "$message".
         media : str, optional
-        URL or PATH to a local file, or a file-like object (something
-            with a read() method), or a list of any combination of the above.
+            URL or PATH to a local file, or a file-like object (something
+            with a read() method).
         time_zone : str, optional
             Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
@@ -147,13 +156,17 @@ class Coo:
 
         if aleatory:
             random.shuffle(updates)
+        if time_zone is not self.time_zone:
+            self.set_time_zone(time_zone)
+        if media:
+            self.set_media_file(Path(media))
 
-        self.delay(delay, time_zone)
+        self.delay(delay)
         for update in updates:
             self.interval(interval)
-            self.str_update(update, template, media)
+            self.str_update(update, template)
 
-    def schedule(self, updates: list, time_zone=time_zone):
+    def schedule(self, updates: list, time_zone=time_zone, media=media):
         """
         Post multiple Twitter Updates from a list of tuples.
 
@@ -179,6 +192,9 @@ class Coo:
         time_zone : str, optional
             Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+        media : str, optional
+            URL or PATH to a local file, or a file-like object (something
+            with a read() method).
 
         Raises
         ------
@@ -187,11 +203,15 @@ class Coo:
         """
         if not isinstance(updates[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
+        if time_zone:
+            self.set_time_zone(time_zone)
+        if media:
+            self.set_media_file(Path(media))
 
-        self.loop.run_until_complete(self.async_tasks(updates, time_zone))
+        self.loop.run_until_complete(self.async_tasks(updates))
         self.loop.close()
 
-    def str_update(self, update: str, template: Union[None, str], media=None):
+    def str_update(self, update: str, template: Optional[str]):
         """
         Post a Twitter Update from a string.
 
@@ -201,9 +221,6 @@ class Coo:
             A string representing a Twitter Update.
         template : str, optional
             A string to serve as a template. Need to has a "$message".
-        media : str, optional
-            URL or PATH to a local file, or a file-like object (something
-            with a read() method), or a list of any combination of the above.
 
         Returns
         -------
@@ -215,43 +232,38 @@ class Coo:
         if self.preview:
             print(update)
             return
-        if media:
-            media_file = Path(media)
 
         try:
             # Try to post with a media file.
-            with open(media_file, "rb") as media_file:  # type: ignore
+            with open(self.media, "rb") as media_file:  # type: ignore
                 return self.api.PostUpdate(update, media=media_file)
         except TypeError:
             # If media is not a readable type, just post the update.
             return self.api.PostUpdate(update)
 
-    async def async_tasks(self, custom_msgs: list, time_zone: str):
+    async def async_tasks(self, custom_msgs: list):
         """Prepare the asyncio tasks for the custom tweets."""
         for msg in set(custom_msgs):
             check_schedule_len(msg)
 
         await asyncio.wait(
-            [
-                self.loop.create_task(self.custom_updates(post, time_zone))
-                for post in custom_msgs
-            ]
+            [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
         )
 
-    async def custom_updates(self, msg: tuple, time_zone: str):
+    async def custom_updates(self, msg: tuple):
         """
         Process custom updates: templates and updates times for every
         Twitter update.
         """
-        seconds = parse_or_get(msg[0], time_zone)
+        seconds = parse_or_get(msg[0], self.time_zone)
         await asyncio.sleep(seconds)
 
         return self.str_update(update=msg[2], template=msg[1])
 
-    def delay(self, delay: Union[None, str, int], time_zone):
+    def delay(self, delay: Union[None, str, int]):
         """Delay the Post of one or multiple tweets."""
         if delay and self.delay_time:
-            zzz(delay, time_zone)
+            zzz(delay, self.time_zone)
 
             # Set to False to avoid repetition
             self.delay_time = False
