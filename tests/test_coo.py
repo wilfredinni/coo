@@ -71,13 +71,13 @@ def test_tweet_TweetTypeError(updates):
         at_preview.tweet(updates)
 
 
-def test_aleatory_tweet():
+def test_tweet_random():
     # TODO: test aleatory=True (coo.tweet)
     pass
 
 
-def test_media_update():
-    # TODO: test media updates
+def test_tweet_media_update():
+    # TODO: test tweet media updates
     pass
 
 
@@ -118,6 +118,11 @@ def test_schedule_len_tuple_ScheduleError():
     pass
 
 
+def test_schedule_media_update():
+    # TODO: test schedule media updates
+    pass
+
+
 # STR UPDATE
 @pytest.mark.parametrize(
     "update, template", [("My Twitter Update", None), ("My Twitter Update", "$message")]
@@ -127,10 +132,10 @@ def test_str_update(update, template):
 
 
 # DELAY
-@pytest.mark.parametrize("delay, time_zone", [(0, "local"), ("now", "local")])
-def test_delay(delay, time_zone):
+@pytest.mark.parametrize("delay", [(0), ("now",)])
+def test_delay(delay):
     # TODO: test the delay using datetime strings.
-    at_preview.delay(delay, time_zone)
+    at_preview.delay(delay)
 
 
 # INTERVAL
