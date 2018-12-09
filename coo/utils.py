@@ -43,8 +43,8 @@ def parse_time(date_time: str, time_zone: str) -> int:
     # The time will be set to 00:00:00 if it's not specified.
     # A future date is needed.
 
-    secs = (update - now).seconds
-    if secs < 0:
+    secs = update - now
+    if secs.seconds < 0:
         raise ScheduleError(ScheduleError.pastDateError)
 
     return secs.seconds
