@@ -1,12 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-"""The setup script."""
-
 from setuptools import setup, find_packages
+import re
+
+with open("coo/__init__.py", "r") as file:
+    regex_version = r'^__version__\s*=\s*[\'"]([^\'"]*)[\'"]'
+    version = re.search(regex_version, file.read(), re.MULTILINE).group(1)
 
 with open("README_P.rst") as readme_file:
     readme = readme_file.read()
+
 
 requirements = ["python-twitter", "pendulum"]
 
@@ -34,6 +35,6 @@ setup(
     test_suite="tests",
     tests_require=test_requirements,
     url="https://github.com/wilfredinni/coo",
-    version="0.1.2",
+    version=version,
     zip_safe=False,
 )
