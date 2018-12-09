@@ -82,6 +82,16 @@ at.tweet(tweets, delay="13:45", interval="four_hours", template=my_template)
 
 For more detailed options and usage, keep reading or check the [documentation](https://coo.readthedocs.io/en/latest/) :blue_book:.
 
+## TODO's
+
+- [ ] Add support random updates.
+- [ ] Add support for media files on `Coo.tweet`.
+- [ ] Add support for media files on `Coo.schedule`.
+- [ ] Support `.toml` files for configuration and tweets.
+- [ ] Support resume after a process restart ( see [apscheduler
+](https://github.com/agronholm/apscheduler)).
+- [ ] Add a CLI.
+
 
 ## Scheduling Twitter Updates
 
@@ -134,7 +144,7 @@ at.schedule(tweets, time_zone="America/Santiago")
 
 Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) available.
 
-## Tweet an ordered list of strings
+## Tweet a list of strings
 
 Post ordered updates with `delay`, `interval`, and a [template](#Templates) if needed.
 
