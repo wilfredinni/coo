@@ -5,18 +5,24 @@ from coo import Coo
 from coo.exceptions import TweetTypeError, ScheduleError
 
 
-# Coo instances
-at_preview = Coo("mock", "mock", "mock", "mock", preview=True)
-atc = Coo("mock", "mock", "mock", "mock")
-
 # Mock Update list
 m_updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
 
 
+@pytest.fixture
+def coo_preview_instance():
+    return Coo("mock", "mock", "mock", "mock", preview=True)
+
+
+@pytest.fixture
+def coo_mock_instance():
+    return Coo("mock", "mock", "mock", "mock")
+
+
 # API
-def test_wrong_credentials_TwitterError():
+def test_wrong_credentials_TwitterError(coo_mock_instance):
     with pytest.raises(TwitterError):
-        atc.verify
+        coo_mock_instance.verify
 
 
 # TWEET
@@ -47,8 +53,8 @@ def test_wrong_credentials_TwitterError():
         (m_updates, None, None, None, "America/Santiago "),
     ],
 )
-def test_tweet(updates, delay, interval, template, time_zone):
-    at_preview.tweet(updates, delay, interval, template, time_zone)
+def test_tweet(coo_preview_instance, updates, delay, interval, template, time_zone):
+    coo_preview_instance.tweet(updates, delay, interval, template, time_zone)
 
 
 @pytest.mark.parametrize(
@@ -66,9 +72,9 @@ def test_tweet(updates, delay, interval, template, time_zone):
         ([1, 2, 3]),
     ],
 )
-def test_tweet_TweetTypeError(updates):
+def test_tweet_TweetTypeError(coo_preview_instance, updates):
     with pytest.raises(TweetTypeError):
-        at_preview.tweet(updates)
+        coo_preview_instance.tweet(updates)
 
 
 def test_tweet_random():
@@ -95,8 +101,8 @@ def test_tweet_media_update():
         )
     ],
 )
-def test_schedule(updates):
-    at_preview.schedule(updates)
+def test_schedule(coo_preview_instance, updates):
+    coo_preview_instance.schedule(updates)
 
 
 @pytest.mark.parametrize(
@@ -108,9 +114,9 @@ def test_schedule(updates):
         ([123, 456, 789]),
     ],
 )
-def test_schedule_ScheduleError(updates):
+def test_schedule_ScheduleError(coo_preview_instance, updates):
     with pytest.raises(ScheduleError):
-        at_preview.schedule(updates)
+        coo_preview_instance.schedule(updates)
 
 
 def test_schedule_len_tuple_ScheduleError():
@@ -132,8 +138,8 @@ def test_schedule_single_media_update():
 @pytest.mark.parametrize(
     "update, template", [("My Twitter Update", None), ("My Twitter Update", "$message")]
 )
-def test_str_update(update, template):
-    at_preview.str_update(update, template)
+def test_str_update(coo_preview_instance, update, template):
+    coo_preview_instance.str_update(update, template)
 
 
 def test_str_update_media():
@@ -142,13 +148,13 @@ def test_str_update_media():
 
 
 # DELAY
-@pytest.mark.parametrize("delay", [(0), ("now",)])
-def test_delay(delay):
+@pytest.mark.parametrize("delay", [(0), ("now")])
+def test_delay(coo_preview_instance, delay):
     # TODO: test the delay using datetime strings.
-    at_preview.delay(delay)
+    coo_preview_instance.delay(delay)
 
 
 # INTERVAL
 @pytest.mark.parametrize("interval", [(0), ("now")])
-def test_interval(interval):
-    at_preview.interval(interval)
+def test_interval(coo_preview_instance, interval):
+    coo_preview_instance.interval(interval)
