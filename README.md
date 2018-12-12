@@ -90,6 +90,10 @@ For more detailed options and usage, keep reading or check the [documentation](h
 - [ ] Add support for random updates.
 - [ ] Add support for media files on `Coo.tweet`.
 - [ ] Add support for media files on `Coo.schedule`.
+- [ ] Add support for multiple media files on `Coo.tweet`.
+- [ ] Add support for multiple media files on `Coo.schedule`.
+- [ ] Add support for media files from URLs.
+- [ ] Add support for one template for all updates on `Coo.schedule`.
 - [ ] Add logging support.
 - [ ] Support `.toml` files for configuration and tweets.
 - [ ] Support resume after a process restart (see [apscheduler](https://github.com/agronholm/apscheduler)).

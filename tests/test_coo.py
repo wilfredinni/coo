@@ -118,8 +118,13 @@ def test_schedule_len_tuple_ScheduleError():
     pass
 
 
-def test_schedule_media_update():
-    # TODO: test schedule media updates
+def test_schedule_global_media_update():
+    # TODO: test schedule global media updates
+    pass
+
+
+def test_schedule_single_media_update():
+    # TODO: test schedule single media updates
     pass
 
 
@@ -129,6 +134,11 @@ def test_schedule_media_update():
 )
 def test_str_update(update, template):
     at_preview.str_update(update, template)
+
+
+def test_str_update_media():
+    # TODO: test string update with media file
+    pass
 
 
 # DELAY

@@ -5,7 +5,7 @@ import asyncio
 
 import twitter
 
-from .utils import zzz, tweet_template, parse_or_get, check_schedule_len
+from .utils import zzz, tweet_template, parse_or_get
 from .exceptions import ScheduleError, TweetTypeError
 
 
@@ -44,6 +44,7 @@ class Coo:
 
     time_zone: str = "local"
     media: Optional[str] = None
+    global_media: Optional[str] = None
 
     def __init__(
         self,
@@ -112,6 +113,10 @@ class Coo:
     @classmethod
     def set_media_file(cls, media):
         cls.media = media
+
+    @classmethod
+    def set_global_media_file(cls, global_media):
+        cls.global_media = global_media
 
     def tweet(
         self,
@@ -203,10 +208,10 @@ class Coo:
         """
         if not isinstance(updates[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
-        if time_zone:
+        if time_zone is not self.time_zone:
             self.set_time_zone(time_zone)
         if media:
-            self.set_media_file(Path(media))
+            self.set_global_media_file(Path(media))
 
         self.loop.run_until_complete(self.async_tasks(updates))
         self.loop.close()
@@ -243,8 +248,9 @@ class Coo:
 
     async def async_tasks(self, custom_msgs: list):
         """Prepare the asyncio tasks for the custom tweets."""
-        for msg in set(custom_msgs):
-            check_schedule_len(msg)
+        # TODO: check the len of the tuples
+        # for msg in set(custom_msgs):
+        #     check_schedule_len(msg)
 
         await asyncio.wait(
             [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
@@ -257,6 +263,13 @@ class Coo:
         """
         seconds = parse_or_get(msg[0], self.time_zone)
         await asyncio.sleep(seconds)
+
+        if len(msg) is 4 and msg[3] is not None:
+            self.set_media_file(Path(msg[3]))
+        elif len(msg) is 3 and self.global_media:
+            self.set_media_file(Path(self.global_media))
+        else:
+            self.set_media_file(None)
 
         return self.str_update(update=msg[2], template=msg[1])
 
