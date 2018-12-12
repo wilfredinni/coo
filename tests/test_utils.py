@@ -84,7 +84,6 @@ def test_parse_or_get_TypeError(schedule_time, time_zone):
 # ZZZ
 @pytest.mark.parametrize("sleep_time, time_zone", [(0, None), ("now", None)])
 def test_zzz_INT(sleep_time, time_zone):
-    # TODO: test datetime strings
     zzz(sleep_time, time_zone)
 
 

@@ -13,7 +13,3 @@ exclude_lines =
     raise AssertionError
     raise NotImplementedError
     if __name__ == .__main__.:
-    self.set_media_file(None)
-    return self.api.PostUpdate(update)
-    return self.api.PostUpdate(update, media=media_file)
-    with open(self.media, "rb") as media_file:  # type: ignore

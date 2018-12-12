@@ -60,6 +60,33 @@ def test_tweet(coo_preview_instance, updates, delay, interval, template, time_zo
 
 
 @pytest.mark.parametrize(
+    "tz",
+    [
+        ("Canada/Yukon"),
+        ("Brazil/Acre"),
+        ("Australia/Tasmania"),
+        ("America/Santiago"),
+        ("America/Detroit"),
+        ("Asia/Atyrau"),
+    ],
+)
+def test_tweet_time_zone(coo_preview_instance, tz):
+    coo_preview_instance.tweet(["mock"], time_zone=tz)
+    assert coo_preview_instance.time_zone == tz
+
+
+def test_tweet_random(coo_preview_instance):
+    updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
+    coo_preview_instance.tweet(m_updates, aleatory=True)
+    assert updates != m_updates
+
+
+def test_tweet_media_update(coo_preview_instance):
+    coo_preview_instance.tweet(["mock"], media="../coo.png")
+    assert coo_preview_instance.media == Path("../coo.png")
+
+
+@pytest.mark.parametrize(
     "updates",
     [
         # update is not a instance of list:
@@ -79,31 +106,19 @@ def test_tweet_TweetTypeError(coo_preview_instance, updates):
         coo_preview_instance.tweet(updates)
 
 
-def test_tweet_random(coo_preview_instance):
-    updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
-    coo_preview_instance.tweet(m_updates, aleatory=True)
-    assert updates != m_updates
+def test_tweet_media_FileNotFoundError(coo_mock_instance):
+    with pytest.raises(FileNotFoundError):
+        coo_mock_instance.tweet(["mock"], media="coo_.png")
 
 
-def test_tweet_media_update(coo_preview_instance):
-    coo_preview_instance.tweet(["mock"], media="../coo.png")
-    assert coo_preview_instance.media == Path("../coo.png")
+def test_tweet_media_TwitterError(coo_mock_instance):
+    with pytest.raises(TwitterError):
+        coo_mock_instance.tweet(["mock"], media="coo.png")
 
 
-@pytest.mark.parametrize(
-    "tz",
-    [
-        ("Canada/Yukon"),
-        ("Brazil/Acre"),
-        ("Australia/Tasmania"),
-        ("America/Santiago"),
-        ("America/Detroit"),
-        ("Asia/Atyrau"),
-    ],
-)
-def test_tweet_time_zone(coo_preview_instance, tz):
-    coo_preview_instance.tweet(["mock"], time_zone=tz)
-    assert coo_preview_instance.time_zone == tz
+def test_tweet_none_media_TwitterError(coo_mock_instance):
+    with pytest.raises(TwitterError):
+        coo_mock_instance.tweet(["mock"], media=None)
 
 
 # SCHEDULE
@@ -142,23 +157,12 @@ def test_schedule_ScheduleError(coo_preview_instance, updates):
         coo_preview_instance.schedule(updates)
 
 
-def test_schedule_len_tuple_ScheduleError():
-    # TODO: write a test for ScheduleError for the wrong len(tuple).
-    pass
-
-
 # STR UPDATE
 @pytest.mark.parametrize(
     "update, template", [("My Twitter Update", None), ("My Twitter Update", "$message")]
 )
 def test_str_update(coo_preview_instance, update, template):
     coo_preview_instance.str_update(update, template)
-
-
-# def test_str_update_media(coo_preview_instance):
-# TODO: test string update with media file
-# coo_preview_instance.str_update("update", media="../coo.png")
-# assert coo_preview_instance.media == Path("../coo.png")
 
 
 # DELAY
