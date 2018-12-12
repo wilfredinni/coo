@@ -1,3 +1,5 @@
+from pathlib import Path
+
 import pytest
 from twitter.error import TwitterError
 
@@ -11,12 +13,12 @@ m_updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
 
 @pytest.fixture
 def coo_preview_instance():
-    return Coo("mock", "mock", "mock", "mock", preview=True)
+    yield Coo("mock", "mock", "mock", "mock", preview=True)
 
 
 @pytest.fixture
 def coo_mock_instance():
-    return Coo("mock", "mock", "mock", "mock")
+    yield Coo("mock1", "mock2", "mock3", "mock4")
 
 
 # API
@@ -77,14 +79,31 @@ def test_tweet_TweetTypeError(coo_preview_instance, updates):
         coo_preview_instance.tweet(updates)
 
 
-def test_tweet_random():
-    # TODO: test aleatory=True (coo.tweet)
-    pass
+def test_tweet_random(coo_preview_instance):
+    updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
+    coo_preview_instance.tweet(m_updates, aleatory=True)
+    assert updates != m_updates
 
 
-def test_tweet_media_update():
-    # TODO: test tweet media updates
-    pass
+def test_tweet_media_update(coo_preview_instance):
+    coo_preview_instance.tweet(["mock"], media="../coo.png")
+    assert coo_preview_instance.media == Path("../coo.png")
+
+
+@pytest.mark.parametrize(
+    "tz",
+    [
+        ("Canada/Yukon"),
+        ("Brazil/Acre"),
+        ("Australia/Tasmania"),
+        ("America/Santiago"),
+        ("America/Detroit"),
+        ("Asia/Atyrau"),
+    ],
+)
+def test_tweet_time_zone(coo_preview_instance, tz):
+    coo_preview_instance.tweet(["mock"], time_zone=tz)
+    assert coo_preview_instance.time_zone == tz
 
 
 # SCHEDULE
@@ -101,8 +120,11 @@ def test_tweet_media_update():
         )
     ],
 )
-def test_schedule(coo_preview_instance, updates):
-    coo_preview_instance.schedule(updates)
+def test_schedule_time_zone_media(coo_preview_instance, updates):
+    coo_preview_instance.schedule(updates, time_zone="Canada/Yukon", media="../coo.png")
+    assert coo_preview_instance.time_zone == "Canada/Yukon"
+    assert coo_preview_instance.media == Path("../coo.png")
+    assert coo_preview_instance.global_media == Path("../coo.png")
 
 
 @pytest.mark.parametrize(
@@ -124,16 +146,6 @@ def test_schedule_len_tuple_ScheduleError():
     pass
 
 
-def test_schedule_global_media_update():
-    # TODO: test schedule global media updates
-    pass
-
-
-def test_schedule_single_media_update():
-    # TODO: test schedule single media updates
-    pass
-
-
 # STR UPDATE
 @pytest.mark.parametrize(
     "update, template", [("My Twitter Update", None), ("My Twitter Update", "$message")]
@@ -142,15 +154,15 @@ def test_str_update(coo_preview_instance, update, template):
     coo_preview_instance.str_update(update, template)
 
 
-def test_str_update_media():
+# def test_str_update_media(coo_preview_instance):
     # TODO: test string update with media file
-    pass
+    # coo_preview_instance.str_update("update", media="../coo.png")
+    # assert coo_preview_instance.media == Path("../coo.png")
 
 
 # DELAY
 @pytest.mark.parametrize("delay", [(0), ("now")])
 def test_delay(coo_preview_instance, delay):
-    # TODO: test the delay using datetime strings.
     coo_preview_instance.delay(delay)
 
 
