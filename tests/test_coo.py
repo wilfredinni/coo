@@ -116,6 +116,7 @@ def test_tweet_time_zone(coo_preview_instance, tz):
                 (0, "template", "update"),
                 ("now", None, "update"),
                 (0, None, "update"),
+                (0, None, "update", "../coo.png"),
             ]
         )
     ],
@@ -155,9 +156,9 @@ def test_str_update(coo_preview_instance, update, template):
 
 
 # def test_str_update_media(coo_preview_instance):
-    # TODO: test string update with media file
-    # coo_preview_instance.str_update("update", media="../coo.png")
-    # assert coo_preview_instance.media == Path("../coo.png")
+# TODO: test string update with media file
+# coo_preview_instance.str_update("update", media="../coo.png")
+# assert coo_preview_instance.media == Path("../coo.png")
 
 
 # DELAY
