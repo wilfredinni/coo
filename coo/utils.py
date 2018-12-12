@@ -84,7 +84,7 @@ def tweet_template(update: str, template: str) -> str:
         raise TemplateError(TemplateError.templateInfoMsg)
 
 
-def check_schedule_len(schedule: tuple):
-    """Raises a ScheduleError if the len of the tuple is less tan 3."""
-    if len(schedule) is not 3:
-        raise ScheduleError(ScheduleError.tupleLenError)
+# def check_schedule_len(schedule: tuple):
+#     """Raises a ScheduleError if the len of the tuple is less tan 3."""
+#     if len(schedule) is not 3:
+#         raise ScheduleError(ScheduleError.tupleLenError)

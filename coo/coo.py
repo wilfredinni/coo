@@ -171,6 +171,8 @@ class Coo:
             self.interval(interval)
             self.str_update(update, template)
 
+        return updates
+
     def schedule(self, updates: list, time_zone=time_zone, media=media):
         """
         Post multiple Twitter Updates from a list of tuples.
