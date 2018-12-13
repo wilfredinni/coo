@@ -155,7 +155,6 @@ class Coo:
         TweetTypeError
             When "updates" is not a list or its elements are not strings.
         """
-        # If 'updates' is not a List of Strings.
         if not isinstance(updates, list) or not isinstance(updates[0], str):
             raise TweetTypeError(TweetTypeError.wrongListMsg)
 
@@ -250,9 +249,9 @@ class Coo:
 
     async def async_tasks(self, custom_msgs: list):
         """Prepare the asyncio tasks for the custom tweets."""
-        # TODO: check the len of the tuples
-        # for msg in set(custom_msgs):
-        #     check_schedule_len(msg)
+        for msg in set(custom_msgs):
+            if len(msg) < 3 or len(msg) > 4:
+                raise ScheduleError(ScheduleError.tupleLenError)
 
         await asyncio.wait(
             [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
