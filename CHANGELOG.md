@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+## [0.1.3] - 2018-12-13
+
 - Added support to post updates randomly on `Coo.tweet(aleartory=True)`.
 - Added support for updates with a single media file for all tweets on `Coo.tweet()`.
 - Added support for updates with a single media file for all tweets on `Coo.schedule()`.
@@ -21,6 +23,7 @@
 Initial Release
 
 [Unreleased]: https://github.com/wilfredinni/coo/tree/master
+[0.1.3]: https://github.com/wilfredinni/coo/releases/tag/0.1.3
 [0.1.2]: https://github.com/wilfredinni/coo/releases/tag/0.1.2
 [0.1.1]: https://github.com/wilfredinni/coo/releases/tag/0.1.1
 [0.1.0]: https://github.com/wilfredinni/coo/releases/tag/0.1.0
