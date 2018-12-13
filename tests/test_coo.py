@@ -122,21 +122,14 @@ def test_tweet_none_media_TwitterError(coo_mock_instance):
 
 
 # SCHEDULE
-@pytest.mark.parametrize(
-    "updates",
-    [
-        (
-            [
-                ("now", "template", "update"),
-                (0, "template", "update"),
-                ("now", None, "update"),
-                (0, None, "update"),
-                (0, None, "update", "../coo.png"),
-            ]
-        )
-    ],
-)
-def test_schedule_time_zone_media(coo_preview_instance, updates):
+def test_schedule_time_zone_media(coo_preview_instance):
+    updates = [
+        ("now", "template", "update"),
+        (0, "template", "update"),
+        ("now", None, "update"),
+        (0, None, "update"),
+        (0, None, "update", "../coo.png"),
+    ]
     coo_preview_instance.schedule(updates, time_zone="Canada/Yukon", media="../coo.png")
     assert coo_preview_instance.time_zone == "Canada/Yukon"
     assert coo_preview_instance.media == Path("../coo.png")
@@ -150,6 +143,8 @@ def test_schedule_time_zone_media(coo_preview_instance, updates):
         ([{"update1", "update2"}]),
         (["update1", "update2"]),
         ([123, 456, 789]),
+        # len tuple
+        ([("now")]),
     ],
 )
 def test_schedule_ScheduleError(coo_preview_instance, updates):
