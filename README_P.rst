@@ -130,6 +130,45 @@ Parsing DateTime strings
 Here you can find all the
 `Time Zones <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>`_.
 
+Media Files
+^^^^^^^^^^^
+
+There are two ways to add media files to your tweets. The first and easiest is to use one global file for all the updates:
+
+.. code-block:: python
+
+    at.schedule(tweets, time_zone="America/Santiago", media="path/to/file.png")
+
+Also, an individual file can be set for each one of the updates:
+
+.. code-block:: python
+
+    tweets = [
+        ("2030-10-28 18:50", template, "Update with an image.", "pics/owl.png"),
+        ("2030-10-29 18:15", template, "Update with other media.", "videos/funny_video.mp4"),
+        ("2030-11-01 13:45", template, "Tweet without media."),
+    ]
+
+Finally, it is possible to combine these to ways. For example, if most of the tweets are gonna use the same media and just a few will have a different or none:
+
+.. code-block:: python
+
+    tweets = [
+        ("2030-11-01 13:45", template, "Tweet with global media."),
+        ("2030-11-02 13:45", template, "Tweet with global media."),
+        ("2030-11-03 13:45", template, "Tweet with global media."),
+        ("2030-11-04 13:45", template, "Tweet with global media."),
+        ("2030-11-05 13:45", template, "Tweet with global media."),
+        ("2030-11-06 13:45", template, "Tweet with global media."),
+        ("2030-11-07 13:45", template, "Tweet with global media."),
+        ("2030-11-08 13:45", template, "Tweet without media.", None),
+        ("2030-11-09 13:45", template, "Tweet without media.", None),
+        ("2030-12-10 18:50", template, "Update with an image.", "pics/owl.png"),
+        ("2030-12-11 18:15", template, "Update with other media.", "videos/funny_video.mp4"),
+    ]
+
+    at.schedule(tweets, time_zone="America/Santiago", media="path/to/global_media.png")
+
 
 Tweet an ordered list of strings
 ================================
@@ -205,6 +244,24 @@ Use integers as seconds or some strings as `Keywords`_: ``half_hour``, ``one_hou
 
     # integers
     at.tweet(tweets, interval=14400)
+
+Media files
+^^^^^^^^^^^
+
+Use one media file for all of your updates:
+
+.. code-block:: python
+
+    at.tweet(tweets, media="path/to/media.jpeg")
+
+Random updates
+^^^^^^^^^^^^^^
+
+To tweet your updates randomly:
+
+.. code-block:: python
+
+    at.tweet(tweets, aleatory=True)
 
 Keywords
 ^^^^^^^^

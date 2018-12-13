@@ -2,8 +2,6 @@
 
 ## [Unreleased]
 
-### Added
-
 - Added support to post updates randomly on `Coo.tweet(aleartory=True)`.
 - Added support for updates with a single media file for all tweets on `Coo.tweet()`.
 - Added support for updates with a single media file for all tweets on `Coo.schedule()`.
@@ -11,14 +9,10 @@
 
 ## [0.1.2] - 2018-11-29
 
-### Fixed
-
 - Fixed template overwriting the updates when `$message` is not provided.
 - Fixed lots of typos.
 
 ## [0.1.1] - 2018-11-21
-
-### Fixed
 
 - Fixed typos and README_P.rst for PyPI
 

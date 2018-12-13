@@ -75,6 +75,24 @@ Use integers as seconds or some strings as `Keywords`_: ``half_hour``, ``one_hou
     # integers
     at.tweet(tweets, interval=14400)
 
+Media files
+^^^^^^^^^^^
+
+Use one media file for all of your updates:
+
+.. code-block:: python
+
+    at.tweet(tweets, media="path/to/media.jpeg")
+
+Random updates
+^^^^^^^^^^^^^^
+
+To tweet your updates randomly:
+
+.. code-block:: python
+
+    at.tweet(tweets, aleatory=True)
+
 Keywords
 ^^^^^^^^
 

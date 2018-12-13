@@ -85,27 +85,13 @@ at.tweet(tweets, delay="13:45", interval="four_hours", template=my_template)
 
 For more detailed options and usage, keep reading or check the [documentation](https://coo.readthedocs.io/en/latest/) :blue_book:.
 
-## TODO's
-
-- [ ] Add support for random updates.
-- [ ] Add support for media files on `Coo.tweet`.
-- [ ] Add support for media files on `Coo.schedule`.
-- [ ] Add support for multiple media files on `Coo.tweet`.
-- [ ] Add support for multiple media files on `Coo.schedule`.
-- [ ] Add support for media files from URLs.
-- [ ] Add support for one template for all updates on `Coo.schedule`.
-- [ ] Add logging support.
-- [ ] Support `.toml` files for configuration and tweets.
-- [ ] Support resume after a process restart (see [apscheduler](https://github.com/agronholm/apscheduler)).
-- [ ] Add a CLI.
-
 
 ## Scheduling Twitter Updates
 
 Schedule updates with `datetime` strings or integers and use [custom templates](#Templates) if needed.
 
 ```python
-Coo.schedule(updates, time_zone)
+Coo.schedule(updates, time_zone, media)
 ```
 
 Full example:
@@ -151,12 +137,50 @@ at.schedule(tweets, time_zone="America/Santiago")
 
 Here you can find all the [Time Zones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) available.
 
+#### Media files
+
+There are two ways to add media files to your tweets. The first and easiest is to use one global file for all the updates:
+
+```python
+at.schedule(tweets, time_zone="America/Santiago", media="path/to/file.png")
+```
+
+Also, an individual file can be set for each one of the updates:
+
+```python
+tweets = [
+    ("2030-10-28 18:50", template, "Update with an image.", "pics/owl.png"),
+    ("2030-10-29 18:15", template, "Update with other media.", "videos/funny_video.mp4"),
+    ("2030-11-01 13:45", template, "Tweet without media."),
+]
+```
+
+Finally, it is possible to combine these to ways. For example, if most of the tweets are gonna use the same media and just a few will have a different or none:
+
+```python
+tweets = [
+    ("2030-11-01 13:45", template, "Tweet with global media."),
+    ("2030-11-02 13:45", template, "Tweet with global media."),
+    ("2030-11-03 13:45", template, "Tweet with global media."),
+    ("2030-11-04 13:45", template, "Tweet with global media."),
+    ("2030-11-05 13:45", template, "Tweet with global media."),
+    ("2030-11-06 13:45", template, "Tweet with global media."),
+    ("2030-11-07 13:45", template, "Tweet with global media."),
+    ("2030-11-08 13:45", template, "Tweet without media.", None),
+    ("2030-11-09 13:45", template, "Tweet without media.", None),
+    ("2030-12-10 18:50", template, "Update with an image.", "pics/owl.png"),
+    ("2030-12-11 18:15", template, "Update with other media.", "videos/funny_video.mp4"),
+]
+
+at.schedule(tweets, time_zone="America/Santiago", media="path/to/global_media.png")
+```
+
 ## Tweet a list of strings
 
 Post ordered updates with `delay`, `interval`, and a [template](#Templates) if needed.
 
 ```python
-Coo.tweet(updates, delay, interval, template, time_zone)
+Coo.tweet(updates, delay, interval, template, media, time_zone, aleatory)
 ```
 
 ```python
@@ -221,6 +245,22 @@ And of course, you can also set one [template](#Templates) for each one of the u
 at.tweet(tweets, template=template)
 ```
 
+#### Media files
+
+Use one media file for all of your updates:
+
+```python
+at.tweet(tweets, media="path/to/media.jpeg")
+```
+
+#### Random updates
+
+To tweet your updates randomly:
+
+```python
+at.tweet(tweets, aleatory=True)
+```
+
 #### Delay and Interval Keywords
 
 | Keyword          | Seconds |
@@ -283,6 +323,20 @@ retweets = at.api.GetRetweets()
 ```
 
 And a lot more. If you are interested, check their [documentation](https://python-twitter.readthedocs.io/en/latest/index.html).
+
+## TODO's
+
+- [x] Add support for random updates.
+- [x] Add support for media files on `Coo.tweet`.
+- [x] Add support for individual and single media files on `Coo.schedule`.
+- [ ] Add support for multiple media files on `Coo.tweet`.
+- [ ] Add support for multiple media files on `Coo.schedule`.
+- [ ] Add support for media files from URLs.
+- [ ] Add support for one template for all updates on `Coo.schedule`.
+- [ ] Add logging support.
+- [ ] Support `.toml` files for configuration and tweets.
+- [ ] Support resume after a process restart (see [apscheduler](https://github.com/agronholm/apscheduler)).
+- [ ] Add a CLI.
 
 ## Documentation
 
