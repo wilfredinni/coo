@@ -1,0 +1,8 @@
+{
+  "binary": "/Users/carlitos/Library/Caches/pypoetry/virtualenvs/coo-py3.7/bin/pyre.bin",
+  "source_directories": [
+    "."
+  ],
+  "typeshed": "/Users/carlitos/Library/Caches/pypoetry/virtualenvs/coo-py3.7/lib/pyre_check/typeshed/",
+  "search_path": "/Users/carlitos/Library/Caches/pypoetry/virtualenvs/coo-py3.7/lib/python3.7/site-packages"
+}

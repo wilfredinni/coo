@@ -671,6 +671,7 @@ ASALocalRun/
 
 # End of https://www.gitignore.io/api/vim,osx,linux,macos,python,windows,pycharm,sublimetext,visualstudio,visualstudiocode
 # Personal development files
+.pyre/*
 docs/source/_build
 import.py
 me.jpeg
