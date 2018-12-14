@@ -9,11 +9,11 @@ license = "MIT"
 python = "^3.7"
 pendulum = "^2.0"
 python-twitter = "^3.5"
+mypy = "^0.650.0"
 
 [tool.poetry.dev-dependencies]
 black = { version = "*", allows-prereleases = true }
 flake8 = "^3.6"
-mypy = "^0.641.0"
 pytest = "^4.0"
 docutils = "^0.14.0"
 sphinx = "^1.8"
