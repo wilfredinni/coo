@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- Added global template support for `Coo.schedule(template=template)`.
+
 ## [0.1.3] - 2018-12-13
 
 - Added support to post updates randomly on `Coo.tweet(aleartory=True)`.

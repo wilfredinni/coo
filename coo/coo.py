@@ -45,6 +45,7 @@ class Coo:
     time_zone: str = "local"
     media: Optional[str] = None
     global_media: Optional[str] = None
+    global_template: Optional[str] = None
 
     def __init__(
         self,
@@ -118,6 +119,10 @@ class Coo:
     def set_global_media_file(cls, global_media):
         cls.global_media = global_media
 
+    @classmethod
+    def set_global_template(cls, global_template):
+        cls.global_template = global_template
+
     def tweet(
         self,
         updates: List[str],
@@ -142,7 +147,7 @@ class Coo:
         template : str, optional
             A string to serve as a template. Need to has a "$message".
         media : str, optional
-            URL or PATH to a local file, or a file-like object (something
+            PATH to a local file, or a file-like object (something
             with a read() method).
         time_zone : str, optional
             Sets a time zone for parsing datetime strings (default is 'local'):
@@ -172,7 +177,9 @@ class Coo:
 
         return updates
 
-    def schedule(self, updates: list, time_zone=time_zone, media=media):
+    def schedule(
+        self, updates: list, time_zone=time_zone, media=media, template=global_template
+    ):
         """
         Post multiple Twitter Updates from a list of tuples.
 
@@ -199,7 +206,7 @@ class Coo:
             Sets a time zone for parsing datetime strings (default is 'local'):
             https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
         media : str, optional
-            URL or PATH to a local file, or a file-like object (something
+            PATH to a local file, or a file-like object (something
             with a read() method).
 
         Raises
@@ -209,6 +216,8 @@ class Coo:
         """
         if not isinstance(updates[0], tuple):
             raise ScheduleError(ScheduleError.wrongListMsg)
+        if template:
+            self.set_global_template(template)
         if time_zone is not self.time_zone:
             self.set_time_zone(time_zone)
         if media:
@@ -235,6 +244,9 @@ class Coo:
         """
         if template:
             update = tweet_template(update=update, template=template)
+        elif self.global_template:
+            update = tweet_template(update=update, template=self.global_template)
+
         if self.preview:
             print(update)
             return
