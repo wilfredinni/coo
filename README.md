@@ -327,13 +327,11 @@ And a lot more. If you are interested, check their [documentation](https://pytho
 ## TODO's
 
 - [x] Add support for random updates.
-- [x] Add support for media files on `Coo.tweet`.
-- [x] Add support for individual and single media files on `Coo.schedule`.
-- [ ] Add support for multiple media files on `Coo.tweet`.
-- [ ] Add support for multiple media files on `Coo.schedule`.
+- [x] Add support for media files.
+- [ ] Add support for multiple media files.
 - [ ] Add support for media files from URLs.
 - [ ] Add support for one template for all updates on `Coo.schedule`.
-- [ ] Add logging support.
+- [ ] Add logging.
 - [ ] Support `.toml` files for configuration and tweets.
 - [ ] Support resume after a process restart (see [apscheduler](https://github.com/agronholm/apscheduler)).
 - [ ] Add a CLI.
