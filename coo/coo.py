@@ -208,6 +208,8 @@ class Coo:
         media : str, optional
             PATH to a local file, or a file-like object (something
             with a read() method).
+        template : str, optional
+            A global template for all the tweets with a "None" value on "msg[1]".
 
         Raises
         ------
