@@ -328,7 +328,7 @@ And a lot more. If you are interested, check their [documentation](https://pytho
 
 - [x] Add support for random updates.
 - [x] Add support for media files.
-- [ ] Add support for multiple media files.
+- [x] Add support for multiple media files.
 - [ ] Add support for media files from URLs.
 - [ ] Add support for one template for all updates on `Coo.schedule`.
 - [ ] Add logging.
