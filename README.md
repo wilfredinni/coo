@@ -329,9 +329,9 @@ And a lot more. If you are interested, check their [documentation](https://pytho
 - [x] Add support for random updates.
 - [x] Add support for media files.
 - [x] Add support for multiple media files.
+- [ ] Add support for a history of tweets.
 - [ ] Add support for media files from URLs.
 - [ ] Add support for one template for all updates on `Coo.schedule`.
-- [ ] Add logging.
 - [ ] Support `.toml` files for configuration and tweets.
 - [ ] Support resume after a process restart (see [apscheduler](https://github.com/agronholm/apscheduler)).
 - [ ] Add a CLI.
