@@ -279,9 +279,9 @@ class Coo:
         seconds = parse_or_get(msg[0], self.time_zone)
         await asyncio.sleep(seconds)
 
-        if len(msg) is 4 and msg[3] is not None:
+        if len(msg) == 4 and msg[3] is not None:
             self.set_media_file(Path(msg[3]))
-        elif len(msg) is 3 and self.global_media:
+        elif len(msg) == 3 and self.global_media:
             self.set_media_file(Path(self.global_media))
         else:
             self.set_media_file(None)
