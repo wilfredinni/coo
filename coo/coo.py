@@ -273,7 +273,7 @@ class Coo:
 
     async def custom_updates(self, msg: tuple):
         """
-        Process custom updates: templates and updates times for every
+        Process custom updates: templates and updates time for every
         Twitter update.
         """
         seconds = parse_or_get(msg[0], self.time_zone)
