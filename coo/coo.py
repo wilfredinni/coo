@@ -69,6 +69,9 @@ class Coo:
         preview : bool, optional
             Print the update(s) on the console.
         """
+        # check for correct credentials types
+        self._check_credentials_type(consumer, consumer_secret, token, token_secret)
+
         # https://github.com/bear/python-twitter
         self.consumer = consumer
         self.consumer_secret = consumer_secret
@@ -84,6 +87,11 @@ class Coo:
 
         # The async loop for the custom updates.
         self.loop = asyncio.get_event_loop()
+
+    def _check_credentials_type(self, *args):
+        for credential in args:
+            if not isinstance(credential, str):
+                raise TypeError("Twitter credentials must be strings")
 
     @property
     def api(self):

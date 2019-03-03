@@ -11,6 +11,20 @@ from coo.exceptions import TweetTypeError, ScheduleError
 m_updates = ["mock1", "mock2", "mock3", "mock4", "mock5"]
 
 
+def test_input_types():
+    with pytest.raises(TypeError):
+        Coo([1], [1], [1], [1])
+
+    with pytest.raises(TypeError):
+        Coo({1: 5}, {1: 5}, {1: 5}, {1: 5})
+
+    with pytest.raises(TypeError):
+        Coo(1, 2, 3, 4)
+
+    # correct construction. no error
+    Coo("mock", "mock", "mock", "mock")
+
+
 @pytest.fixture
 def coo_preview_instance():
     yield Coo("mock", "mock", "mock", "mock", preview=True)
