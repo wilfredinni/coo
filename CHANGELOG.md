@@ -3,6 +3,7 @@
 ## [Unreleased]
 
 - Added global template support for `Coo.schedule(template=template)`.
+- Added an additional check for the type of the Twitter credentials.
 
 ## [0.1.3] - 2018-12-13
 
