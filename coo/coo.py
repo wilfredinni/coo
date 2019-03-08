@@ -5,8 +5,8 @@ import asyncio
 
 import twitter
 
-from .utils import zzz, tweet_template, parse_or_get
-from .exceptions import ScheduleError, TweetTypeError
+from ._utils import zzz, tweet_template, parse_or_get
+from ._exceptions import ScheduleError, TweetTypeError
 
 
 class Coo:
@@ -34,11 +34,11 @@ class Coo:
     -------
     verify()
         Verify if the authentication is valid.
-    tweet(updates, delay=None, interval=None, template=None, time_zone="local")
+    tweet(updates, _delay=None, _interval=None, template=None, time_zone="local")
         Post Twitter Updates from a list of strings.
     schedule(updates, time_zone='local')
         Post multiple Twitter Updates from a list of tuples.
-    str_update()
+    _str_update()
         Post a Twitter Update from a string.
     """
 
@@ -81,9 +81,9 @@ class Coo:
         # True to preview the update in the console.
         self.preview = preview
 
-        # interval and delay switches.
-        self.delay_time = True
-        self.interval_time = False
+        # _interval and _delay switches.
+        self._delay_time = True
+        self._interval_time = False
 
         # The async loop for the custom updates.
         self.loop = asyncio.get_event_loop()
@@ -134,8 +134,8 @@ class Coo:
     def tweet(
         self,
         updates: List[str],
-        delay: Union[int, str] = None,
-        interval: Union[int, str] = None,
+        _delay: Union[int, str] = None,
+        _interval: Union[int, str] = None,
         template: Optional[str] = None,
         media=media,
         time_zone=time_zone,
@@ -148,9 +148,9 @@ class Coo:
         ----------
         updates : list
             A list of strings, each one is a Twitter Update.
-        delay : str, int, optional
+        _delay : str, int, optional
             The time before the first Update.
-        interval : str, int, optional
+        _interval : str, int, optional
             The time between Updates.
         template : str, optional
             A string to serve as a template. Need to has a "$message".
@@ -178,10 +178,10 @@ class Coo:
         if media:
             self.set_media_file(Path(media))
 
-        self.delay(delay)
+        self._delay(_delay)
         for update in updates:
-            self.interval(interval)
-            self.str_update(update, template)
+            self._interval(_interval)
+            self._str_update(update, template)
 
         return updates
 
@@ -233,10 +233,10 @@ class Coo:
         if media:
             self.set_global_media_file(Path(media))
 
-        self.loop.run_until_complete(self.async_tasks(updates))
+        self.loop.run_until_complete(self._async_tasks(updates))
         self.loop.close()
 
-    def str_update(self, update: str, template: Optional[str]):
+    def _str_update(self, update: str, template: Optional[str]):
         """
         Post a Twitter Update from a string.
 
@@ -269,17 +269,17 @@ class Coo:
             # If media is not a readable type, just post the update.
             return self.api.PostUpdate(update)
 
-    async def async_tasks(self, custom_msgs: list):
+    async def _async_tasks(self, custom_msgs: list):
         """Prepare the asyncio tasks for the custom tweets."""
         for msg in set(custom_msgs):
             if len(msg) < 3 or len(msg) > 4:
                 raise ScheduleError(ScheduleError.tupleLenError)
 
         await asyncio.wait(
-            [self.loop.create_task(self.custom_updates(post)) for post in custom_msgs]
+            [self.loop.create_task(self._custom_updates(post)) for post in custom_msgs]
         )
 
-    async def custom_updates(self, msg: tuple):
+    async def _custom_updates(self, msg: tuple):
         """
         Process custom updates: templates and updates time for every
         Twitter update.
@@ -294,25 +294,25 @@ class Coo:
         else:
             self.set_media_file(None)
 
-        return self.str_update(update=msg[2], template=msg[1])
+        return self._str_update(update=msg[2], template=msg[1])
 
-    def delay(self, delay: Union[None, str, int]):
-        """Delay the Post of one or multiple tweets."""
-        if delay and self.delay_time:
-            zzz(delay, self.time_zone)
+    def _delay(self, _delay: Union[None, str, int]):
+        """_delay the Post of one or multiple tweets."""
+        if _delay and self._delay_time:
+            zzz(_delay, self.time_zone)
 
             # Set to False to avoid repetition
-            self.delay_time = False
+            self._delay_time = False
 
-    def interval(self, interval: Union[int, str, None]):
-        """Add an interval between Twitter Updates."""
+    def _interval(self, _interval: Union[int, str, None]):
+        """Add an _interval between Twitter Updates."""
         # Avoid the first iteration
-        if interval and self.interval_time is True:
-            zzz(interval)
+        if _interval and self._interval_time is True:
+            zzz(_interval)
 
         # Allow from the second one
-        if self.interval_time is False:
-            self.interval_time = True
+        if self._interval_time is False:
+            self._interval_time = True
 
     def __str__(self):
         return f"Twitter User: {self.verify.name}."

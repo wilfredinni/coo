@@ -4,7 +4,7 @@ import pytest
 from twitter.error import TwitterError
 
 from coo import Coo
-from coo.exceptions import TweetTypeError, ScheduleError
+from coo._exceptions import TweetTypeError, ScheduleError
 
 
 # Mock Update list
@@ -43,7 +43,7 @@ def test_wrong_credentials_TwitterError(coo_mock_instance):
 
 # TWEET
 @pytest.mark.parametrize(
-    "updates, delay, interval, template, time_zone",
+    "updates, _delay, _interval, template, time_zone",
     [
         (m_updates, None, None, None, None),
         # One None
@@ -56,10 +56,10 @@ def test_wrong_credentials_TwitterError(coo_mock_instance):
         (m_updates, "now", None, None, "local"),
         (m_updates, "now", "now", None, None),
         (m_updates, None, "now", "$message", None),
-        # Delay
+        # _delay
         (m_updates, "now", None, None, None),
         (m_updates, 0, None, None, None),
-        # Interval
+        # _interval
         (m_updates, None, "now", None, None),
         (m_updates, None, 0, None, None),
         # Template
@@ -69,8 +69,8 @@ def test_wrong_credentials_TwitterError(coo_mock_instance):
         (m_updates, None, None, None, "America/Santiago "),
     ],
 )
-def test_tweet(coo_preview_instance, updates, delay, interval, template, time_zone):
-    coo_preview_instance.tweet(updates, delay, interval, template, time_zone)
+def test_tweet(coo_preview_instance, updates, _delay, _interval, template, time_zone):
+    coo_preview_instance.tweet(updates, _delay, _interval, template, time_zone)
 
 
 @pytest.mark.parametrize(
@@ -170,17 +170,17 @@ def test_schedule_ScheduleError(coo_preview_instance, updates):
 @pytest.mark.parametrize(
     "update, template", [("My Twitter Update", None), ("My Twitter Update", "$message")]
 )
-def test_str_update(coo_preview_instance, update, template):
-    coo_preview_instance.str_update(update, template)
+def test__str_update(coo_preview_instance, update, template):
+    coo_preview_instance._str_update(update, template)
 
 
-# DELAY
-@pytest.mark.parametrize("delay", [(0), ("now")])
-def test_delay(coo_preview_instance, delay):
-    coo_preview_instance.delay(delay)
+# _delay
+@pytest.mark.parametrize("_delay", [(0), ("now")])
+def test__delay(coo_preview_instance, _delay):
+    coo_preview_instance._delay(_delay)
 
 
-# INTERVAL
-@pytest.mark.parametrize("interval", [(0), ("now")])
-def test_interval(coo_preview_instance, interval):
-    coo_preview_instance.interval(interval)
+# _interval
+@pytest.mark.parametrize("_interval", [(0), ("now")])
+def test__interval(coo_preview_instance, _interval):
+    coo_preview_instance._interval(_interval)

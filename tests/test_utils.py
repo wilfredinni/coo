@@ -1,7 +1,7 @@
 import pytest
 
-from coo.utils import parse_time, parse_or_get, zzz, tweet_template, TIME_DICT
-from coo.exceptions import ScheduleError, TemplateError
+from coo._utils import parse_time, parse_or_get, zzz, tweet_template, TIME_DICT
+from coo._exceptions import ScheduleError, TemplateError
 
 
 # DICTIONARIES

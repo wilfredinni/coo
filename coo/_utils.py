@@ -5,7 +5,7 @@ import time
 import pendulum
 from pendulum.parsing.exceptions import ParserError
 
-from .exceptions import TemplateError, ScheduleError
+from ._exceptions import TemplateError, ScheduleError
 
 
 TIME_DICT: Dict[str, int] = {
