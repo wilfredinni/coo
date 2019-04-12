@@ -1,5 +1,4 @@
 from string import Template
-from typing import Dict
 import time
 
 import pendulum
@@ -8,7 +7,7 @@ from pendulum.parsing.exceptions import ParserError
 from ._exceptions import TemplateError, ScheduleError
 
 
-TIME_DICT: Dict[str, int] = {
+TIME_DICT = {
     "now": 0,
     "half_hour": 1800,
     "one_hour": 3600,
@@ -33,7 +32,7 @@ TIME_DICT: Dict[str, int] = {
 }
 
 
-def parse_time(date_time: str, time_zone: str) -> int:
+def parse_time(date_time, time_zone):
     """Returns the seconds between now and the scheduled time."""
     now = pendulum.now(time_zone)
     update = pendulum.parse(date_time, tz=time_zone)
@@ -63,7 +62,7 @@ def parse_or_get(schedule_time, time_zone):
         raise TypeError("An integer, valid datetime or keyword is needed.")
 
 
-def zzz(sleep_time, time_zone: str = None):
+def zzz(sleep_time, time_zone=None):
     """Delay sleep and interval time sleep. """
     try:
         time.sleep(sleep_time)
@@ -72,7 +71,7 @@ def zzz(sleep_time, time_zone: str = None):
         time.sleep(sleep_time)
 
 
-def tweet_template(update: str, template: str) -> str:
+def tweet_template(update, template):
     """Returns the the update in the template."""
     # Raise an Error if the template does not contain a $message.
     if template and "$message" not in template:

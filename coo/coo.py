@@ -1,4 +1,3 @@
-from typing import Union, List, Optional
 from pathlib import Path
 import random
 import asyncio
@@ -43,18 +42,11 @@ class Coo:
     """
 
     time_zone: str = "local"
-    media: Optional[str] = None
-    global_media: Optional[str] = None
-    global_template: Optional[str] = None
+    media = None
+    global_media = None
+    global_template = None
 
-    def __init__(
-        self,
-        consumer: str,
-        consumer_secret: str,
-        token: str,
-        token_secret: str,
-        preview=False,
-    ) -> None:
+    def __init__(self, consumer, consumer_secret, token, token_secret, preview=False):
         """
         Parameters
         ----------
@@ -133,10 +125,10 @@ class Coo:
 
     def tweet(
         self,
-        updates: List[str],
-        _delay: Union[int, str] = None,
-        _interval: Union[int, str] = None,
-        template: Optional[str] = None,
+        updates,
+        _delay=None,
+        _interval=None,
+        template=None,
         media=media,
         time_zone=time_zone,
         aleatory=False,
@@ -186,7 +178,7 @@ class Coo:
         return updates
 
     def schedule(
-        self, updates: list, time_zone=time_zone, media=media, template=global_template
+        self, updates, time_zone=time_zone, media=media, template=global_template
     ):
         """
         Post multiple Twitter Updates from a list of tuples.
@@ -236,7 +228,7 @@ class Coo:
         self.loop.run_until_complete(self._async_tasks(updates))
         self.loop.close()
 
-    def _str_update(self, update: str, template: Optional[str]):
+    def _str_update(self, update, template):
         """
         Post a Twitter Update from a string.
 
@@ -269,7 +261,7 @@ class Coo:
             # If media is not a readable type, just post the update.
             return self.api.PostUpdate(update)
 
-    async def _async_tasks(self, custom_msgs: list):
+    async def _async_tasks(self, custom_msgs):
         """Prepare the asyncio tasks for the custom tweets."""
         for msg in set(custom_msgs):
             if len(msg) < 3 or len(msg) > 4:
@@ -279,7 +271,7 @@ class Coo:
             [self.loop.create_task(self._custom_updates(post)) for post in custom_msgs]
         )
 
-    async def _custom_updates(self, msg: tuple):
+    async def _custom_updates(self, msg):
         """
         Process custom updates: templates and updates time for every
         Twitter update.
@@ -296,7 +288,7 @@ class Coo:
 
         return self._str_update(update=msg[2], template=msg[1])
 
-    def _delay(self, _delay: Union[None, str, int]):
+    def _delay(self, _delay):
         """_delay the Post of one or multiple tweets."""
         if _delay and self._delay_time:
             zzz(_delay, self.time_zone)
@@ -304,7 +296,7 @@ class Coo:
             # Set to False to avoid repetition
             self._delay_time = False
 
-    def _interval(self, _interval: Union[int, str, None]):
+    def _interval(self, _interval):
         """Add an _interval between Twitter Updates."""
         # Avoid the first iteration
         if _interval and self._interval_time is True:
