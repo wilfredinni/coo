@@ -4,10 +4,11 @@
 
 - Added global template support for `Coo.schedule(template=template)`.
 - Added an additional check for the type of the Twitter credentials.
+- DEV: removed Type Check from the project.
 
 ## [0.1.3] - 2018-12-13
 
-- Added support to post updates randomly on `Coo.tweet(aleartory=True)`.
+- Added support to post updates randomly on `Coo.tweet(aleatory=True)`.
 - Added support for updates with a single media file for all tweets on `Coo.tweet()`.
 - Added support for updates with a single media file for all tweets on `Coo.schedule()`.
 - Added support for updates with a different media file for each tweet on `Coo.schedule()`.
