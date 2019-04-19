@@ -7,7 +7,7 @@ black==19.3b0
 certifi==2019.3.9
 chardet==3.0.4
 Click==7.0
-colorama==0.4.1
+-e git+https://github.com/wilfredinni/coo.git@f4dfe756ac4b0256099960986ce93fbc1453b1c2#egg=coo
 docutils==0.14
 entrypoints==0.3
 flake8==3.7.7
@@ -27,7 +27,7 @@ pycodestyle==2.5.0
 pyflakes==2.1.1
 Pygments==2.3.1
 pyparsing==2.4.0
-pytest==4.4.0
+pytest==4.4.1
 python-dateutil==2.8.0
 python-twitter==3.5
 pytz==2019.1
@@ -39,4 +39,4 @@ snowballstemmer==1.2.1
 Sphinx==1.8.5
 sphinxcontrib-websupport==1.1.0
 toml==0.10.0
-urllib3==1.24.1
+urllib3==1.24.2
