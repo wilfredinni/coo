@@ -19,10 +19,12 @@
     <a href="https://coo.readthedocs.io/en/latest/?badge=latest">
         <img src="https://readthedocs.org/projects/coo/badge/?version=latest" alt="Docs">
     </a>
-    <a href="https://opensource.org/licenses/Apache-2.0">
-        <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License">
+    <a href="https://github.com/wilfredinni/coo/blob/master/LICENSE">
+        <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="License">
     </a>
 </p>
+
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wilfredinni/merken/blob/master/LICENSE)
 
 Coo is an easy to use Python library for scheduling Twitter updates. To use it, you need to first apply for a developer account in the [Twitter Developers Platform](https://developer.twitter.com/) and generate the Keys and Access Tokens.
 
