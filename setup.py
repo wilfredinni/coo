@@ -26,7 +26,7 @@ setup(
     ],
     description="Schedule Twitter Updates with Easy",
     install_requires=requirements,
-    license="Apache Software License 2.0",
+    license="MIT License",
     long_description=readme,
     include_package_data=True,
     keywords="coo",
