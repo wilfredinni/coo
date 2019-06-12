@@ -43,7 +43,7 @@ def test_wrong_credentials_TwitterError(coo_mock_instance):
 
 # TWEET
 @pytest.mark.parametrize(
-    "updates, _delay, _interval, template, time_zone",
+    "updates, delay, interval, template, time_zone",
     [
         (m_updates, None, None, None, None),
         # One None
@@ -69,8 +69,8 @@ def test_wrong_credentials_TwitterError(coo_mock_instance):
         (m_updates, None, None, None, "America/Santiago "),
     ],
 )
-def test_tweet(coo_preview_instance, updates, _delay, _interval, template, time_zone):
-    coo_preview_instance.tweet(updates, _delay, _interval, template, time_zone)
+def test_tweet(coo_preview_instance, updates, delay, interval, template, time_zone):
+    coo_preview_instance.tweet(updates, delay, interval, template, time_zone)
 
 
 @pytest.mark.parametrize(
@@ -175,9 +175,9 @@ def test__str_update(coo_preview_instance, update, template):
 
 
 # _delay
-@pytest.mark.parametrize("_delay", [(0), ("now")])
-def test__delay(coo_preview_instance, _delay):
-    coo_preview_instance._delay(_delay)
+@pytest.mark.parametrize("delay", [(0), ("now")])
+def test_delay(coo_preview_instance, delay):
+    coo_preview_instance._delay(delay)
 
 
 # _interval

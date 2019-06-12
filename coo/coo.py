@@ -126,8 +126,8 @@ class Coo:
     def tweet(
         self,
         updates,
-        _delay=None,
-        _interval=None,
+        delay=None,
+        interval=None,
         template=None,
         media=media,
         time_zone=time_zone,
@@ -170,9 +170,9 @@ class Coo:
         if media:
             self.set_media_file(Path(media))
 
-        self._delay(_delay)
+        self._delay(delay)
         for update in updates:
-            self._interval(_interval)
+            self._interval(interval)
             self._str_update(update, template)
 
         return updates
