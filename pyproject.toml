@@ -11,7 +11,7 @@ pendulum = "^2.0"
 python-twitter = "^3.5"
 
 [tool.poetry.dev-dependencies]
-black = { version = "*", allows-prereleases = true }
+black = { version = "*", allow-prereleases = true }
 flake8 = "^3.6"
 pytest = "^4.0"
 sphinx = "^1.8"
