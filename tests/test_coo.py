@@ -1,3 +1,4 @@
+import asyncio
 from pathlib import Path
 
 import pytest
@@ -144,6 +145,7 @@ def test_schedule_time_zone_media(coo_preview_instance):
         (0, None, "update"),
         (0, None, "update", "../coo.png"),
     ]
+    coo_preview_instance.loop = asyncio.new_event_loop()
     coo_preview_instance.schedule(updates, time_zone="Canada/Yukon", media="../coo.png")
     assert coo_preview_instance.time_zone == "Canada/Yukon"
     assert coo_preview_instance.media == Path("../coo.png")
